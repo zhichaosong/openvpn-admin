@@ -1,0 +1,50 @@
+{cx:toolbar id="toolbar"}
+{/cx:toolbar}
+
+<!-- 表格 -->
+<table id="table" data-toggle="gridview" class="table table-striped" data-url="/{$Request.module}/{$Request.controller}"  data-toolbar="#toolbar"   data-show-columns="true" data-page-size="10" data-page-list="[10, 25, 50, All]"  data-search="true"  data-show-export="true" data-side-pagination="client" >
+    <thead>
+		<tr>
+			<th data-width="10" data-checkbox="true"></th>
+			<th data-width="60" data-field="username">姓名</th>
+			<th data-width="100" data-field="mobile">手机号码</th>
+			<th data-width="100" data-field="role_name">角色名称</th>
+			<th data-width="30" data-field="status" data-formatter="format_status">状态</th>
+			<th data-width="60" data-field="create_time">创建时间</th>
+		</tr>
+	</thead>
+</table>
+
+<script type="text/javascript">
+	function format_status(status,row,index) {
+		// if(status != null && status != ""){
+			if(status == 1){
+				return '显示'
+			}else if(status == 2){
+				return '隐藏'
+			}else if(status == 0){
+				return '禁用'
+			}
+		// }
+	}
+
+	$(function(){
+		$("#table").on('auth',function(e, gridview, params){
+			if(gridview.currentRow == null){
+				alertMsg("请先选择授权的用户！")
+				return false;
+			}
+			params.data.id = gridview.currentRow.id
+		}).on('password',function(e, gridview, params){
+			if(gridview.currentRow == null){
+				alertMsg("请先选择用户！")
+				return false;
+			}
+			params.data.id = gridview.currentRow.id
+		})
+	})
+</script>
+
+
+
+

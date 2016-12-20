@@ -1,0 +1,46 @@
+<!-- head -->
+{include file="./_layout/header" /} 
+<body>
+	<div id="wrapper">
+		<!-- 左侧菜单 -->
+		<nav class="navbar-default navbar-static-side" role="navigation">
+			{include file="./_layout/sidebar" /}
+    	</nav>
+		
+		<!-- 右侧 -->
+		<div id="page-wrapper" class="gray-bg">
+			<!-- 头部 -->
+			<div class="row border-bottom">
+				{include file="./_layout/top" /}
+			</div>
+			<!-- 面包屑导航 -->
+			<div class="row wrapper border-bottom white-bg page-heading">
+				{include file="./_layout/breadcrumb" /}
+			</div>
+			<!-- 内容 -->
+			
+			<div class="wrapper wrapper-content animated fadeInRight">
+				{__CONTENT__}
+			</div>
+			<!-- 页脚 -->
+			<div>
+				{include file="./_layout/footer" /}
+			</div>
+		</div>
+	</div>
+
+	<!-- necessary ！！！-->
+	{js href="/bootstrap3/js/bootstrap.min.js" /}
+	{js href="/js/plugins/metisMenu/jquery.metisMenu.js" /}
+	{js href="/js/plugins/slimscroll/jquery.slimscroll.min.js" /}
+	{js href="/js/admin/inspinia.js" /}
+
+
+	
+	<!-- custom and plugins -->
+	{js href="/js/admin/bootstrap-table.js" /}
+	{js href="/js/admin/main.js" /}
+	{js href="/js/admin/gridview.js" /}
+	{js href="/js/admin/zh-CN.js" /}
+</body>
+</html>

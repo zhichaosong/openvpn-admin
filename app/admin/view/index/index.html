@@ -1,0 +1,72 @@
+{__NOLAYOUT__}
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>{$Think.config.WEBSITE_NAME}</title>
+	{css href="/bootstrap3/css/bootstrap.css" /}
+	{css href="/css/admin/bootstrap-table.css" /}
+	<!-- {css href="/bootstrap3/css/bootstrap.min.css" /} -->
+	{css href="/font-awesome-4.6/css/font-awesome.min.css" /}
+	<!-- {css href="/css/admin/layout.css" /} -->
+	{js href="/plugins/jquery-3.1.0.min.js" /}
+</head>
+<style>
+body{
+	background-color: purple;
+}
+
+#main{
+	width: 800px;
+	margin: 0 auto;
+	z-index: 1;
+}
+
+.background-image{
+	background-image: url('/images/admin/product.png');
+	z-index: 5;
+	position: absolute;
+	height: 60%;
+	width: 60%;
+	display: block;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	-webkit-background-size: cover;
+	background-size: cover;
+	background-position: center center;
+	background-repeat: no-repeat;
+
+}
+
+.btns{
+	margin: 8% auto 0;
+	width: 100%;
+	text-align: center;
+}
+
+.btns a{
+	color: #f7f7f8;
+
+}
+a:hover{
+	text-decoration: none;
+}
+ 
+
+</style>
+<body>
+
+	<div id="main">
+		<div class="btns">
+		<a href="/admin/login" class="btn btn-primary btn-lg" role="button">Login In</a>
+		</div>
+		<div class="background-image"></div>
+	</div>
+
+</body>
+</html>
