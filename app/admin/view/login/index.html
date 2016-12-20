@@ -29,7 +29,7 @@
                 <h1 class="logo-name">RED</h1>
             </div>
             <h3>Welcome to RED</h3>
-            <p>Perfectly designed,Simplicity,Useful
+            <p>Perfectly designed,Simplicity,Useful,Free.
             </p>
             <p>Login in. To see it in action.</p>
 
@@ -76,7 +76,7 @@
 			if(data.mobile == ''){
 				msgerr.html("请输入账号！")
 			}else if(data.password == ''){
-				msgerr.addClass('msg-info').html("请输入密码！")
+				msgerr.html("请输入密码！")
 				return false;
 			}else{
 				$.ajax({
@@ -92,11 +92,11 @@
 				                window.location.href = data.url;
 				            }, parseInt(data.wait) * 300)
 						}else if(data.code == 0){
-							msgerr.addClass('msg-info').html(data.msg);
+							msgerr.html(data.msg);
 						}
 					},
 					error:function () {
-						msgerr.addClass('msg-error').html("网络错误，请稍后再试！");
+						msgerr.html("网络错误，请稍后再试！");
 					}
 				})
 			}
