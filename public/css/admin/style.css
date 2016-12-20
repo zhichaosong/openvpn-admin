@@ -3363,7 +3363,7 @@ body.body-small .footer.fixed {
 /* PANELS */
 .page-heading {
   border-top: 0;
-  padding: 0px 10px 20px 10px;
+  padding: 10px 10px 10px 10px;
 }
 .panel-heading h1,
 .panel-heading h2 {
@@ -4192,7 +4192,7 @@ body.modal-open {
   padding: 100px 20px 20px 20px;
 }
 .logo-name {
-  color: #e6e6e6;
+  color: #b51e34;
   font-size: 180px;
   font-weight: 800;
   letter-spacing: -10px;
