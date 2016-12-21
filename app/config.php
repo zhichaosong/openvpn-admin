@@ -58,11 +58,11 @@ return [
     // +----------------------------------------------------------------------
 
     // 默认模块名
-    'default_module'         => 'admin',
+    'default_module'         => 'www',
     // 禁止访问模块
     'deny_module_list'       => ['common'],
     //允许访问模块
-    'allow_module_list'      => ['home','admin','index'],
+    'allow_module_list'      => ['www','admin'],
     // 默认控制器名
     'default_controller'     => 'Index',
     // 默认操作名
