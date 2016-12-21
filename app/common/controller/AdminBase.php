@@ -6,6 +6,7 @@ use think\Session;
 use think\Request;
 use think\Url;
 use think\Config;
+use app\common\tools;
 
 // use 引入的类文件需要首字母大写
 
@@ -22,6 +23,16 @@ class AdminBase extends Controller
 	function __construct()
 	{
 		parent::__construct();
+
+		//验证权限
+		$auth = new tools\Auth();
+		$request = Request::instance();
+		$rule_name=$request->module().'/'.$request->controller().'/'.$request->action();
+		$userRow = Session::get(Config::get('USER_AUTH_KEY'), 'admin');
+		$uid = isset($userRow['id']) ? $userRow['id'] : 0;
+		if(!$auth->check($rule_name, $uid)) {
+			//die('无权限');
+		}
 		$this->request = Request::instance();
 		$this->module_name = Request::instance()->module();
 

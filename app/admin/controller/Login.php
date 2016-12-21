@@ -12,7 +12,7 @@ use think\Session;
 * @author aierui github  https://github.com/Aierui
 * @version 1.0 
 */
-class Login extends Controller
+class Login
 {
 
 	/**
@@ -43,6 +43,7 @@ class Login extends Controller
 			if ($userRow === false) {
                 return $this->error($userModel->getError());
             }
+			Session::set(Config::get('USER_AUTH_KEY'), $userRow, 'admin');
             return $this->success('登录成功', Url::build('/admin/subject'));
 		}else{
 			return $this->fetch();

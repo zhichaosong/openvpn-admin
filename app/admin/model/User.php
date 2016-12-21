@@ -38,7 +38,6 @@ class User extends Model
 		}
 
         unset($userRow['password']);
-        Session::set(Config::get('USER_AUTH_KEY'), $userRow,'admin');
 
         //登录成功要记录在日志里
         Loader::model('LogRecord')->record('登录成功');

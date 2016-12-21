@@ -23,7 +23,6 @@ class Subject extends AdminBase
 
 	public function index()
 	{
-
 		if (request()->isAjax()) {
 			$data = request()->param();
 			$map = "1 = 1";
