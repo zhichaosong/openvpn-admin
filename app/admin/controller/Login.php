@@ -43,7 +43,7 @@ class Login extends Controller
 			if ($userRow === false) {
                 return $this->error($userModel->getError());
             }
-            return $this->success('登录成功', Url::build('/admin/user'));
+            return $this->success('登录成功', Url::build('/admin/subject'));
 		}else{
 			return $this->fetch();
 		}
