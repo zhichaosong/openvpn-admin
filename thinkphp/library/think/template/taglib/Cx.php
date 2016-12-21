@@ -12,7 +12,6 @@
 namespace think\template\taglib;
 
 use think\template\TagLib;
-use think\Request;
 
 /**
  * CX标签库解析类
@@ -50,7 +49,6 @@ class Cx extends Taglib
         'for'        => ['attr' => 'start,end,name,comparison,step'],
         'url'        => ['attr' => 'link,vars,suffix,domain', 'close' => 0, 'expression' => true],
         'function'   => ['attr' => 'name,vars,use,call'],
-        'toolbar'    => ['attr' => 'id'],
     ];
 
     /**
@@ -671,53 +669,5 @@ class Cx extends Taglib
         $parseStr .= ' ?>' . $content . '<?php }; ';
         $parseStr .= $call ? '$' . $name . '(' . $call . '); ?>' : '?>';
         return $parseStr;
-    }
-
-
-
-
-    public function tagToolbar($tag, $content)
-    {
-       // 元素默认id
-        if(empty($tag['id'])){
-            $tag['id'] = 'toolbar';
-        }
-
-        $request = Request::instance();
-        $module = $request->module();
-        $controller = $request->controller();
-        $module = '/'.$module.'/'.$controller;
-
-        $html = '<div id="' . $tag['id'] . '" class="toolbar" data-module="'.strtolower($module).'">
-                <?php
-                    $toolbar_node_list = \app\common\controller\Permission::getCurrentAccessList();
-
-                    if(!empty($toolbar_node_list)){
-                        $toolbar_prev_group = 0;
-
-                        $toolbar_node_count = count($toolbar_node_list);
-
-                        foreach ($toolbar_node_list as $i => $btn) {
-
-                            if ($toolbar_prev_group != $btn["group"]) {
-                                if ($i != 0) {
-                                    echo \'</div>\';
-                                }
-
-                                echo \'<div class="btn-group">\';
-                                $toolbar_prev_group = $btn["group"];
-                            }
-                           
-                            echo \'<button type="button" data-name="\' . $btn["name"] . \'" class="btn btn-default" data-event-type="\' . $btn["event_type"] . \'" data-event-value="\' . $btn["event_value"] . \'" data-target="\' . $btn["target"] . \'"><i class="fa \' . $btn["icon"] . \'" aria-hidden="true"> </i>\' . '.' '.'$btn["title"] . \'</button>\';
-                            
-                            if($i == $toolbar_node_count - 1){
-                                echo \'</div>\';
-                            }
-                        }
-                    }
-                        
-                ?>
-            '.$content.'</div>';
-        return $html;
     }
 }

@@ -127,6 +127,8 @@ class App
 
             // 监听app_begin
             Hook::listen('app_begin', $dispatch);
+            // 请求缓存检查
+            $request->cache($config['request_cache'], $config['request_cache_expire']);
 
             switch ($dispatch['type']) {
                 case 'redirect':
@@ -139,11 +141,13 @@ class App
                     break;
                 case 'controller':
                     // 执行控制器操作
-                    $data = Loader::action($dispatch['controller']);
+                    $vars = Request::instance()->param();
+                    $data = Loader::action($dispatch['controller'], array_merge($vars, $dispatch['var']));
                     break;
                 case 'method':
                     // 执行回调方法
-                    $data = self::invokeMethod($dispatch['method']);
+                    $vars = Request::instance()->param();
+                    $data = self::invokeMethod($dispatch['method'], array_merge($vars, $dispatch['var']));
                     break;
                 case 'function':
                     // 执行闭包
@@ -218,7 +222,7 @@ class App
     public static function invokeMethod($method, $vars = [])
     {
         if (is_array($method)) {
-            $class   = is_object($method[0]) ? $method[0] : new $method[0](Request::instance());
+            $class   = is_object($method[0]) ? $method[0] : self::invokeClass($method[0]);
             $reflect = new \ReflectionMethod($class, $method[1]);
         } else {
             // 静态方法
@@ -343,6 +347,8 @@ class App
                 // 初始化模块
                 $request->module($module);
                 $config = self::init($module);
+                // 模块请求缓存检查
+                $request->cache($config['request_cache'], $config['request_cache_expire']);
             } else {
                 throw new HttpException(404, 'module not exists:' . $module);
             }
@@ -377,12 +383,14 @@ class App
         // 获取当前操作名
         $action = $actionName . $config['action_suffix'];
 
+        $vars = [];
         if (is_callable([$instance, $action])) {
             // 执行操作方法
             $call = [$instance, $action];
         } elseif (is_callable([$instance, '_empty'])) {
             // 空操作
             $call = [$instance, '_empty'];
+            $vars = [$actionName];
         } else {
             // 操作不存在
             throw new HttpException(404, 'method not exists:' . get_class($instance) . '->' . $action . '()');
@@ -390,9 +398,7 @@ class App
 
         Hook::listen('action_begin', $call);
 
-        $data = self::invokeMethod($call);
-
-        return $data;
+        return self::invokeMethod($call, $vars);
     }
 
     /**
@@ -444,9 +450,9 @@ class App
             // 监听app_init
             Hook::listen('app_init');
 
-            self::$init = $config;
+            self::$init = true;
         }
-        return self::$init;
+        return Config::get();
     }
 
     /**

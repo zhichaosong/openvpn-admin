@@ -69,6 +69,8 @@ class Route
     private static $domainRule;
     // 当前域名
     private static $domain;
+    // 当前路由执行过程中的参数
+    private static $option = [];
 
     /**
      * 注册变量规则
@@ -127,7 +129,7 @@ class Route
      * 设置路由绑定
      * @access public
      * @param mixed     $bind 绑定信息
-     * @param string    $type 绑定类型 默认为module 支持 namespace class
+     * @param string    $type 绑定类型 默认为module 支持 namespace class controller
      * @return mixed
      */
     public static function bind($bind, $type = 'module')
@@ -149,7 +151,7 @@ class Route
         } elseif ('' === $name) {
             return self::$rules['name'];
         } elseif (!is_null($value)) {
-            self::$rules['name'][$name][] = $value;
+            self::$rules['name'][strtolower($name)][] = $value;
         } else {
             $name = strtolower($name);
             return isset(self::$rules['name'][$name]) ? self::$rules['name'][$name] : null;
@@ -302,13 +304,13 @@ class Route
             $rule                     = substr($rule, 0, -1);
         }
 
-        if ('/' != $rule) {
+        if ('/' != $rule || $group) {
             $rule = trim($rule, '/');
         }
         $vars = self::parseVar($rule);
         if (isset($name)) {
-            $key = $group ? $group . '/' . $rule : $rule;
-            self::name(strtolower($name), [$key, $vars, self::$domain]);
+            $key = $group ? $group . ($rule ? '/' . $rule : '') : $rule;
+            self::name($name, [$key, $vars, self::$domain]);
         }
         if ($group) {
             if ('*' != $type) {
@@ -339,6 +341,27 @@ class Route
                 }
             }
         }
+    }
+
+    /**
+     * 设置当前执行的参数信息
+     * @access public
+     * @param array    $options 参数信息
+     * @return mixed
+     */
+    protected static function setOption($options = [])
+    {
+        self::$option[] = $options;
+    }
+
+    /**
+     * 获取当前执行的所有参数信息
+     * @access public
+     * @return array
+     */
+    public static function getOption()
+    {
+        return self::$option;
     }
 
     /**
@@ -425,10 +448,11 @@ class Route
                         $options['complete_match'] = true;
                         $key                       = substr($key, 0, -1);
                     }
+                    $key    = trim($key, '/');
                     $vars   = self::parseVar($key);
                     $item[] = ['rule' => $key, 'route' => $route, 'var' => $vars, 'option' => $options, 'pattern' => $patterns];
                     // 设置路由标识
-                    self::name($route, [$name . '/' . $key, $vars, self::$domain]);
+                    self::name($route, [$name . ($key ? '/' . $key : ''), $vars, self::$domain]);
                 }
                 self::$rules['*'][$name] = ['rule' => $item, 'route' => '', 'var' => [], 'option' => $option, 'pattern' => $pattern];
             }
@@ -578,7 +602,8 @@ class Route
                 } elseif (strpos($val[1], ':id') && isset($option['var'][$rule])) {
                     $val[1] = str_replace(':id', ':' . $option['var'][$rule], $val[1]);
                 }
-                $item = ltrim($rule . $val[1], '/');
+                $item           = ltrim($rule . $val[1], '/');
+                $option['rest'] = $key;
                 self::rule($item . '$', $route . '/' . $val[2], $val[0], $option, $pattern);
             }
         }
@@ -637,7 +662,7 @@ class Route
      * rest方法定义和修改
      * @access public
      * @param string    $name 方法名称
-     * @param array     $resourece 资源
+     * @param array     $resource 资源
      * @return void
      */
     public static function rest($name, $resource = [])
@@ -745,6 +770,10 @@ class Route
                 }
             }
             if (!empty($item)) {
+                if (isset($panDomain)) {
+                    // 保存当前泛域名
+                    $request->route(['__domain__' => $panDomain]);
+                }
                 if (isset($item['[bind]'])) {
                     // 解析子域名部署规则
                     list($rule, $option, $pattern) = $item['[bind]'];
@@ -833,6 +862,7 @@ class Route
                 $rule = self::getRouteExpress($item);
             }
             if (!empty($rule['route']) && self::checkOption($rule['option'], $request)) {
+                self::setOption($rule['option']);
                 return self::parseRule($item, $rule['route'], $url, $rule['option']);
             }
         }
@@ -896,7 +926,7 @@ class Route
                 if (is_string($str) && $str && 0 !== strpos(str_replace('|', '/', $url), $str)) {
                     continue;
                 }
-
+                self::setOption($option);
                 $result = self::checkRoute($request, $rule, $url, $depr, $key, $option);
                 if (false !== $result) {
                     return $result;
@@ -911,6 +941,8 @@ class Route
                 if ($group) {
                     $rule = $group . ($rule ? '/' . ltrim($rule, '/') : '');
                 }
+
+                self::setOption($option);
                 if (isset($options['bind_model']) && isset($option['bind_model'])) {
                     $option['bind_model'] = array_merge($options['bind_model'], $option['bind_model']);
                 }
@@ -997,6 +1029,9 @@ class Route
                 case 'class':
                     // 绑定到类
                     return self::bindToClass($url, $bind, $depr);
+                case 'controller':
+                    // 绑定到控制器类
+                    return self::bindToController($url, $bind, $depr);
                 case 'namespace':
                     // 绑定到命名空间
                     return self::bindToNamespace($url, $bind, $depr);
@@ -1041,7 +1076,7 @@ class Route
         if (!empty($array[2])) {
             self::parseUrlParams($array[2]);
         }
-        return ['type' => 'method', 'method' => [$namespace . '\\' . $class, $method]];
+        return ['type' => 'method', 'method' => [$namespace . '\\' . Loader::parseName($class, 1), $method]];
     }
 
     /**
@@ -1091,14 +1126,16 @@ class Route
      */
     private static function checkOption($option, $request)
     {
-        // 请求类型检测
         if ((isset($option['method']) && is_string($option['method']) && false === stripos($option['method'], $request->method()))
-            || (!empty($option['ajax']) && !$request->isAjax()) // Ajax检测
-             || (!empty($option['pjax']) && !$request->isPjax()) // Pjax检测
+            || (isset($option['ajax']) && $option['ajax'] && !$request->isAjax()) // Ajax检测
+             || (isset($option['ajax']) && !$option['ajax'] && $request->isAjax()) // 非Ajax检测
+             || (isset($option['pjax']) && $option['pjax'] && !$request->isPjax()) // Pjax检测
+             || (isset($option['pjax']) && !$option['pjax'] && $request->isPjax()) // 非Pjax检测
              || (isset($option['ext']) && false === stripos($option['ext'], $request->ext())) // 伪静态后缀检测
              || (isset($option['deny_ext']) && false !== stripos($option['deny_ext'], $request->ext()))
             || (isset($option['domain']) && !in_array($option['domain'], [$_SERVER['HTTP_HOST'], self::$subDomain])) // 域名检测
-             || (!empty($option['https']) && !$request->isSsl()) // https检测
+             || (isset($option['https']) && $option['https'] && !$request->isSsl()) // https检测
+             || (isset($option['https']) && !$option['https'] && $request->isSsl()) // https检测
              || (!empty($option['before_behavior']) && false === Hook::exec($option['before_behavior'])) // 行为检测
              || (!empty($option['callback']) && is_callable($option['callback']) && false === call_user_func($option['callback'])) // 自定义检测
         ) {
@@ -1184,11 +1221,13 @@ class Route
                 $find   = false;
                 foreach ($path as $val) {
                     $item[] = $val;
-                    if (is_file($dir . DS . str_replace('.', DS, $val) . $suffix . EXT)) {
+                    $file   = $dir . DS . str_replace('.', DS, $val) . $suffix . EXT;
+                    $file   = pathinfo($file, PATHINFO_DIRNAME) . DS . Loader::parseName(pathinfo($file, PATHINFO_FILENAME), 1) . EXT;
+                    if (is_file($file)) {
                         $find = true;
                         break;
                     } else {
-                        $dir .= DS . $val;
+                        $dir .= DS . Loader::parseName($val);
                     }
                 }
                 if ($find) {
@@ -1370,7 +1409,6 @@ class Route
             foreach ($matches as $key => $val) {
                 if (false !== strpos($route, ':' . $key)) {
                     $route = str_replace(':' . $key, $val, $route);
-                    unset($matches[$key]);
                 }
             }
         }
@@ -1446,23 +1484,30 @@ class Route
             $result = ['type' => 'redirect', 'url' => $route, 'status' => isset($option['status']) ? $option['status'] : 301];
         } elseif (false !== strpos($route, '\\')) {
             // 路由到方法
-            $route  = str_replace('/', '@', $route);
-            $method = strpos($route, '@') ? explode('@', $route) : $route;
-            $result = ['type' => 'method', 'method' => $method];
+            list($path, $var) = self::parseUrlPath($route);
+            $route            = str_replace('/', '@', implode('/', $path));
+            $method           = strpos($route, '@') ? explode('@', $route) : $route;
+            $result           = ['type' => 'method', 'method' => $method, 'var' => $var];
         } elseif (0 === strpos($route, '@')) {
             // 路由到控制器
-            $result = ['type' => 'controller', 'controller' => substr($route, 1)];
+            $route             = substr($route, 1);
+            list($route, $var) = self::parseUrlPath($route);
+            $result            = ['type' => 'controller', 'controller' => implode('/', $route), 'var' => $var];
+            $request->action(array_pop($route));
+            $request->controller($route ? array_pop($route) : Config::get('default_controller'));
+            $request->module($route ? array_pop($route) : Config::get('default_module'));
+            App::$modulePath = APP_PATH . (Config::get('app_multi_module') ? $request->module() . DS : '');
         } else {
             // 路由到模块/控制器/操作
             $result = self::parseModule($route);
         }
         // 开启请求缓存
-        if ($request->isGet() && !empty($option['cache'])) {
+        if ($request->isGet() && isset($option['cache'])) {
             $cache = $option['cache'];
             if (is_array($cache)) {
                 list($key, $expire) = $cache;
             } else {
-                $key    = $pathinfo;
+                $key    = str_replace('|', '/', $pathinfo);
                 $expire = $cache;
             }
             $request->cache($key, $expire);

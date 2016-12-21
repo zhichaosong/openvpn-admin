@@ -265,40 +265,6 @@
             padding: 12px 0;
             border-top: 1px solid #eee;
         }
-        .btn{
-            display: inline-block;
-            padding: 6px 12px;
-            margin-bottom: 0;
-            font-size: 14px;
-            font-weight: 400;
-            line-height: 1.42857143;
-            text-align: center;
-            white-space: nowrap;
-            vertical-align: middle;
-            -ms-touch-action: manipulation;
-            touch-action: manipulation;
-            cursor: pointer;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            background-image: none;
-            border: 1px solid transparent;
-            border-radius: 4px;
-            color: #fff;
-        }
-        .btn-danger{
-            background-image: -webkit-linear-gradient(top,#d9534f 0,#c12e2a 100%);
-            background-image: -o-linear-gradient(top,#d9534f 0,#c12e2a 100%);
-            background-image: -webkit-gradient(linear,left top,left bottom,from(#d9534f),to(#c12e2a));
-            background-image: linear-gradient(to bottom,#d9534f 0,#c12e2a 100%);
-            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffd9534f', endColorstr='#ffc12e2a', GradientType=0);
-            filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
-            background-repeat: repeat-x;
-            border-color: #b92c28;
-        }
-
-
 
         /* SPAN elements with the classes below are added by prettyprint. */
         pre.prettyprint .pln { color: #000 }  /* plain text */
@@ -443,9 +409,11 @@
     </div>
     <?php } ?>
 
-
-<p><input type="button" class="btn btn-danger" value="返回" onclick="window.history.back()"></p>
- 
+    <div class="copyright">
+        <a title="官方网站" href="http://www.thinkphp.cn">ThinkPHP</a> 
+        <span>V<?php echo THINK_VERSION; ?></span> 
+        <span>{ 十年磨一剑-为API开发设计的高性能框架 }</span>
+    </div>
     <?php if(\think\App::$debug) { ?>
     <script>
         var LINE = <?php echo $line; ?>;

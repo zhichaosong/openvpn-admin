@@ -12,6 +12,7 @@
 namespace think;
 
 use think\exception\TemplateNotFoundException;
+use think\Request;
 
 /**
  * ThinkPHP分离出来的模板引擎
@@ -25,6 +26,7 @@ class Template
     // 引擎配置
     protected $config = [
         'view_path'          => '', // 模板路径
+        'view_base'          => '',
         'view_suffix'        => 'html', // 默认模板文件后缀
         'view_depr'          => DS,
         'cache_suffix'       => 'php', // 默认模板缓存后缀
@@ -1061,14 +1063,20 @@ class Template
     {
         if ('' == pathinfo($template, PATHINFO_EXTENSION)) {
             if (strpos($template, '@')) {
-                // 跨模块调用模板
-                $template = str_replace(['/', ':'], $this->config['view_depr'], $template);
-                $template = APP_PATH . str_replace('@', '/' . basename($this->config['view_path']) . '/', $template);
-            } else {
-                $template = str_replace(['/', ':'], $this->config['view_depr'], $template);
-                $template = $this->config['view_path'] . $template;
+                list($module, $template) = explode('@', $template);
             }
-            $template .= '.' . ltrim($this->config['view_suffix'], '.');
+            if (0 !== strpos($template, '/')) {
+                $template = str_replace(['/', ':'], $this->config['view_depr'], $template);
+            } else {
+                $template = str_replace(['/', ':'], $this->config['view_depr'], substr($template, 1));
+            }
+            if ($this->config['view_base']) {
+                $module = isset($module) ? $module : Request::instance()->module();
+                $path   = $this->config['view_base'] . ($module ? $module . DS : '');
+            } else {
+                $path = isset($module) ? APP_PATH . $module . DS . basename($this->config['view_path']) . DS : $this->config['view_path'];
+            }
+            $template = $path . $template . '.' . ltrim($this->config['view_suffix'], '.');
         }
 
         if (is_file($template)) {
