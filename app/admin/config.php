@@ -1,5 +1,15 @@
 <?php
-	
+
+use \think\Request;
+
+$request = Request::instance();
+$base    = $request->root();
+$root    = strpos($base, '.') ? ltrim(dirname($base), DS) : $base;
+if ('' != $root) {
+    $root = '/' . ltrim($root, '/');
+}
+$static = $root . '/static';
+
 return [
     //网站名称
 	'WEBSITE_NAME'          		    =>  'Red-Team',
@@ -66,7 +76,10 @@ return [
 
     // 视图输出字符串内容替换
     'view_replace_str'       => [
-        '__ADMIN_STATIC__DOMAIN__'=>'http://tp-admin.com/',
+        '__CSS__'    => $static . '/admin/css',
+        '__JS__'     => $static . '/admin/js',
+        '__IMG__'    => $static . '/admin/images',
+        '__LIB__'    => $static . '/admin/lib'
     ],
 
     //伪静态
