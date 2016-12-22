@@ -3,7 +3,7 @@
 <html lang="zh-CN">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    {css href="/bootstrap3/css/bootstrap.css" /}
+    {css href="__ADMIN_STATIC__DOMAIN__bootstrap3/css/bootstrap.css" /}
     <title>跳转提示</title>
     <style type="text/css">
         *{ padding: 0; margin: 0; }

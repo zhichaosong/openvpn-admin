@@ -64,6 +64,11 @@ return [
         'auto_start'     => true,
     ],
 
+    // 视图输出字符串内容替换
+    'view_replace_str'       => [
+        '__ADMIN_STATIC__DOMAIN__'=>'http://tp-admin.com/',
+    ],
+
     //伪静态
     'url_html_suffix' => false,
 
