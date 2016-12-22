@@ -24,7 +24,6 @@ window.win = {
             if ($form.eq(i).data('validate') == true) {
                 return true;
             }
-
             $form.eq(i).on('submit', function() {
                 $form.eq(i).ajaxSubmit();
                 return false;

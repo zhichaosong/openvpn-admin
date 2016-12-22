@@ -77,28 +77,85 @@ $(function() {
                     $this.editRow(row);
                 }
                 $element.addClass('info').siblings().removeClass('info');
+                var btnGroup = $element.parents('.bootstrap-table').find('#toolbar').find('.btn-group')
+                btnGroup.each(function(items, index){
+                    $(index).find('button').each(function(item, ele){
+                        if ($(ele).data('name') != 'delete') { //默认delete需选中checkbox
+                            $(ele).removeClass('btn-default').addClass('btn-primary')
+                        }
+                    })
+                })
+
+                $this.$table.trigger('check', [row, $this]);
                 $this.currentRow = row;
             },
             onDblClickRow: function(item, $element) {
+                $element.addClass('info').siblings().removeClass('info');
+                var btnGroup = $element.parents('.bootstrap-table').find('#toolbar').find('.btn-group')
+                btnGroup.each(function(items, index){
+                    $(index).find('button').each(function(item, ele){
+                        if ($(ele).data('name') != 'delete') { //默认delete需选中checkbox
+                            $(ele).addClass('btn-default').removeClass('btn-primary')
+                        }
+                    })
+                })
+
                 //$table.trigger('dblClickRow', [item, $element]);
                 return false;
             },
             onSort: function(name, order) {
                 //$table.triggerHandler('sort', [name, order]);
             },
-            onCheck: function(row) {
+            onCheck: function(row, $element) {
+
+                var btnGroup = $element.parents('.bootstrap-table').find('#toolbar').find('.btn-group')
+                btnGroup.each(function(items, index){
+                    $(index).find('button').each(function(item, ele){
+                        if ($(ele).data('name') == 'delete') { 
+                            $(ele).removeClass('btn-default').addClass('btn-primary')
+                        }
+                    })
+                })
                 $this.$table.trigger('check', [row, $this]);
                 return false;
             },
-            onUncheck: function(row) {
+            onUncheck: function(row, $element) {
+                var btnGroup = $element.parents('.bootstrap-table').find('#toolbar').find('.btn-group')
+                btnGroup.each(function(items, index){
+                    $(index).find('button').each(function(item, ele){
+                        if ($(ele).data('name') == 'delete') { 
+                            $(ele).addClass('btn-default').removeClass('btn-primary')
+                        }
+                    })
+                })
+
                 $this.$table.trigger('uncheck', [row, $this]);
                 return false;
             },
-            onCheckAll: function(rows) {
+            onCheckAll: function(rows, $element) {
+                console.log($element)
+                // var btnGroup = $element[0].parents('.bootstrap-table').find('#toolbar').find('.btn-group')
+                // btnGroup.each(function(items, index){
+                //     $(index).find('button').each(function(item, ele){
+                //         if ($(ele).data('name') == 'delete') { 
+                //             $(ele).removeClass('btn-default').addClass('btn-primary')
+                //         }
+                //     })
+                // })
+
                 //$table.trigger('checkAll', [rows]);
                 return false;
             },
             onUncheckAll: function(rows) {
+                var btnGroup = $element[0].parents('.bootstrap-table').find('#toolbar').find('.btn-group')
+                btnGroup.each(function(items, index){
+                    $(index).find('button').each(function(item, ele){
+                        if ($(ele).data('name') == 'delete') { 
+                            $(ele).addClass('btn-default').removeClass('btn-primary')
+                        }
+                    })
+                })
+
                 //$table.trigger('uncheckAll', [rows]);
                 return false;
             },
