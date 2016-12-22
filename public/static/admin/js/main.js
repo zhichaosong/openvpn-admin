@@ -207,7 +207,7 @@ window.win = {
             return;
         }
         if (typeof $.fn.validate == 'undefined') {
-            this.getScript('/js/admin/jquery.validate.min.js', function() {
+            this.getScript('/static/admin/js/jquery.validate.min.js', function() {
                 win.validate($form);
             });
             return;
@@ -262,8 +262,8 @@ window.win = {
 
         if (typeof $.fn.bootstrapTable != 'function') {
             var $win = this;
-            this.getStyle('/css/admin/bootstrap-table.css');
-            this.getScript('/js/admin/bootstrap-table.js', function() {
+            this.getStyle('/static/admin/css/bootstrap-table.css');
+            this.getScript('/static/admin/js/bootstrap-table.js', function() {
                 $win.bootstrapTable($table);
             });
             return;
