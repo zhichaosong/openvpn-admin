@@ -1,7 +1,6 @@
 <?php
 namespace app\admin\controller;
 
-use app\common\controller\AdminBase;
 use think\Db;
 use think\Loader;
 
@@ -12,12 +11,12 @@ use think\Loader;
 * @author aierui github  https://github.com/Aierui
 * @version 1.0 
 */
-class Subject extends AdminBase
+class Subject extends Admin
 {	
 	private $comment;
-	function __construct()
+	function _initialize()
 	{
-		parent::__construct();
+		parent::_initialize();
 		$this->comment = Db::table('test_comments');
 	}
 

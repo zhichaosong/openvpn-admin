@@ -1,7 +1,6 @@
 <?php
 namespace app\admin\controller;
 
-use app\common\controller\AdminBase;
 use think\Db;
 use think\Config;
 use think\Cache;
@@ -14,13 +13,13 @@ use think\Loader;
 * @author aierui github  https://github.com/Aierui
 * @version 1.0 
 */
-class Menu extends AdminBase
+class Menu extends Admin
 {
     private $menu;    
     private $node;    
-    function __construct()
+    function _initialize()
     {
-        parent::__construct();
+        parent::_initialize();
         $this->menu = Db::name('bs_menu');
         $this->node = 'bs_node';
     }

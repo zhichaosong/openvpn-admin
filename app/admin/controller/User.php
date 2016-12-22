@@ -1,7 +1,6 @@
 <?php
 namespace app\admin\controller;
 
-use app\common\controller\AdminBase;
 use think\Session;
 use think\Request;
 use think\Loader;
@@ -13,12 +12,12 @@ use think\Config;
 * @author aierui github  https://github.com/Aierui
 * @version 1.0 
 */
-class User extends AdminBase
+class User extends Admin
 {
     private $users;
-    function __construct()
+    function _initialize()
     {
-        parent::__construct();
+        parent::_initialize();
         $this->users = Db::table('users');
     }
 

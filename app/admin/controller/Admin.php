@@ -1,6 +1,7 @@
 <?php
-namespace app\common\controller;
+namespace app\admin\controller;
 
+use app\common\controller\Common;
 use think\Controller;
 use think\Session;
 use think\Request;
@@ -8,22 +9,21 @@ use think\Url;
 use think\Config;
 use app\common\tools;
 
-// use 引入的类文件需要首字母大写
 
 /**
-* 基础类
+* 后台基础类
 * @author aierui github  https://github.com/Aierui
+ *
 * @version 1.0 
 */
-class AdminBase extends Controller
+class Admin extends Common
 {
 	protected $request;
 	private $module_name;
 
-	function __construct()
+	function _initialize()
 	{
-		parent::__construct();
-
+		parent::_initialize();
 		//验证权限
 		$auth = new tools\Auth();
 		$request = Request::instance();
@@ -79,29 +79,5 @@ class AdminBase extends Controller
 		$redirect = '/admin/login/'; 
 		$this->redirect(Url::build($redirect));
 	}
-
-
-		/**
-		 * 取消模板布局
-		 */
-	// protected function fetch($template = '', $vars = [], $replace = [], $config = [])
-	// {
-	// 	if (request()->isPost() || request()->isAjax()) {
-	// 		// Config::set('layout_on',false);
-	// 		// config(['layout_on'] => false);
-	// 		// {__NOLAYOUT__}
-	// 	}
-	// 	// var_dump(321);die;
-	// 	parent::fetch($template, $vars, $replace, $config);
-	// 	exit();
-	// }
-
-
-
-
-
-
-
-
 }
 

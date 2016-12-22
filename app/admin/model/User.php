@@ -5,7 +5,6 @@ use think\Db;
 use think\Loader;
 use think\Model;
 use think\Session;
-use think\Config;
 
 class User extends Model
 {

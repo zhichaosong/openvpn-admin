@@ -1,7 +1,6 @@
 <?php
 namespace app\admin\controller;
 
-use app\common\controller\AdminBase;
 use think\Db;
 use think\Config;
 use think\Cache;
@@ -11,14 +10,8 @@ use think\View;
 /**
 * 
 */
-class Test extends AdminBase
+class Test extends Admin
 {
-	function __construct()
-	{
-		parent::__construct();
-
-	}
-
 	public function index()
 	{
 

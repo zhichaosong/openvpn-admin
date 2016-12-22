@@ -1,7 +1,6 @@
 <?php
 namespace app\admin\controller;
 
-use app\common\controller\AdminBase;
 use think\Session;
 use think\Request;
 use think\Loader;
@@ -12,12 +11,12 @@ use think\Db;
 * @author aierui github  https://github.com/Aierui
 * @version 1.0 
 */
-class Role extends AdminBase
+class Role extends Admin
 {
     private $role;
-    function __construct()
+    function _initialize()
     {
-        parent::__construct();
+        parent::_initialize();
         $this->role = Db::table('bs_role');
     }
 
