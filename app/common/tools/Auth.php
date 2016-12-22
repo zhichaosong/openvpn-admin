@@ -27,6 +27,7 @@ class Auth
      * @param $uid 认证的用户id
      * @param string $relation 是否为or关系，为true是， name为数组，只要数组中有一个条件通过则通过，如果为false需要全部条件通过
      * @return bool
+     * name元素中的字符串需要对大小写保持一致，避免验证 或者添加 strtolower() 函数不区分大小写 为保证数据格式一致，建议转为小（大）写
      */
     public function check($name, $uid, $relation='or')
     {

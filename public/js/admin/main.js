@@ -3,41 +3,10 @@
  * @author aierui github  https://github.com/Aierui
  * @version 1.0
  */
-
-
-/*左侧菜单*/
-
-$(function() {
+ 
+$(function(){
     win.start();
-    $(document).ready(function() {
-        $('.admin-menu-parent').find('.admin-menu-dropdown-toggle').click(function() {
-            var $this = $(this)
-            var menuList = $this.parent().parent();
-
-            menuList.find('.admin-menu-parent').each(function(index, value) {
-                var exists = $(this).find('botton').hasClass('admin-menu-botton')
-                if (exists) {
-                    $(this).find('botton').removeClass('admin-menu-botton')
-                }
-            })
-
-            $this.find('.toggle-angle').toggleClass('active')
-            $this.addClass('admin-menu-botton')
-            $this.siblings('ul').slideToggle('slow')
-        });
-
-        //菜单选中样式
-        $('.sub_button').each(function() {
-            var href = $(this).find('a').attr('href')
-            var loc = String(window.location.pathname)
-            if (href == loc) {
-                // $(this).parent().siblings('botton').addClass('admin-menu-botton')
-                $(this).addClass('menu-active')
-            }
-        })
-    });
-});
-
+})
 
 // 常用函数封装
 window.win = {
@@ -404,7 +373,7 @@ $.fn.ajaxSubmit = function() {
 
 //** 弹出提示信息 **//
 function alertMsg(content, time) {
-    var option = { title: false, content: '', time: 3, status: 'info' };
+    var option = { title: false, content: '', time: 1.5, status: 'info' };
     if (typeof content == 'object') {
         option = $.extend(option, content);
     } else if (typeof content == "string") {
