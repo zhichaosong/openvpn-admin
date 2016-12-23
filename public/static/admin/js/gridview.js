@@ -76,7 +76,9 @@ $(function() {
                 if (result !== false && $this.enabledEdit) {
                     $this.editRow(row);
                 }
+
                 $element.addClass('info').siblings().removeClass('info');
+                
                 var btnGroup = $element.parents('.bootstrap-table:eq(0)').find('#toolbar').find('.btn-group')
                 btnGroup.each(function(items, index){
                     $(index).find('button').each(function(item, ele){
@@ -200,7 +202,6 @@ $(function() {
                 return false;
             },
             onRefreshOptions: function() {
-                alert();
             }
         });
 
