@@ -284,7 +284,7 @@ $(function() {
                 text: this.innerText
             };
 
-            //事件类型 1. 自定义 2.视图(modal、self、_blank)3.默认(modal、self)4.脚本
+            //事件类型 1. 自定义 2.视图(modal、self、_blank)3.默认(alertConfirm函数)4.脚本
             if (params.event_type == 'custom') { // 自定义事件
                 return $this.$table.triggerHandler(eventName, [$this, params]);
             } else if (params.event_type == 'view') { //视图
