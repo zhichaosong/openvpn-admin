@@ -31,8 +31,8 @@ class User extends Admin
             $data = request()->param();
             
             $userModel = Loader::model('User');
-            $index = $userModel->index($data);
-            return $index;
+            //$index = $userModel->index($data);
+            //return $index;
         }
         return view();
     }
@@ -41,15 +41,14 @@ class User extends Admin
      * 添加
      */
     public function add()
-    {   
+    {
         if( request()->isPost() ){
-            $data = request()->param();
-            
+            $data = input('post.');
             $userModel = Loader::model('User');
             $add = $userModel->add($data);
             return $add;
         }
-        return $this->fetch('edit');
+        return $this->fetch('add');
     }
 
     /**
