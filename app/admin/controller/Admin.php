@@ -6,7 +6,6 @@ use think\Controller;
 use think\Session;
 use think\Request;
 use think\Url;
-use think\Config;
 use app\common\tools;
 
 
@@ -18,59 +17,22 @@ use app\common\tools;
 */
 class Admin extends Common
 {
-	protected $request;
-	private $module_name;
-
 	function _initialize()
 	{
 		parent::_initialize();
+		//判断是否已经登录
+		$userRow = Session::get('userinfo', 'admin');
+		if( empty($userRow) ) {
+			$this->error('Please login first', url('admin/Login/index'));
+		}
 		//验证权限
 		$auth = new tools\Auth();
 		$request = Request::instance();
 		$rule_name=$request->module().'/'.$request->controller().'/'.$request->action();
-		$userRow = Session::get(Config::get('USER_AUTH_KEY'), 'admin');
-		$uid = isset($userRow['id']) ? $userRow['id'] : 0;
-		if(!$auth->check($rule_name, $uid)) {
-			//die('无权限');
+		$uid = $userRow['id'];
+		if($userRow['administrator']!=1 && !$auth->check($uid, $rule_name)) {
+			$this->error(lang('Without the permissions page'));
 		}
-		$this->request = Request::instance();
-		$this->module_name = Request::instance()->module();
-
-		if($this->module_name == "admin"){
-			$this->checkAccess();
-		}	
-	 	//获取session
-	 	$userId = Session::get(config('USER_AUTH_KEY').'.id','admin');
-	 	if(is_null($userId)){
-	 		$this->goLogin();
-	 	}
-	}
-
-
-	public function checkAccess()
-	{
-
-
-		$uid = $this->key();
-
-		if(is_null($uid)){
-			$this->goLogin();
-			return false;
-		}
-		
-	}
-
-	public function key()
-	{
-		$user = Session::get(config('USER_AUTH_KEY'),'admin');
-		if(is_null($user)){
-			$this->goLogin();
-		}
-		if(empty($user)){
-			$this->goLogin();
-		}
-		$user = reset($user);
-		return $user;
 	}
 
 	public function goLogin()

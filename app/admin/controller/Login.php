@@ -29,26 +29,17 @@ class Login extends Common
 	 */
 	public function doLogin()
 	{
-		$request = Request::instance();
-
-		if($request->isAjax()){
-			$data = $request->param();
-			$result = $this->validate($data,'User.login');
-			
-			if($result != true){
-				return ['status' => 0, 'data' => $result];
-			}
-			$userModel = Loader::model('User');
-			$userRow = $userModel->login($data);
-
-			if ($userRow === false) {
-                return $this->error($userModel->getError());
-            }
-			Session::set(Config::get('USER_AUTH_KEY'), $userRow, 'admin');
-            return $this->success('登录成功', Url::build('/admin/subject'));
-		}else{
-			return $this->fetch();
+		if( !Request::instance()->isAjax() ) {
+			return $this->success( lang('Request type error') );
 		}
+
+		$loginData = input('post.');
+		$ret = Loader::model('User')->login( $loginData );
+		if ($ret['code'] !== 1) {
+			return $this->error( $ret['msg'] );
+		}
+		Session::set('userinfo', $ret['data'], 'admin');
+		return $this->success($ret['msg'], url('admin/index/index'));
 	}
 
 	/**
@@ -60,5 +51,4 @@ class Login extends Common
 		
 		return $this->success('退出成功~');
 	}
-    
 }

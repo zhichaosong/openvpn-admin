@@ -1,7 +1,9 @@
 <?php
 namespace app\common\tools;
 
+use app\admin\model\User;
 use \think\Db;
+use think\Model;
 
 
 /**
@@ -12,14 +14,6 @@ use \think\Db;
  */
 class Auth
 {
-    //默认配置
-    protected $_config = array(
-        'AUTH_GROUP' => 'ta_auth_group', //用户组数据表名
-        'AUTH_GROUP_ACCESS' => 'ta_auth_group_access', //用户组明细表
-        'AUTH_RULE' => 'ta_auth_rule', //权限规则表
-        'AUTH_USER' => 'users'//用户信息表
-    );
-
     /**
      * 检查权限
      *
@@ -29,44 +23,13 @@ class Auth
      * @return bool
      * name元素中的字符串需要对大小写保持一致，避免验证 或者添加 strtolower() 函数不区分大小写 为保证数据格式一致，建议转为小（大）写
      */
-    public function check($name, $uid, $relation='or')
+    public function check($uid, $name)
     {
         $authList = $this->getAuthList($uid);
-        if (is_string($name)) {
-            if (strpos($name, ',') !== false) {
-                $name = explode(',', $name);
-            } else {
-                $name = array($name);
-            }
-        }
-        $list = array(); //有权限的name
-        foreach ($authList as $val) {
-            if (in_array($val, $name))
-                $list[] = $val;
-        }
-        if ($relation=='or' and !empty($list)) {
-            return true;
-        }
-        $diff = array_diff($name, $list);
-        if ($relation=='and' and empty($diff)) {
+        if (in_array($name, $authList)) {
             return true;
         }
         return false;
-    }
-
-    /**
-     * 获得用户组，外部也可以调用
-     *
-     * @param $uid
-     * @return mixed
-     */
-    public function getGroups($uid) {
-        static $groups = array();
-        if (isset($groups[$uid]))
-            return $groups[$uid];
-        $user_groups = Db::table($this->_config['AUTH_GROUP_ACCESS'])->alias('a')->where(['a.uid'=>$uid, 'g.status'=>'1'])->join($this->_config['AUTH_GROUP'].' g', 'a.group_id=g.id')->select();
-        $groups[$uid]=$user_groups?$user_groups:array();
-        return $groups[$uid];
     }
 
     /**
@@ -81,57 +44,33 @@ class Auth
         if (isset($_authList[$uid])) {
             return $_authList[$uid];
         }
-        //读取用户所属用户组
-        $groups = $this->getGroups($uid);
+        //获取所属角色的权限列表
+        $roles = $this->getRoles($uid);
         $ids = array();
-        foreach ($groups as $g) {
-            $ids = array_merge($ids, explode(',', trim($g['rules'], ',')));
+        foreach ($roles as $g) {
+            $ids = array_merge($ids, explode(',', trim($g['rule_name'], ',')));
         }
         $ids = array_unique($ids);
         if (empty($ids)) {
             $_authList[$uid] = array();
-            return array();
+        } else {
+            $_authList[$uid] = $ids;
         }
-        //读取用户组所有权限规则
-        $map=array(
-            'id'=>array('in',$ids),
-            'status'=>1
-        );
-        $rules = Db::table($this->_config['AUTH_RULE'])->where($map)->select();
-        //循环规则，判断结果。
-        $authList = array();
-        foreach ($rules as $r) {
-            if (!empty($r['condition'])) {
-                //条件验证
-                $user = $this->getUserInfo($uid);
-                $command = preg_replace('/\{(\w*?)\}/', '$user[\'\\1\']', $r['condition']);
-                //dump($command);//debug
-                @(eval('$condition=(' . $command . ');'));
-                if ($condition) {
-                    $authList[] = $r['name'];
-                }
-            } else {
-                //存在就通过
-                $authList[] = $r['name'];
-            }
-        }
-        $_authList[$uid] = $authList;
-        return $authList;
+        return $_authList[$uid];
     }
 
     /**
-     * 获得用户资料,根据自己的情况读取数据库
+     * 获得用户组，外部也可以调用
      *
      * @param $uid
      * @return mixed
      */
-    protected function getUserInfo($uid)
-    {
-        static $userinfo=array();
-        if(!isset($userinfo[$uid])){
-             $userinfo[$uid]= Db::table($this->_config['AUTH_USER'])->find($uid);
-        }
-        return $userinfo[$uid];
+    public function getRoles($uid) {
+        static $groups = array();
+        if (isset($groups[$uid]))
+            return $groups[$uid];
+        $user_groups = Db::name('role_user')->alias('a')->where(['a.user_id'=>$uid])->join('auth_access g', 'a.role_id=g.role_id')->select();
+        $groups[$uid]=$user_groups?$user_groups:array();
+        return $groups[$uid];
     }
-
 }

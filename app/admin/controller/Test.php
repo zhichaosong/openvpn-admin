@@ -24,6 +24,24 @@ class Test extends Admin
 		return view();
 	}
 
+	// 模态框
+	public function add()
+	{
+		return view();
+	}
+
+	// 本页打开 单页
+	public function addSelf()
+	{
+		return view();
+	}
+
+	// 本页打开 多页
+	public function addManyPage()
+	{
+		return view();
+	}
+
 }
 
 

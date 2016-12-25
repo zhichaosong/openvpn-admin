@@ -1,51 +1,62 @@
-{read id="111"}
-123
-{/read}
+<!-- Data Tables -->
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins" style="background: white;padding: 10px">
+                <!-- 表单标题概要 -->
+                <div class="ibox-title">
+                    <h5>Editable Table in- combination with jEditable</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li><a href="#">Config option 1</a>
+                            </li>
+                            <li><a href="#">Config option 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <!-- 表单内容 -->
+                <div class="ibox-content">
+                    <!-- 用户控件（操作） -->
+                    <div id="toolbar" class="toolbar" data-module="/admin/user">
+                        <div class="btn-group">
+                            <button type="button" data-name="add" class="btn btn-primary" data-event-type="view" data-event-value="" data-target="modal"><i class="fa fa-plus" aria-hidden="true" style="margin-right: 2px"> </i>添加</button>
 
-<!-- 表格 -->
-<table id="table" data-toggle="gridview" class="table table-striped" data-url="/{$Request.module}/{$Request.controller}"  data-toolbar="#toolbar"   data-show-columns="true" data-page-size="10" data-page-list="[10, 25, 50, All]"  data-search="true"  data-show-export="true" data-side-pagination="client" >
-    <thead>
-		<tr>
-			<th data-width="10" data-checkbox="true"></th>
-			<th data-width="60" data-field="username">姓名</th>
-			<th data-width="100" data-field="mobile">手机号码</th>
-			<th data-width="100" data-field="role_name">角色名称</th>
-			<th data-width="30" data-field="status" data-formatter="format_status">状态</th>
-			<th data-width="60" data-field="create_time">创建时间</th>
-		</tr>
-	</thead>
-</table>
+                            <button type="button" data-name="addSelf" class="btn btn-primary" data-event-type="view" data-event-value="" data-target="self"><i class="fa fa-plus" aria-hidden="true" style="margin-right: 2px"> </i>添加</button>
 
-<script type="text/javascript">
-	function format_status(status,row,index) {
-		// if(status != null && status != ""){
-			if(status == 1){
-				return '显示'
-			}else if(status == 2){
-				return '隐藏'
-			}else if(status == 0){
-				return '禁用'
-			}
-		// }
-	}
-
-	$(function(){
-		$("#table").on('auth',function(e, gridview, params){
-			if(gridview.currentRow == null){
-				alertMsg("请先选择授权的用户！")
-				return false;
-			}
-			params.data.id = gridview.currentRow.id
-		}).on('password',function(e, gridview, params){
-			if(gridview.currentRow == null){
-				alertMsg("请先选择用户！")
-				return false;
-			}
-			params.data.id = gridview.currentRow.id
-		})
-	})
-</script>
+                            <button type="button" data-name="addManyPage" class="btn btn-primary" data-event-type="view" data-event-value="" data-target="self"><i class="fa fa-plus" aria-hidden="true" style="margin-right: 2px"> </i>添加</button>
 
 
-
-
+                            <button type="button" data-name="edit" class="btn btn-default" data-event-type="view" data-event-value="" data-target="modal"><i class="fa fa-edit" aria-hidden="true" style="margin-right: 2px"> </i>编辑</button>
+                            <button type="button" data-name="delete" class="btn btn-default" data-event-type="default" data-event-value="" data-target="modal"><i class="fa fa-edit" aria-hidden="true" style="margin-right: 2px"> </i>删除</button>
+                        </div>
+                        <div class="btn-group">
+                            <button type="button" data-name="auth" class="btn btn-default" data-event-type="view" data-event-value="" data-target="modal"><i class="fa fa-hand-lizard-o" aria-hidden="true"> </i>授权</button>
+                            <button type="button" data-name="password" class="btn btn-default" data-event-type="view" data-event-value="" data-target="modal"><i class="fa fa-undo" aria-hidden="true"> </i>修改密码</button>
+                        </div>
+                    </div>
+                    <!-- 表格数据 -->
+                    <table id="table" data-toggle="gridview" class="table" data-url="/admin/subject" data-toolbar="#toolbar" data-show-columns="true" data-page-size="10" data-page-list="[10, 25, 50, All]" data-unique-id="id" data-pagination="true" data-side-pagination="client" data-search="true">
+                        <thead>
+                            <tr>
+                                <th data-width="10" data-align="center" data-checkbox="true"></th>
+                                <th data-field="name">称呼</th>
+                                <th data-field="content">留言内容</th>
+                                <th data-field="create_time">时间</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

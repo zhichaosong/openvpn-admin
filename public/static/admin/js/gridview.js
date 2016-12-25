@@ -76,29 +76,77 @@ $(function() {
                 if (result !== false && $this.enabledEdit) {
                     $this.editRow(row);
                 }
+
                 $element.addClass('info').siblings().removeClass('info');
+                
+                var btnGroup = $element.parents('.bootstrap-table:eq(0)').find('#toolbar').find('.btn-group')
+                btnGroup.each(function(items, index){
+                    $(index).find('button').each(function(item, ele){
+                        if ($(ele).data('name') != 'delete') { //默认delete需选中checkbox
+                            $(ele).removeAttr('disabled').removeClass('btn-default').addClass('btn-primary')
+                        }
+                    })
+                })
+
+                $this.$table.trigger('check', [row, $this]);
                 $this.currentRow = row;
             },
-            onDblClickRow: function(item, $element) {
+            onDblClickRow: function(item, $element) {//双击
                 //$table.trigger('dblClickRow', [item, $element]);
                 return false;
             },
             onSort: function(name, order) {
                 //$table.triggerHandler('sort', [name, order]);
             },
-            onCheck: function(row) {
+            onCheck: function(row, $element) {
+
+                var btnGroup = $element.parents('.bootstrap-table:eq(0)').find('#toolbar').find('.btn-group')
+                btnGroup.each(function(items, index){
+                    $(index).find('button').each(function(item, ele){
+                        if ($(ele).data('name') == 'delete') { 
+                            $(ele).removeAttr('disabled').removeClass('btn-default').addClass('btn-primary')
+                        }
+                    })
+                })
                 $this.$table.trigger('check', [row, $this]);
                 return false;
             },
-            onUncheck: function(row) {
+            onUncheck: function(row, $element) {
+                var btnGroup = $element.parents('.bootstrap-table:eq(0)').find('#toolbar').find('.btn-group')
+                btnGroup.each(function(items, index){
+                    $(index).find('button').each(function(item, ele){
+                        if ($(ele).data('name') == 'delete') { 
+                            $(ele).attr('disabled', true).addClass('btn-default').removeClass('btn-primary')
+                        }
+                    })
+                })
+
                 $this.$table.trigger('uncheck', [row, $this]);
                 return false;
             },
             onCheckAll: function(rows) {
+                
+                var btnGroup = $('body').find('.bootstrap-table:eq(0)').find('#toolbar').find('.btn-group')
+                btnGroup.each(function(items, index){
+                    $(index).find('button').each(function(item, ele){
+                        if ($(ele).data('name') == 'delete') { 
+                            $(ele).removeAttr('disabled').removeClass('btn-default').addClass('btn-primary')
+                        }
+                    })
+                })
                 //$table.trigger('checkAll', [rows]);
                 return false;
             },
             onUncheckAll: function(rows) {
+                var btnGroup = $('body').find('.bootstrap-table:eq(0)').find('#toolbar').find('.btn-group')
+                btnGroup.each(function(items, index){
+                    $(index).find('button').each(function(item, ele){
+                        if ($(ele).data('name') == 'delete') { 
+                            $(ele).attr('disabled', true).addClass('btn-default').removeClass('btn-primary')
+                        }
+                    })
+                })
+
                 //$table.trigger('uncheckAll', [rows]);
                 return false;
             },
@@ -154,7 +202,6 @@ $(function() {
                 return false;
             },
             onRefreshOptions: function() {
-                alert();
             }
         });
 
@@ -237,7 +284,7 @@ $(function() {
                 text: this.innerText
             };
 
-            //事件类型 1. 自定义 2.视图(modal、self、_blank)3.默认(modal、self)4.脚本
+            //事件类型 1. 自定义 2.视图(modal、self、_blank)3.默认(alertConfirm函数)4.脚本
             if (params.event_type == 'custom') { // 自定义事件
                 return $this.$table.triggerHandler(eventName, [$this, params]);
             } else if (params.event_type == 'view') { //视图

@@ -35,16 +35,16 @@
             </p>
             <p>Login in. To see it in action.</p>
 
-            <form class="m-t" role="form" onsubmit="return doLogin()" id="login-form-hooks">
+            <form class="m-t" role="form" id="login-form-hooks">
             	<div class="msgerr" style="color: #e15f63;text-align: left;"></div>
                 <div class="form-group">
-                    <input type="mobile" id="mobile" class="form-control" placeholder="Mobile" maxlength="11" value="13330613321" required="">
+                    <input id="username" name="username" class="form-control" placeholder="Username" maxlength="11" value="" required="">
                 </div>
                 <div class="form-group">
-                    <input type="password" id="password" class="form-control" placeholder="Password" maxlength="16" value="123" required="">
+                    <input id="password" name="password" type="password"  class="form-control" placeholder="Password" maxlength="16" value="123" required="">
                 </div>
 
-                <button type="submit" class="btn btn-primary block full-width m-b" data-loading-text="loading···" data-complete-text="success">Login</button>
+                <button id="sub-login" type="button" class="btn btn-primary block full-width m-b" data-loading-text="loading···" data-complete-text="success">Login</button>
 
                 <a href="#"><small>Forgot password?</small></a>
                 <p class="text-muted text-center"><small>Do not have an account?</small></p>
@@ -66,13 +66,20 @@
 		}
 	})
 
-	// $("#login-form-hooks").validate({
-	// 	errorPlacement: function(error, element) {  
-	// 	    error.appendTo(element.parent().find(".msgerr"));  
-	// 	}	
-	// })
 
-	function doLogin() {
+
+	$('#sub-login').on('click', function(){
+		$.post('{:url("/admin/login/doLogin")}', $('#login-form-hooks').serialize(), function(o){
+			if(o.code == 1) {
+				window.location.href = o.url;
+			} else {
+				$(".msgerr").html(o.msg);
+			}
+		}, 'json');
+	})
+
+
+	/*function doLogin() {
 		var data = {};
 		var msgerr = $(".msgerr")
 		var $btn = $("button")
@@ -101,7 +108,7 @@
 			})
 		})
 		return false;
-	}
+	}*/
 </script>
 </body>
 </html>

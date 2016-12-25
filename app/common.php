@@ -61,5 +61,8 @@ function replaceToStar($str)
     return substr_replace($str, str_repeat('*', $len), floor(($len) / 2), $len);
 }
 
-
-
+function mduser( $str )
+{
+    $user_auth_key = \think\Config::get('user_auth_key');
+    return md5(md5($user_auth_key).$str);
+}

@@ -134,7 +134,7 @@ return [
 
     // 视图输出字符串内容替换
     'view_replace_str'       => [
-        '__STATIC__DOMAIN__'=>'http://tp-admin.com/',
+        '__STATIC__DOMAIN__'=>STATIC_PATH,
     ],
     // 默认跳转页面对应的模板文件
     'dispatch_success_tmpl'  => THINK_PATH . 'tpl' . DS . 'dispatch_jump.tpl',
@@ -232,4 +232,7 @@ return [
         'var_page'  => 'page',
         'list_rows' => 15,
     ],
+
+    //写安装程序的时候随即生成
+    'user_auth_key' => '1234',
 ];

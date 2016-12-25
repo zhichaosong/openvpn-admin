@@ -135,6 +135,7 @@ class Role extends Admin
 
         $menu = json_encode($menu, JSON_UNESCAPED_UNICODE);
         $this->assign(['list' => $menu, 'role_id' => $role_id]);
+        
         return $this->fetch();
     }
 
