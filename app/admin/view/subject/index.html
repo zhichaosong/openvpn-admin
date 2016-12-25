@@ -39,13 +39,14 @@
                         </div>
                     </div>
                     <!-- 表格数据 -->
-                    <table id="table" data-toggle="gridview" class="table" data-url="/admin/subject" data-toolbar="#toolbar" data-show-columns="true" data-page-size="10" data-page-list="[10, 25, 50, All]" data-unique-id="id" data-pagination="true" data-side-pagination="client" data-search="true">
+                    <table id="table" data-toggle="gridview" class="table" data-url="/admin/subject" data-toolbar="#toolbar" data-show-columns="true" data-page-size="10" data-page-list="[10, 25, 50, All]" data-unique-id="id" data-pagination="true" data-side-pagination="client" data-search="true" data-operate="true" data-click-to-select="true">
                         <thead>
                             <tr>
                                 <th data-width="10" data-align="center" data-checkbox="true"></th>
-                                <th data-field="name">称呼</th>
+                                <th data-field="name" >称呼</th>
                                 <th data-field="content">留言内容</th>
-                                <th data-field="create_time">时间</th>
+                                <th data-field="create_time" data-align="center">时间</th>
+                                
                             </tr>
                         </thead>
                     </table>
@@ -54,3 +55,32 @@
         </div>
     </div>
 </div>
+
+<!-- <th data-field="operate"  data-align="center" data-formatter="operateFormatter" data-events="operateEvents">操作</th> -->
+<script type="text/javascript">
+    function operateFormatter(value, row, index) {
+        return [
+            '<a class="like" href="javascript:void(0)" title="Like">',
+            '<i class="glyphicon glyphicon-edit"></i>',
+            '</a>  ',
+            '<a class="remove" href="javascript:void(0)" title="Remove">',
+            '<i class="glyphicon glyphicon-remove"></i>',
+            '</a>'
+        ].join('');
+    }
+
+    window.operateEvents = {
+        'click .like': function (e, value, row, index) {
+            alert(111)
+            alert('You click like action, row: ' + JSON.stringify(row));
+        },
+        'click .remove': function (e, value, row, index) {
+            $table.bootstrapTable('remove', {
+                field: 'id',
+                values: [row.id]
+            });
+        }
+    };
+
+
+</script>
