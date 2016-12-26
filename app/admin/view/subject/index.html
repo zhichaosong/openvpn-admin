@@ -33,19 +33,17 @@
                             <button type="button" data-name="edit" class="btn btn-default" data-event-type="view" data-event-value="" data-target="modal" disabled><i class="fa fa-edit" aria-hidden="true" style="margin-right: 2px"> </i>编辑</button>
                             <button type="button" data-name="delete" class="btn btn-default" data-event-type="default" data-event-value="" data-target="modal" disabled><i class="fa fa-trash" aria-hidden="true" style="margin-right: 2px"> </i>删除</button>
                         </div>
-                        <div class="btn-group">
-                            <button type="button" data-name="auth" class="btn btn-default" data-event-type="view" data-event-value="" data-target="modal" disabled><i class="fa fa-hand-lizard-o" aria-hidden="true"  style="margin-right: 2px"> </i>授权</button>
-                            <button type="button" data-name="password" class="btn btn-default"  data-event-type="view" data-event-value="" data-target="modal" disabled><i class="fa fa-undo" aria-hidden="true"  style="margin-right: 2px"> </i>修改密码</button>
-                        </div>
+                       
                     </div>
                     <!-- 表格数据 -->
-                    <table id="table" data-toggle="gridview" class="table" data-url="/admin/subject" data-toolbar="#toolbar" data-show-columns="true" data-page-size="10" data-page-list="[10, 25, 50, All]" data-unique-id="id" data-pagination="true" data-side-pagination="client" data-search="true" data-operate="true" data-click-to-select="true">
+                    <table id="table" data-toggle="gridview" class="table" data-url="/admin/subject" data-toolbar="#toolbar" data-show-columns="true" data-page-size="10" data-page-list="[10, 25, 50, All]" data-unique-id="id" data-pagination="true" data-side-pagination="client" data-search="true" data-click-to-select="false">
                         <thead>
                             <tr>
                                 <th data-width="10" data-align="center" data-checkbox="true"></th>
                                 <th data-field="name" >称呼</th>
-                                <th data-field="content">留言内容</th>
+                                <th data-field="content"   data-events="operateEvents" data-formatter="for_content">留言内容</th>
                                 <th data-field="create_time" data-align="center">时间</th>
+                                <th data-field="operate"   data-align="center" data-formatter="operateFormatter" data-events="operateEvents">操作</th>
                                 
                             </tr>
                         </thead>
@@ -56,29 +54,33 @@
     </div>
 </div>
 
-<!-- <th data-field="operate"  data-align="center" data-formatter="operateFormatter" data-events="operateEvents">操作</th> -->
 <script type="text/javascript">
     function operateFormatter(value, row, index) {
         return [
-            '<a class="like" href="javascript:void(0)" title="Like">',
-            '<i class="glyphicon glyphicon-edit"></i>',
+            '<a class="edit" href="javascript:void(0)" title="编辑">',
+            '<i class="fa fa-edit"></i>',
             '</a>  ',
-            '<a class="remove" href="javascript:void(0)" title="Remove">',
-            '<i class="glyphicon glyphicon-remove"></i>',
+            '<a class="delete" href="javascript:void(0)" title="删除">',
+            '<i class="fa fa-trash"></i>',
             '</a>'
         ].join('');
     }
 
-    window.operateEvents = {
-        'click .like': function (e, value, row, index) {
-            alert(111)
-            alert('You click like action, row: ' + JSON.stringify(row));
+    function for_content(value, row, index) {
+        return '<a class="edit" href="javascript:void(0)" title="编辑">'+ value+' </a>'
+    }
+
+    var operateEvents = {
+        'click .edit': function (e, value, row, index) {
+            var param = {}
+            param.url = '/admin/subject/edit'
+            param.data = {}
+            param.data.id = row.id
+            $("#table").gridView('loadModal', param.url,param.data)
         },
-        'click .remove': function (e, value, row, index) {
-            $table.bootstrapTable('remove', {
-                field: 'id',
-                values: [row.id]
-            });
+        'click .delete': function (e, value, row, index) {
+            $("#table").gridView('deleteModal', 'delete')
+            
         }
     };
 

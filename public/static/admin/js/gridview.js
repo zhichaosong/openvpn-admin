@@ -17,20 +17,23 @@ $(function() {
         this.uniqueId = 'id';
         this.module = this.$toolbar.data('module');
         this.pagination = this.$table.data('pagination') == false ? false : true;
-        this.sidePagination = this.$table.data('sidePagination') || "client";
+        this.sidePagination = this.$table.data('') || "client";
         this.clientSort = this.$table.data('clientSort') == false ? false : true;
         this.pageSize = this.$table.data('pageSize') || 50;
-        this.clickToSelect = this.$table.data('clickToSelect') == false ? false : true;
+        this.clickToSelect = this.$table.data('clickToSelect') == false ? false : true; //选中checkbox
         this.showRefresh = this.$table.data('showRefresh') == false ? false : true;
         this.$table.data('gridview', this);
         this.enabledEdit = this.$table.data('edit') || false;
+        this.operate = null
         this.init();
     };
 
     GridView.prototype.init = function() {
+        // console.log(this.clickToSelect)
         this.initTable();
         this.initForm();
         this.initToolbar();
+        this.initOperate();
     };
 
     GridView.prototype.initTable = function() {
@@ -45,6 +48,10 @@ $(function() {
             classes: 'table table-hover table-no-bordered',
             sidePagination: $this.sidePagination,
             pageSize: $this.pageSize,
+            clickToSelect: $this.clickToSelect,
+            columns: [],
+            data: [],
+
             queryParams: function(params) {
                 params = $.extend(params, $this.queryParams);
 
@@ -71,6 +78,10 @@ $(function() {
                 return false;
             },
             onClickRow: function(row, $element) {
+
+
+                // this.onCheck(row, $element)
+
                 $this.scrollPosition = $this.$table.bootstrapTable('getScrollPosition');
                 var result = $this.$table.triggerHandler('clickRow', [row, $this]);
                 if (result !== false && $this.enabledEdit) {
@@ -78,20 +89,20 @@ $(function() {
                 }
 
                 $element.addClass('info').siblings().removeClass('info');
-                
+
                 var btnGroup = $element.parents('.bootstrap-table:eq(0)').find('#toolbar').find('.btn-group')
-                btnGroup.each(function(items, index){
-                    $(index).find('button').each(function(item, ele){
+                btnGroup.each(function(items, index) {
+                    $(index).find('button').each(function(item, ele) {
                         if ($(ele).data('name') != 'delete') { //默认delete需选中checkbox
                             $(ele).removeAttr('disabled').removeClass('btn-default').addClass('btn-primary')
                         }
                     })
                 })
 
-                $this.$table.trigger('check', [row, $this]);
+                // $this.$table.trigger('check', [row, $this]);
                 $this.currentRow = row;
             },
-            onDblClickRow: function(item, $element) {//双击
+            onDblClickRow: function(item, $element) { //双击
                 //$table.trigger('dblClickRow', [item, $element]);
                 return false;
             },
@@ -101,9 +112,9 @@ $(function() {
             onCheck: function(row, $element) {
 
                 var btnGroup = $element.parents('.bootstrap-table:eq(0)').find('#toolbar').find('.btn-group')
-                btnGroup.each(function(items, index){
-                    $(index).find('button').each(function(item, ele){
-                        if ($(ele).data('name') == 'delete') { 
+                btnGroup.each(function(items, index) {
+                    $(index).find('button').each(function(item, ele) {
+                        if ($(ele).data('name') == 'delete') {
                             $(ele).removeAttr('disabled').removeClass('btn-default').addClass('btn-primary')
                         }
                     })
@@ -113,9 +124,9 @@ $(function() {
             },
             onUncheck: function(row, $element) {
                 var btnGroup = $element.parents('.bootstrap-table:eq(0)').find('#toolbar').find('.btn-group')
-                btnGroup.each(function(items, index){
-                    $(index).find('button').each(function(item, ele){
-                        if ($(ele).data('name') == 'delete') { 
+                btnGroup.each(function(items, index) {
+                    $(index).find('button').each(function(item, ele) {
+                        if ($(ele).data('name') == 'delete') {
                             $(ele).attr('disabled', true).addClass('btn-default').removeClass('btn-primary')
                         }
                     })
@@ -125,23 +136,23 @@ $(function() {
                 return false;
             },
             onCheckAll: function(rows) {
-                
+
                 var btnGroup = $('body').find('.bootstrap-table:eq(0)').find('#toolbar').find('.btn-group')
-                btnGroup.each(function(items, index){
-                    $(index).find('button').each(function(item, ele){
-                        if ($(ele).data('name') == 'delete') { 
-                            $(ele).removeAttr('disabled').removeClass('btn-default').addClass('btn-primary')
-                        }
+                btnGroup.each(function(items, index) {
+                        $(index).find('button').each(function(item, ele) {
+                            if ($(ele).data('name') == 'delete') {
+                                $(ele).removeAttr('disabled').removeClass('btn-default').addClass('btn-primary')
+                            }
+                        })
                     })
-                })
-                //$table.trigger('checkAll', [rows]);
+                    //$table.trigger('checkAll', [rows]);
                 return false;
             },
             onUncheckAll: function(rows) {
                 var btnGroup = $('body').find('.bootstrap-table:eq(0)').find('#toolbar').find('.btn-group')
-                btnGroup.each(function(items, index){
-                    $(index).find('button').each(function(item, ele){
-                        if ($(ele).data('name') == 'delete') { 
+                btnGroup.each(function(items, index) {
+                    $(index).find('button').each(function(item, ele) {
+                        if ($(ele).data('name') == 'delete') {
                             $(ele).attr('disabled', true).addClass('btn-default').removeClass('btn-primary')
                         }
                     })
@@ -201,8 +212,7 @@ $(function() {
                 //$table.trigger('collapseRow', [index, row]);
                 return false;
             },
-            onRefreshOptions: function() {
-            }
+            onRefreshOptions: function() {}
         });
 
         $this.bootstrapTable = $this.$table.data('bootstrap.table');
@@ -250,11 +260,11 @@ $(function() {
                 }
             },
             errorPlacement: function($error, element) {
-               if (this.errorClass == 'help-block') {
-                        $error.insertAfter($element.parent());
-                    } else {
-                        $error.appendTo($element.parent());
-                    }
+                if (this.errorClass == 'help-block') {
+                    $error.insertAfter($element.parent());
+                } else {
+                    $error.appendTo($element.parent());
+                }
             },
             submitHandler: function() {
                 return false;
@@ -271,7 +281,7 @@ $(function() {
             $this.$table.bootstrapTable('refresh');
             return false;
         });
-        
+
         this.$toolbar.find('>.btn-group>button[data-name]').on('click', function() {
             // 要执行的事件名称
             var $btn = $(this);
@@ -324,100 +334,109 @@ $(function() {
                 return;
             } else if (params.event_type == 'javascript') { //脚本
                 return $('html').append('<script type="text/javascript">' + params.event_value + '</script>');
-            } else if (params.event_type == 'default') {//默认
+            } else if (params.event_type == 'default') { //默认
 
                 //toolbar中默认事件类型的按钮 如删除、搜索等
                 if (eventName.substr(0, 6) == 'delete') {
-                    var rows = $this.$table.bootstrapTable('getSelections'); // 当前页被选中项(getAllSelections 所有分页被选中项)
-                    if (rows.length == 0) {
-                        alertMsg('请勾选要删除的数据', 'warning');
-                        return;
-                    }
-                    var params = {
-                        rows: rows,
-                        length: rows.length,
-                        url: $this.module + '/' + eventName,
-                        backdrop: true,
-                        title: '提示',
-                        message: '确定要删除选中的' + rows.length + '项吗？',
-                        okValue: '确定',
-                        cancelValue: '取消',
-                        ajaxMsg: '正在删除中...',
-                        data: null,
-                        ok: function() {
-                            var post_data = {};
-
-                            var uniqueId = [];
-                            var needRestForm = false;
-                            var editUniqueId = $this.$form.find('input[name="' + $this.uniqueId + '"]').val();
-                            for (var i in params.rows) {
-                                uniqueId.push(params.rows[i][$this.uniqueId]);
-                                // 判断当前编辑的数据是否在删除数组中
-                                if (editUniqueId == params.rows[i][$this.uniqueId]) {
-                                    needRestForm = true;
-                                }
-                            }
-
-                            if (params.data == null) {
-                                post_data[$this.uniqueId] = uniqueId.join(',');
-                            } else {
-                                post_data = params.data;
-                            }
-                            // 请求服务器删除数据
-                            $.ajax({
-                                url: params.url,
-                                dataType: 'json',
-                                data: post_data,
-                                waitting: params.ajaxMsg,
-                                type: 'post',
-                                success: function(ajaxData) {
-                                    if (needRestForm) { $this.editRow(); }
-                                    ajaxData.deletedRows = params.rows;
-                                    // 通知删除成功
-                                    var result = $this.$table.triggerHandler('deleted', [ajaxData, 'success']);
-                                    if (result === false) {
-                                        return;
-                                    }
-
-                                    $this.$table.bootstrapTable('remove', { field: 'id', values: uniqueId });
-
-                                    if ($this.bootstrapTable.data.length == 0 && $this.bootstrapTable.options.sidePagination == 'server') {
-                                        $this.$table.bootstrapTable('refresh');
-                                    } else {
-                                        $this.resetView();
-                                    }
-                                },
-                                error: function(ajaxData) {
-                                    ajaxData.deletedRows = params.rows;
-                                    $this.$table.triggerHandler('deleted', [ajaxData, 'error']);
-                                }
-                            });
-                        },
-                        cancel: function() {}
-                    };
-
-                    // 通知我要删除
-                    var result = $this.$table.triggerHandler('delete', [$this, params]);
-                    if (result === false) {
-                        return;
-                    }
-                    // 弹出删除提示
-                    alertConfirm({
-                        title: params.title,
-                        content: params.message,
-                        okValue: params.okValue,
-                        cancelValue: params.cancelValue,
-                        ok: params.ok,
-                        cancel: params.cancel,
-                        backdrop: params.backdrop
-                    }); //删除 ok
+                    $this.deleteModal(eventName)
                 } else {
                     $this.$table.triggerHandler(eventName, [$this, params]);
                 }
             }
-
         });
     };
+
+    GridView.prototype.deleteModal = function(eventName) {
+        $this = this
+        var rows = $this.$table.bootstrapTable('getSelections'); // 当前页被选中项(getAllSelections 所有分页被选中项)
+        if (rows.length == 0) {
+            alertMsg('请勾选要删除的数据', 'warning');
+            return;
+        }
+        var params = {
+            rows: rows,
+            length: rows.length,
+            url: $this.module + '/' + eventName,
+            backdrop: true,
+            title: '提示',
+            message: '确定要删除选中的' + rows.length + '项吗？',
+            okValue: '确定',
+            cancelValue: '取消',
+            ajaxMsg: '正在删除中...',
+            data: null,
+            ok: function() {
+                var post_data = {};
+
+                var uniqueId = [];
+                var needRestForm = false;
+                var editUniqueId = $this.$form.find('input[name="' + $this.uniqueId + '"]').val();
+                for (var i in params.rows) {
+                    uniqueId.push(params.rows[i][$this.uniqueId]);
+                    // 判断当前编辑的数据是否在删除数组中
+                    if (editUniqueId == params.rows[i][$this.uniqueId]) {
+                        needRestForm = true;
+                    }
+                }
+
+                if (params.data == null) {
+                    post_data[$this.uniqueId] = uniqueId.join(',');
+                } else {
+                    post_data = params.data;
+                }
+                // 请求服务器删除数据
+                $.ajax({
+                    url: params.url,
+                    dataType: 'json',
+                    data: post_data,
+                    waitting: params.ajaxMsg,
+                    type: 'post',
+                    success: function(ajaxData) {
+                        $this.refresh()
+                    },
+                    error: function(ajaxData) {
+                        $this.refresh()
+                    }
+                });
+            },
+            cancel: function() {}
+        };
+
+        // 通知我要删除
+        var result = $this.$table.triggerHandler('delete', [$this, params]);
+        if (result === false) {
+            return;
+        }
+        // 弹出删除提示
+        alertConfirm({
+            title: params.title,
+            content: params.message,
+            okValue: params.okValue,
+            cancelValue: params.cancelValue,
+            ok: params.ok,
+            cancel: params.cancel,
+            backdrop: params.backdrop
+        }); //删除 ok
+    }
+
+
+
+    GridView.prototype.initOperate = function() {
+        $this = this
+
+
+        $this.operate = $($this.$table).find('tbody').find('tr:first-child') //.find('tr td:last-child')
+            // console.log(111)
+            // console.log($this.operate)
+
+        var operateEvents = {
+            'click .edit': function(e, value, row, index) {
+
+            },
+            'click .delete': function(e, value, row, index) {
+                console.log(e)
+            }
+        };
+    }
 
     GridView.prototype.resetForm = function() {
         if (this.$form.length == 0) {
@@ -478,11 +497,12 @@ $(function() {
     };
 
     GridView.prototype.refresh = function() {
-
         this.$table.bootstrapTable('refresh');
     };
 
     GridView.prototype.loadModal = function(url, data) {
+        console.log(url)
+        console.log(data)
         var $this = this;
         $.ajax({
             url: url,
@@ -518,6 +538,7 @@ $(function() {
             }
         });
     };
+
 
     GridView.prototype.getFormValue = function(selector) {
         var $form = selector == undefined ? this.$form : $(selector);
@@ -562,14 +583,14 @@ $(function() {
 
     new GridView('table[data-toggle="gridview"]');
 
-    $.fn.gridView = function(option, params) {
+    $.fn.gridView = function(option, arg1, arg2) {
         var $gridview = this.data('gridview');
         if (typeof option == 'string') {
             if ($gridview == undefined) {
                 return;
             }
 
-            return $gridview[option](params);
+            return $gridview[option](arg1, arg2);
         }
 
         if ($gridview != undefined) {

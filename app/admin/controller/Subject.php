@@ -17,7 +17,7 @@ class Subject extends Admin
 	function _initialize()
 	{
 		parent::_initialize();
-		$this->comment = Db::table('test_comments');
+		$this->comment = Db::table('ta_test_comments');
 	}
 
 	public function index()
@@ -28,6 +28,7 @@ class Subject extends Admin
 			$rows = $this->comment->where($map)->order('create_time desc')->select();
 			foreach ($rows as $key => $value) {
 				$rows[$key]['create_time'] = date("Y-m-d H:i:s" , $value['create_time']);
+				$rows[$key]['opreate'] = [];
 			}
 			return $rows;
 		}
@@ -45,10 +46,10 @@ class Subject extends Admin
 			$data['create_time'] = time();
 			$res = $this->comment->insert($data);
 			if ($res == 1) {
-				Loader::model('LogRecord')->record('用户留言-添加成功');
+				// Loader::model('LogRecord')->record('用户留言-添加成功');
 				return info("添加成功!",1);
 			}else{
-				Loader::model('LogRecord')->record('用户留言-添加失败 data='.serialize($data));
+				// Loader::model('LogRecord')->record('用户留言-添加失败 data='.serialize($data));
 				return info("添加失败!",0);
 			}
 		}		
@@ -69,10 +70,10 @@ class Subject extends Admin
 			$data = request()->param();
 			$res = $this->comment->update($data);
 			if ($res == 1) {
-				Loader::model('LogRecord')->record('用户留言-编辑成功 ID='.$id);
+				// Loader::model('LogRecord')->record('用户留言-编辑成功 ID='.$id);
 				return info("编辑成功!",1);
 			}else{
-				Loader::model('LogRecord')->record('用户留言-编辑失败 ID='.$id);
+				// Loader::model('LogRecord')->record('用户留言-编辑失败 ID='.$id);
 				return info("编辑失败!",0);
 			}
 		}		
@@ -83,7 +84,15 @@ class Subject extends Admin
 
 	public function delete($id = 0)
 	{
-		
+		if(empty($id)){
+            return info('删除项不能为空！',0);
+        }
+        $result = $this->comment->delete($id);
+        if ($result > 0) {
+            // Loader::model('LogRecord')->record('角色管理-编辑失败 IDS='.serialize($id));
+            return info('删除成功！',0);            
+            // return $this->success('删除成功!');            
+        }       
 	}
 
 }
