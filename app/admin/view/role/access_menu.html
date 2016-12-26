@@ -90,7 +90,6 @@ function save_access(){
     
     $.ajax({
         url: '/admin/role/access_menu',
-        data: {role_id: {$role_id}, node_id: node_id},
         dataType: 'json',
         type: 'post',
         success: function(){

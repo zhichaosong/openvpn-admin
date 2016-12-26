@@ -47,8 +47,7 @@ class Login extends Common
 	 */
 	public function out()
 	{
-		Session::delete(config('USER_AUTH_KEY'),'admin');
-		
-		return $this->success('退出成功~');
+		session::clear('admin');
+		return $this->success('退出成功！');
 	}
 }

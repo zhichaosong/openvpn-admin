@@ -1,13 +1,17 @@
+<div id="toolbar" class="toolbar" data-module="{:URL('/admin/authrule');}">
+	<div class="btn-group">
+		<button type="button" data-name="add" class="btn btn-primary" data-event-type="view" data-event-value="" data-target="modal"><i class="fa fa-plus" aria-hidden="true" style="margin-right: 2px"> </i>添加</button>
+	</div>
+</div>
 <!-- 表格 -->
 <table id="table" data-toggle="gridview" class="table" data-url="/admin/menu" data-toolbar="#toolbar" data-show-columns="true" data-page-size="5" data-page-list="[5, 25, 50, All]" data-unique-id="id" data-pagination="true" data-side-pagination="client">
     <thead>
         <tr>
             <th data-width="40"  data-align="center"  data-checkbox="true"></th>
-            <th data-width="50" data-field="sort" data-formatter="format_sort">排序</th>
-            <th data-field="title">菜单名称</th>
-            <th data-field="level">级别</th>
+            <th data-width="50" data-field="sort" data-formatter="format_sort">ID</th>
+            <th data-field="title">权限名称</th>
+            <th data-field="level">RULE_VAL</th>
             <th data-field="status" data-formatter="format_status">状态</th>
-            <th data-field="url">链接地址</th>
         </tr>
     </thead>
 </table>

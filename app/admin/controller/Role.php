@@ -17,7 +17,7 @@ class Role extends Admin
     function _initialize()
     {
         parent::_initialize();
-        $this->role = Db::table('bs_role');
+        $this->role = Loader::model('role');
     }
 
     /**
@@ -92,7 +92,7 @@ class Role extends Admin
      */
     public function access_menu($id = 0)
     {
-         $role_id = $id;
+         /*$role_id = $id;
         // 保存授权
         if(request()->isPost()){
             $data = [];
@@ -108,7 +108,7 @@ class Role extends Admin
         // 展示授权页面
         $menu = [];
         $role = $this->detail($role_id);
-        $selectedNode = explode(',', $role['node_id']);
+        $selectedNode = explode(',', $role->id);
         
         $Module = Db::table('bs_menu');
 
@@ -134,7 +134,7 @@ class Role extends Admin
         }
 
         $menu = json_encode($menu, JSON_UNESCAPED_UNICODE);
-        $this->assign(['list' => $menu, 'role_id' => $role_id]);
+        $this->assign(['list' => $menu, 'role_id' => $role_id]);*/
         
         return $this->fetch();
     }
