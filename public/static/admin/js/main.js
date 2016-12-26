@@ -276,6 +276,8 @@ function WinMove() {
 
 
 
+
+
 $(function(){
     win.start();
 })

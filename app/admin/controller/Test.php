@@ -42,6 +42,8 @@ class Test extends Admin
 		return view();
 	}
 
+
+
 }
 
 

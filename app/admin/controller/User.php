@@ -31,8 +31,8 @@ class User extends Admin
             $data = request()->param();
             
             $userModel = Loader::model('User');
-            //$index = $userModel->index($data);
-            //return $index;
+            $index = $userModel->index($data);
+            return $index;
         }
         return view();
     }
