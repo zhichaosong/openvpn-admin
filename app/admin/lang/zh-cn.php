@@ -17,4 +17,5 @@ return [
     'Login succeed'       => '登录成功',
     'Without the permissions page' => '无该页面权限',
     'Please login first' => '请先登录',
+    'Save success' => '保存成功'
 ];

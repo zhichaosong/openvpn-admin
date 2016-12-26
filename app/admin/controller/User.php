@@ -14,11 +14,9 @@ use think\Config;
 */
 class User extends Admin
 {
-    private $users;
     function _initialize()
     {
         parent::_initialize();
-        $this->users = Db::table('users');
     }
 
     /**
@@ -26,13 +24,16 @@ class User extends Admin
      */
     public function index()
     {
-        if(request()->isAjax()){
+        if(request()->isAjax()) {
 
             $data = request()->param();
             
             $userModel = Loader::model('User');
+<<<<<<< HEAD
             $index = $userModel->index($data);
             return $index;
+=======
+>>>>>>> origin/master
         }
         return view();
     }
