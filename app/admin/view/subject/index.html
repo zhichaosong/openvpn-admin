@@ -41,7 +41,7 @@
                             <tr>
                                 <th data-width="10" data-align="center" data-checkbox="true"></th>
                                 <th data-field="name" >称呼</th>
-                                <th data-field="content"   data-events="operateEvents" data-formatter="for_content">留言内容</th>
+                                <th data-field="content">留言内容</th>
                                 <th data-field="create_time" data-align="center">时间</th>
                                 <th data-field="operate"   data-align="center" data-formatter="operateFormatter" data-events="operateEvents">操作</th>
                                 
@@ -66,20 +66,16 @@
         ].join('');
     }
 
-    function for_content(value, row, index) {
-        return '<a class="edit" href="javascript:void(0)" title="编辑">'+ value+' </a>'
-    }
-
     var operateEvents = {
         'click .edit': function (e, value, row, index) {
-            var param = {}
-            param.url = '/admin/subject/edit'
-            param.data = {}
-            param.data.id = row.id
+            var param = {
+                url: '/admin/subject/edit',
+                data: {id: row.id}
+            }
             $("#table").gridView('loadModal', param.url,param.data)
         },
         'click .delete': function (e, value, row, index) {
-            $("#table").gridView('deleteModal', 'delete')
+            $("#table").gridView('deleteModal', 'delete', row)
             
         }
     };

@@ -24,16 +24,13 @@ $(function() {
         this.showRefresh = this.$table.data('showRefresh') == false ? false : true;
         this.$table.data('gridview', this);
         this.enabledEdit = this.$table.data('edit') || false;
-        this.operate = null
         this.init();
     };
 
     GridView.prototype.init = function() {
-        // console.log(this.clickToSelect)
         this.initTable();
         this.initForm();
         this.initToolbar();
-        this.initOperate();
     };
 
     GridView.prototype.initTable = function() {
@@ -51,7 +48,6 @@ $(function() {
             clickToSelect: $this.clickToSelect,
             columns: [],
             data: [],
-
             queryParams: function(params) {
                 params = $.extend(params, $this.queryParams);
 
@@ -78,10 +74,6 @@ $(function() {
                 return false;
             },
             onClickRow: function(row, $element) {
-
-
-                // this.onCheck(row, $element)
-
                 $this.scrollPosition = $this.$table.bootstrapTable('getScrollPosition');
                 var result = $this.$table.triggerHandler('clickRow', [row, $this]);
                 if (result !== false && $this.enabledEdit) {
@@ -303,14 +295,7 @@ $(function() {
                     if ($this.currentRow == null) {
                         return alertMsg('请先选择要编辑的数据！', 'warning');
                     }
-                    if (undefined == $this.currentRow[$this.uniqueId]) {
-                        params.data[$this.uniqueId] = $this.currentRow.order_no;
-                    } else {
-                        params.data[$this.uniqueId] = $this.currentRow[$this.uniqueId];
-                    }
-                    if (params.event_value == '') {
-                        // params.url += '?' + $this.uniqueId + '=' + $this.currentRow[$this.uniqueId];
-                    }
+                    params.data[$this.uniqueId] = $this.currentRow[$this.uniqueId];
                 }
 
                 var result = $this.$table.triggerHandler(eventName, [$this, params]);
@@ -346,9 +331,15 @@ $(function() {
         });
     };
 
-    GridView.prototype.deleteModal = function(eventName) {
+    GridView.prototype.deleteModal = function(eventName, row) {
         $this = this
-        var rows = $this.$table.bootstrapTable('getSelections'); // 当前页被选中项(getAllSelections 所有分页被选中项)
+        var rows = {};
+        if (row) {//一条
+            rows[0] = row
+            rows['length'] =1
+        }else{
+            rows = $this.$table.bootstrapTable('getSelections'); // 当前页被选中项(getAllSelections 所有分页被选中项)
+        }
         if (rows.length == 0) {
             alertMsg('请勾选要删除的数据', 'warning');
             return;
@@ -418,26 +409,6 @@ $(function() {
         }); //删除 ok
     }
 
-
-
-    GridView.prototype.initOperate = function() {
-        $this = this
-
-
-        $this.operate = $($this.$table).find('tbody').find('tr:first-child') //.find('tr td:last-child')
-            // console.log(111)
-            // console.log($this.operate)
-
-        var operateEvents = {
-            'click .edit': function(e, value, row, index) {
-
-            },
-            'click .delete': function(e, value, row, index) {
-                console.log(e)
-            }
-        };
-    }
-
     GridView.prototype.resetForm = function() {
         if (this.$form.length == 0) {
             return;
@@ -501,8 +472,6 @@ $(function() {
     };
 
     GridView.prototype.loadModal = function(url, data) {
-        console.log(url)
-        console.log(data)
         var $this = this;
         $.ajax({
             url: url,
