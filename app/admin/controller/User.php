@@ -29,11 +29,8 @@ class User extends Admin
             $data = request()->param();
             
             $userModel = Loader::model('User');
-<<<<<<< HEAD
             $index = $userModel->index($data);
             return $index;
-=======
->>>>>>> origin/master
         }
         return view();
     }
