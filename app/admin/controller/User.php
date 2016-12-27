@@ -66,7 +66,7 @@ class User extends Admin
             $edit = $userModel->edit($data);
             return $edit;
         }
-        $data = Loader::model('User')->finduserById($id);
+        $data = Loader::model('User')->findUserById($id);
         $this->assign('data',$data);
         return $this->fetch();
     }

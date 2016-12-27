@@ -95,7 +95,7 @@ class User extends Model
         }
 	}
 
-	public function finduserById($id)
+	public function findUserById($id)
 	{
 		return User::get($id);
 	}
