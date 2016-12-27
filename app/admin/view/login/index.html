@@ -35,6 +35,10 @@
             </p>
             <p>Login in. To see it in action.</p>
 
+			<a class="right-sidebar-toggle" href="#">
+                <i class="fa fa-tasks"></i>
+            </a>
+            
             <form class="m-t" role="form" id="login-form-hooks">
             	<div class="msgerr" style="color: #e15f63;text-align: left;"></div>
                 <div class="form-group">
@@ -75,38 +79,6 @@
 			}
 		}, 'json');
 	})
-
-
-	/*function doLogin() {
-		var data = {};
-		var msgerr = $(".msgerr")
-		var $btn = $("button")
-		$btn.click(function () {
-			data.mobile = $("#mobile").val()
-			data.password = $("#password").val()
-			$.ajax({
-				url: '/admin/login/doLogin/',
-				type: 'post',
-				data: data,
-				dataType: 'json',
-				success:function (data) {
-					if(data.code == 1){
-						$btn.button('loading')
-						setTimeout(function() {
-							$btn.button('complete')
-			                window.location.href = data.url;
-			            }, parseInt(data.wait) * 300)
-					}else if(data.code == 0){
-						msgerr.html(data.msg);
-					}
-				},
-				error:function () {
-					msgerr.html("网络错误，请稍后再试！");
-				}
-			})
-		})
-		return false;
-	}*/
 </script>
 </body>
 </html>
