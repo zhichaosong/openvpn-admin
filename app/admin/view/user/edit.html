@@ -26,14 +26,14 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">登录密码</label>
                             <div class="col-sm-7">
-                                <input type="password" class="form-control" name="password" id="password" maxlength="32" placeholder="至多32个字符" required>
+                                <input type="password" class="form-control" name="password" id="password"  rangelength="[6,16]" placeholder="至多16个字符" required>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">确认密码</label>
                             <div class="col-sm-7">
-                                <input type="password" class="form-control equalto" name="password2" maxlength="32" placeholder="至多32个字符" required data-rule-equalto="#password" data-msg-equalto="密码不一致">
+                                <input type="password" class="form-control equalto" name="password2" rangelength="[6,16]" placeholder="至多16个字符" required data-rule-equalto="#password" data-msg-equalto="密码不一致">
                             </div>
                         </div>
 

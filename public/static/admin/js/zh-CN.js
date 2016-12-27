@@ -32,7 +32,7 @@ function zh_validator() {
         extension: "请输入有效的后缀",
         maxlength: $.validator.format("最多可以输入 {0} 个字符"),
         minlength: $.validator.format("最少要输入 {0} 个字符"),
-        rangelength: $.validator.format("请输入长度在 {0} 到 {1} 之间的字符串"),
+        rangelength: $.validator.format("请输入长度在 {0} 到 {1} 位字符"),
         range: $.validator.format("请输入范围在 {0} 到 {1} 之间的数值"),
         max: $.validator.format("请输入不大于 {0} 的数值"),
         min: $.validator.format("请输入不小于 {0} 的数值")

@@ -19,8 +19,7 @@
 	{css href="__CSS__/style.css" /}
 	{js href="__LIB__/jquery-3.1.0.min.js" /}
 	{js href="__LIB__/bootstrap3/js/bootstrap.min.js" /}
-	{js href="__JS__/jquery.validate.min.js" /}
-
+    {js href="__JS__/jquery.validate.min.js" /}
 </head>
 
 <body class="gray-bg">
@@ -39,16 +38,16 @@
                 <i class="fa fa-tasks"></i>
             </a>
             
-            <form class="m-t" role="form" id="login-form-hooks">
+            <form class="m-t" id="login-form-hooks" onsubmit="return doLogin()">
             	<div class="msgerr" style="color: #e15f63;text-align: left;"></div>
                 <div class="form-group">
-                    <input id="mobile" name="mobile" class="form-control" placeholder="Moblie" maxlength="11" value="13330613321" required="">
+                    <input id="mobile" name="mobile" class="form-control" placeholder="Moblie" maxlength="11" value="" required="">
                 </div>
                 <div class="form-group">
-                    <input id="password" name="password" type="password"  class="form-control" placeholder="Password" maxlength="16" value="123" required="">
+                    <input id="password" name="password" type="password"  class="form-control" placeholder="Password" rangelength="[6,16]" value="">
                 </div>
 
-                <button id="sub-login" type="button" class="btn btn-primary block full-width m-b" data-loading-text="loading···" data-complete-text="success">Login</button>
+                <button id="sub-login" type="submit" class="btn btn-primary block full-width m-b">Login</button>
 
                 <a href="#"><small>Forgot password?</small></a>
                 <p class="text-muted text-center"><small>Do not have an account?</small></p>
@@ -62,23 +61,29 @@
 
 
 <script type="text/javascript">
-	$(function () {
-		if($("#mobile") == ''){
-			$("#mobile").focus();
-		}else if($("#password") == ''){
-			$("#password").focus();
-		}
-	})
 
-	$('#sub-login').on('click', function(){
-		$.post('{:url("/admin/login/doLogin")}', $('#login-form-hooks').serialize(), function(o){
-			if(o.code == 1) {
-				window.location.href = o.url;
-			} else {
-				$(".msgerr").html(o.msg);
-			}
-		}, 'json');
-	})
+    $(function () {
+       $("#login-form-hooks").validate({
+            submitHandler: function () {
+                return false
+            }
+       })
+    })
+
+    function doLogin() {
+    	$(function(){
+    		$.post('{:url("/admin/login/doLogin")}', $('#login-form-hooks').serialize(), function(o){
+    			if(o.code == 1) {
+    				window.location.href = o.url;
+    			} else {
+    				$(".msgerr").html(o.msg);
+    			}
+    		}, 'json');
+    	})
+        return false;
+    }
+
+
 </script>
 </body>
 </html>
