@@ -24,7 +24,7 @@ class Admin extends Common
 		//判断是否已经登录
 		$userRow = Session::get('userinfo', 'admin');
 		if( empty($userRow) ) {
-			$this->error('Please login first', url('admin/Login/index'));
+			$this->error('Please login first', url('/admin/Login/index'));
 		}
 		//验证权限
 		$request = Request::instance();

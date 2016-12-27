@@ -39,7 +39,7 @@ class Login extends Common
 			return $this->error( $ret['msg'] );
 		}
 		Session::set('userinfo', $ret['data'], 'admin');
-		return $this->success($ret['msg'], url('admin/index/index'));
+		return $this->success($ret['msg'], url('/admin/index'));
 	}
 
 	/**
@@ -48,6 +48,6 @@ class Login extends Common
 	public function out()
 	{
 		session::clear('admin');
-		return $this->success('退出成功！');
+		return $this->success('退出成功！', url('/admin/login'));
 	}
 }

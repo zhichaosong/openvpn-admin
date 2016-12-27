@@ -333,7 +333,8 @@ $(function() {
 
     GridView.prototype.deleteModal = function(eventName, row) {
         $this = this
-        var rows = {};
+        var rows = [];
+
         if (row) {//一条
             rows[0] = row
             rows['length'] =1
@@ -357,23 +358,24 @@ $(function() {
             data: null,
             ok: function() {
                 var post_data = {};
-
                 var uniqueId = [];
                 var needRestForm = false;
                 var editUniqueId = $this.$form.find('input[name="' + $this.uniqueId + '"]').val();
-                for (var i in params.rows) {
-                    uniqueId.push(params.rows[i][$this.uniqueId]);
-                    // 判断当前编辑的数据是否在删除数组中
-                    if (editUniqueId == params.rows[i][$this.uniqueId]) {
-                        needRestForm = true;
+                if (params.length > 1) {
+                    for (var i in params.rows) {
+                        uniqueId.push(params.rows[i][$this.uniqueId]);
+                        // 判断当前编辑的数据是否在删除数组中
+                        if (editUniqueId == params.rows[i][$this.uniqueId]) {
+                            needRestForm = true;
+                        }
                     }
+                    if (params.data == null) {
+                        post_data[$this.uniqueId] = uniqueId.join(',');
+                    }
+                }else{
+                    post_data[$this.uniqueId] = params.rows[0][$this.uniqueId]
                 }
-
-                if (params.data == null) {
-                    post_data[$this.uniqueId] = uniqueId.join(',');
-                } else {
-                    post_data = params.data;
-                }
+                
                 // 请求服务器删除数据
                 $.ajax({
                     url: params.url,

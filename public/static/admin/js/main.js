@@ -274,13 +274,33 @@ function WinMove() {
 }
 
 
+$(function () {
 
+        // 匹配链接
+        var url = (window.location.pathname).toLowerCase() //获取相对路径转为小写
+        var urlStatus = false;
+        var menuObj = $("#side-menu > li:gt(0) a");
+        
+        //遍历所有菜单
+        menuObj.each(function () {
+            //判断当前菜单是否存在
+            if(url.indexOf($(this).attr('href').toLowerCase()) > -1 && $(this).attr('href') != ''){
+                $(this).parent().addClass('active');
+                $(this).parent().parent().addClass('in');
+                $(this).parent().parent().parent().addClass('active'); //针对有二级菜单选中的样式添
+                urlStatus = true;
+            }else{
+                $(this).parent().removeClass('active');
+            }
+        });
 
+        if(!urlStatus){
+            menuObj.parent().eq(0).addClass('active');
+        }
 
-
-$(function(){
     win.start();
 })
+
 
 // 常用函数封装
 window.win = {

@@ -38,7 +38,7 @@
             <form class="m-t" role="form" id="login-form-hooks">
             	<div class="msgerr" style="color: #e15f63;text-align: left;"></div>
                 <div class="form-group">
-                    <input id="username" name="username" class="form-control" placeholder="Username" maxlength="11" value="" required="">
+                    <input id="mobile" name="mobile" class="form-control" placeholder="Moblie" maxlength="11" value="13330613321" required="">
                 </div>
                 <div class="form-group">
                     <input id="password" name="password" type="password"  class="form-control" placeholder="Password" maxlength="16" value="123" required="">
@@ -48,7 +48,7 @@
 
                 <a href="#"><small>Forgot password?</small></a>
                 <p class="text-muted text-center"><small>Do not have an account?</small></p>
-                <a class="btn btn-sm btn-white btn-block" href="register.html">Create an account</a>
+                <a class="btn btn-sm btn-white btn-block" href="#">Create an account</a>
             </form>
 
             <p class="m-t"> <small>Tp-admin framework base on Bootstrap 3 &copy; 2016</small> </p>
@@ -65,8 +65,6 @@
 			$("#password").focus();
 		}
 	})
-
-
 
 	$('#sub-login').on('click', function(){
 		$.post('{:url("/admin/login/doLogin")}', $('#login-form-hooks').serialize(), function(o){
