@@ -226,6 +226,8 @@ return [
         'setcookie' => true,
     ],
 
+
+
     //分页配置
     'paginate'               => [
         'type'      => 'bootstrap',
