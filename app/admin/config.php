@@ -86,4 +86,6 @@ return [
     //伪静态
     'url_html_suffix' => false,
     'user_auth_key'     => 'authId',
+    'KEYWORDS'          =>  'TPAdmin,高性能，后台管理',
+    'DESCRIPTION'       =>  'ThinkPHP5,高性能，后台管理，权限管理，后台模版，组件化开发，软删除，验证器，多语言，国际化'
 ];
