@@ -7,7 +7,6 @@ use think\Loader;
 use think\Model;
 use traits\model\SoftDelete;
 
-
 class User extends Model
 {
 	use SoftDelete;
@@ -21,6 +20,13 @@ class User extends Model
 		$code = 1;
 		$msg = '';
 		//！！！ 用户名、密码、验证码，需要统一后台验证，使用 validate
+		$User = new User();
+		$result = $User->validate('User.login')->save($data);
+
+		if(false === $result){
+			return info($User->getError(),0);
+		}
+
 		$check_field = ['mobile', 'password'];
 		foreach($check_field as $field) {
 			if(!isset($data[$field])) {
