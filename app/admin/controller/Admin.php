@@ -31,7 +31,7 @@ class Admin extends Common
 		$rule_val = $request->module().'/'.$request->controller().'/'.$request->action();
 		$uid = $userRow['id'];
 		//$userRow['administrator']!=1 &&
-		if(!$this->check($uid, $rule_val)) {
+		if(!$this->checkRule($uid, $rule_val)) {
 			$this->error(lang('Without the permissions page'));
 		}
 	}
@@ -43,10 +43,10 @@ class Admin extends Common
 		$this->redirect(Url::build($redirect));
 	}
 
-	public function check($uid, $rule_val)
+	public function checkRule($uid, $rule_val)
 	{
 		$authRule = Loader::model('AuthRule');
-		if(!$authRule->is_check($rule_val)) {
+		if(!$authRule->isCheck($rule_val)) {
 			return true;
 		}
 		$authAccess = Loader::model('AuthAccess');
@@ -54,6 +54,16 @@ class Admin extends Common
 			return true;
 		}
 		return false;
+	}
+
+	//执行该动作必须验证权限，否则抛出异常
+	public function mustCheckRule()
+	{
+		$request = Request::instance();
+		$rule_val = $request->module().'/'.$request->controller().'/'.$request->action();
+		if(!model('AuthRule')->isCheck($rule_val)) {
+			$this->error(lang('This action must be rule'));
+		}
 	}
 }
 

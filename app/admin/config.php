@@ -66,19 +66,4 @@ return [
 
     //伪静态
     'url_html_suffix' => false,
-
-
-    'USER_AUTH_KEY'                     =>  'authId',   // 用户认证SESSION标记
-    'ADMIN_AUTH_KEY'                    =>  'administrator',
-    'USER_TABLE_NAME'                   =>  'users',    // 用户表名称
-    'AUTH_TABLE_MENU'                   =>  'bs_menu',    // 菜单表名称
-    'AUTH_TABLE_NODE'                   =>  'bs_node',    // 权限节点表名称
-    'AUTH_TABLE_ROLE'                   =>  'bs_role',    // 角色表名称
-    'AUTH_TABLE_ROLE_USER'              =>  'bs_role_user',    // 角色表名称
-
-    'USER_AUTH_TYPE'        =>  2,      // 默认认证类型0不认证； 1 登录认证； 2 实时认证
-    'GUEST_AUTH_ID'         =>  0,      //游客模式
-    'NOT_AUTH_MODULE'       =>  '',     // 默认无需认证模块
-    'REQUIRE_AUTH_MODULE'   =>  '',     // 默认需要认证模块
-    'NOT_AUTH_ACTION'       =>  '',     // 默认无需认证操作
 ];
