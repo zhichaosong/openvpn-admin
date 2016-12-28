@@ -221,13 +221,9 @@ class File extends Driver
             $this->rm('tag_' . md5($tag));
             return true;
         }
-        $files = (array) glob($this->options['path'] . ($this->options['prefix'] ? $this->options['prefix'] . DS : '') . '*');
-        foreach ($files as $path) {
-            if (is_dir($path)) {
-                array_map('unlink', glob($path . '/*.php'));
-            } else {
-                unlink($path);
-            }
+        $fileLsit = (array) glob($this->options['path'] . '*');
+        foreach ($fileLsit as $path) {
+            is_file($path) && unlink($path);
         }
         return true;
     }

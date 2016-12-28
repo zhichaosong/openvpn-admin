@@ -32,14 +32,13 @@ class Log
     const SQL    = 'sql';
     const NOTICE = 'notice';
     const ALERT  = 'alert';
-    const DEBUG  = 'debug';
 
     // 日志信息
     protected static $log = [];
     // 配置参数
     protected static $config = [];
     // 日志类型
-    protected static $type = ['log', 'error', 'info', 'sql', 'notice', 'alert', 'debug'];
+    protected static $type = ['log', 'error', 'info', 'sql', 'notice', 'alert'];
     // 日志写入驱动
     protected static $driver;
 
@@ -84,10 +83,6 @@ class Log
     public static function record($msg, $type = 'log')
     {
         self::$log[$type][] = $msg;
-        if (IS_CLI && count(self::$log[$type]) > 100) {
-            // 命令行下面日志写入改进
-            self::save();
-        }
     }
 
     /**
@@ -141,9 +136,6 @@ class Log
             if (empty(self::$config['level'])) {
                 // 获取全部日志
                 $log = self::$log;
-                if (!App::$debug && isset($log['debug'])) {
-                    unset($log['debug']);
-                }
             } else {
                 // 记录允许级别
                 $log = [];
@@ -188,7 +180,7 @@ class Log
             self::init(Config::get('log'));
         }
         // 写入日志
-        return self::$driver->save($log, false);
+        return self::$driver->save($log);
     }
 
     /**

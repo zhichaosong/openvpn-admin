@@ -39,7 +39,7 @@ class File extends SplFileObject
     public function __construct($filename, $mode = 'r')
     {
         parent::__construct($filename, $mode);
-        $this->filename = $this->getRealPath() ?: $this->getPathname();
+        $this->filename = $this->getRealPath();
     }
 
     /**
@@ -95,15 +95,27 @@ class File extends SplFileObject
     }
 
     /**
-     * 获取文件的哈希散列值
-     * @return $string
+     * 获取文件的md5散列值
+     * @return $this
      */
-    public function hash($type = 'sha1')
+    public function md5()
     {
-        if (!isset($this->hash[$type])) {
-            $this->hash[$type] = hash_file($type, $this->filename);
+        if (!isset($this->hash['md5'])) {
+            $this->hash['md5'] = md5_file($this->filename);
         }
-        return $this->hash[$type];
+        return $this->hash['md5'];
+    }
+
+    /**
+     * 获取文件的sha1散列值
+     * @return $this
+     */
+    public function sha1()
+    {
+        if (!isset($this->hash['sha1'])) {
+            $this->hash['sha1'] = sha1_file($this->filename);
+        }
+        return $this->hash['sha1'];
     }
 
     /**
@@ -344,18 +356,19 @@ class File extends SplFileObject
                 $savename = call_user_func_array($this->rule, [$this]);
             } else {
                 switch ($this->rule) {
+                    case 'md5':
+                        $md5      = md5_file($this->filename);
+                        $savename = substr($md5, 0, 2) . DS . substr($md5, 2);
+                        break;
+                    case 'sha1':
+                        $sha1     = sha1_file($this->filename);
+                        $savename = substr($sha1, 0, 2) . DS . substr($sha1, 2);
+                        break;
                     case 'date':
                         $savename = date('Ymd') . DS . md5(microtime(true));
                         break;
                     default:
-                        if (in_array($this->rule, hash_algos())) {
-                            $hash     = $this->hash($this->rule);
-                            $savename = substr($hash, 0, 2) . DS . substr($hash, 2);
-                        } elseif (is_callable($this->rule)) {
-                            $savename = call_user_func($this->rule);
-                        } else {
-                            $savename = date('Ymd') . DS . md5(microtime(true));
-                        }
+                        $savename = call_user_func($this->rule);
                 }
             }
         } elseif ('' === $savename) {
@@ -402,10 +415,5 @@ class File extends SplFileObject
     public function getError()
     {
         return $this->error;
-    }
-
-    public function __call($method, $args)
-    {
-        return $this->hash($method);
     }
 }

@@ -79,7 +79,7 @@ class Memcache extends SessionHandler
      */
     public function read($sessID)
     {
-        return (string) $this->handler->get($this->config['session_name'] . $sessID);
+        return $this->handler->get($this->config['session_name'] . $sessID);
     }
 
     /**
@@ -87,7 +87,6 @@ class Memcache extends SessionHandler
      * @access public
      * @param string    $sessID
      * @param String    $sessData
-     * @return bool
      */
     public function write($sessID, $sessData)
     {
@@ -98,7 +97,6 @@ class Memcache extends SessionHandler
      * 删除Session
      * @access public
      * @param string $sessID
-     * @return bool
      */
     public function destroy($sessID)
     {
@@ -109,7 +107,6 @@ class Memcache extends SessionHandler
      * Session 垃圾回收
      * @access public
      * @param string $sessMaxLifeTime
-     * @return true
      */
     public function gc($sessMaxLifeTime)
     {

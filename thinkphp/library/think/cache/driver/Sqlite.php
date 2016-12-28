@@ -20,6 +20,7 @@ use think\Exception;
  */
 class Sqlite extends Driver
 {
+
     protected $options = [
         'db'         => ':memory:',
         'table'      => 'sharedmemory',

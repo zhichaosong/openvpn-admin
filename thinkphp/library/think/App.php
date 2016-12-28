@@ -16,7 +16,6 @@ use think\Env;
 use think\Exception;
 use think\exception\HttpException;
 use think\exception\HttpResponseException;
-use think\exception\RouteNotFoundException;
 use think\Hook;
 use think\Lang;
 use think\Loader;
@@ -80,34 +79,31 @@ class App
     {
         is_null($request) && $request = Request::instance();
 
+        $config = self::initCommon();
+        if (defined('BIND_MODULE')) {
+            // 模块/控制器绑定
+            BIND_MODULE && Route::bind(BIND_MODULE);
+        } elseif ($config['auto_bind_module']) {
+            // 入口自动绑定
+            $name = pathinfo($request->baseFile(), PATHINFO_FILENAME);
+            if ($name && 'index' != $name && is_dir(APP_PATH . $name)) {
+                Route::bind($name);
+            }
+        }
+
+        $request->filter($config['default_filter']);
         try {
-            $config = self::initCommon();
-            if (defined('BIND_MODULE')) {
-                // 模块/控制器绑定
-                BIND_MODULE && Route::bind(BIND_MODULE);
-            } elseif ($config['auto_bind_module']) {
-                // 入口自动绑定
-                $name = pathinfo($request->baseFile(), PATHINFO_FILENAME);
-                if ($name && 'index' != $name && is_dir(APP_PATH . $name)) {
-                    Route::bind($name);
+
+            // 开启多语言机制
+            if ($config['lang_switch_on']) {
+                // 获取当前语言
+                $request->langset(Lang::detect());
+                // 加载系统语言包
+                Lang::load(THINK_PATH . 'lang' . DS . $request->langset() . EXT);
+                if (!$config['app_multi_module']) {
+                    Lang::load(APP_PATH . 'lang' . DS . $request->langset() . EXT);
                 }
             }
-
-            $request->filter($config['default_filter']);
-
-            if ($config['lang_switch_on']) {
-                // 开启多语言机制 检测当前语言
-                Lang::detect();
-            } else {
-                // 读取默认语言
-                Lang::range($config['default_lang']);
-            }
-            $request->langset(Lang::range());
-            // 加载系统语言包
-            Lang::load([
-                THINK_PATH . 'lang' . DS . $request->langset() . EXT,
-                APP_PATH . 'lang' . DS . $request->langset() . EXT,
-            ]);
 
             // 获取应用调度信息
             $dispatch = self::$dispatch;
@@ -127,8 +123,6 @@ class App
 
             // 监听app_begin
             Hook::listen('app_begin', $dispatch);
-            // 请求缓存检查
-            $request->cache($config['request_cache'], $config['request_cache_expire']);
 
             switch ($dispatch['type']) {
                 case 'redirect':
@@ -141,13 +135,11 @@ class App
                     break;
                 case 'controller':
                     // 执行控制器操作
-                    $vars = Request::instance()->param();
-                    $data = Loader::action($dispatch['controller'], array_merge($vars, $dispatch['var']));
+                    $data = Loader::action($dispatch['controller']);
                     break;
                 case 'method':
                     // 执行回调方法
-                    $vars = Request::instance()->param();
-                    $data = self::invokeMethod($dispatch['method'], array_merge($vars, $dispatch['var']));
+                    $data = self::invokeMethod($dispatch['method']);
                     break;
                 case 'function':
                     // 执行闭包
@@ -222,35 +214,16 @@ class App
     public static function invokeMethod($method, $vars = [])
     {
         if (is_array($method)) {
-            $class   = is_object($method[0]) ? $method[0] : self::invokeClass($method[0]);
+            $class   = is_object($method[0]) ? $method[0] : new $method[0];
             $reflect = new \ReflectionMethod($class, $method[1]);
         } else {
             // 静态方法
             $reflect = new \ReflectionMethod($method);
         }
         $args = self::bindParams($reflect, $vars);
-
-        self::$debug && Log::record('[ RUN ] ' . $reflect->class . '->' . $reflect->name . '[ ' . $reflect->getFileName() . ' ]', 'info');
+        // 记录执行信息
+        self::$debug && Log::record('[ RUN ] ' . $reflect->__toString(), 'info');
         return $reflect->invokeArgs(isset($class) ? $class : null, $args);
-    }
-
-    /**
-     * 调用反射执行类的实例化 支持依赖注入
-     * @access public
-     * @param string    $class 类名
-     * @param array     $vars  变量
-     * @return mixed
-     */
-    public static function invokeClass($class, $vars = [])
-    {
-        $reflect     = new \ReflectionClass($class);
-        $constructor = $reflect->getConstructor();
-        if ($constructor) {
-            $args = self::bindParams($constructor, $vars);
-        } else {
-            $args = [];
-        }
-        return $reflect->newInstanceArgs($args);
     }
 
     /**
@@ -281,18 +254,11 @@ class App
                 $class = $param->getClass();
                 if ($class) {
                     $className = $class->getName();
-                    $bind      = Request::instance()->$name;
-                    if ($bind instanceof $className) {
-                        $args[] = $bind;
+                    if (isset($vars[$name]) && $vars[$name] instanceof $className) {
+                        $args[] = $vars[$name];
+                        unset($vars[$name]);
                     } else {
-                        if (method_exists($className, 'invoke')) {
-                            $method = new \ReflectionMethod($className, 'invoke');
-                            if ($method->isPublic() && $method->isStatic()) {
-                                $args[] = $className::invoke(Request::instance());
-                                continue;
-                            }
-                        }
-                        $args[] = method_exists($className, 'instance') ? $className::instance() : new $className;
+                        $args[] = method_exists($className, 'instance') ? $className::instance() : new $className();
                     }
                 } elseif (1 == $type && !empty($vars)) {
                     $args[] = array_shift($vars);
@@ -347,8 +313,6 @@ class App
                 // 初始化模块
                 $request->module($module);
                 $config = self::init($module);
-                // 模块请求缓存检查
-                $request->cache($config['request_cache'], $config['request_cache_expire']);
             } else {
                 throw new HttpException(404, 'module not exists:' . $module);
             }
@@ -376,29 +340,34 @@ class App
         // 监听module_init
         Hook::listen('module_init', $request);
 
-        $instance = Loader::controller($controller, $config['url_controller_layer'], $config['controller_suffix'], $config['empty_controller']);
-        if (is_null($instance)) {
-            throw new HttpException(404, 'controller not exists:' . Loader::parseName($controller, 1));
-        }
-        // 获取当前操作名
-        $action = $actionName . $config['action_suffix'];
+        try {
+            $instance = Loader::controller($controller, $config['url_controller_layer'], $config['controller_suffix'], $config['empty_controller']);
+            if (is_null($instance)) {
+                throw new HttpException(404, 'controller not exists:' . Loader::parseName($controller, 1));
+            }
+            // 获取当前操作名
+            $action = $actionName . $config['action_suffix'];
+            if (!preg_match('/^[A-Za-z](\w)*$/', $action)) {
+                // 非法操作
+                throw new \ReflectionException('illegal action name:' . $actionName);
+            }
 
-        $vars = [];
-        if (is_callable([$instance, $action])) {
             // 执行操作方法
             $call = [$instance, $action];
-        } elseif (is_callable([$instance, '_empty'])) {
-            // 空操作
-            $call = [$instance, '_empty'];
-            $vars = [$actionName];
-        } else {
+            Hook::listen('action_begin', $call);
+
+            $data = self::invokeMethod($call);
+        } catch (\ReflectionException $e) {
             // 操作不存在
-            throw new HttpException(404, 'method not exists:' . get_class($instance) . '->' . $action . '()');
+            if (method_exists($instance, '_empty')) {
+                $reflect = new \ReflectionMethod($instance, '_empty');
+                $data    = $reflect->invokeArgs($instance, [$action]);
+                self::$debug && Log::record('[ RUN ] ' . $reflect->__toString(), 'info');
+            } else {
+                throw new HttpException(404, 'method not exists:' . (new \ReflectionClass($instance))->getName() . '->' . $action);
+            }
         }
-
-        Hook::listen('action_begin', $call);
-
-        return self::invokeMethod($call, $vars);
+        return $data;
     }
 
     /**
@@ -450,9 +419,9 @@ class App
             // 监听app_init
             Hook::listen('app_init');
 
-            self::$init = true;
+            self::$init = $config;
         }
-        return Config::get();
+        return self::$init;
     }
 
     /**
@@ -475,18 +444,12 @@ class App
             $path = APP_PATH . $module;
             // 加载模块配置
             $config = Config::load(CONF_PATH . $module . 'config' . CONF_EXT);
-            // 读取数据库配置文件
-            $filename = CONF_PATH . $module . 'database' . CONF_EXT;
-            Config::load($filename, 'database');
+
             // 读取扩展配置文件
-            if (is_dir(CONF_PATH . $module . 'extra')) {
-                $dir   = CONF_PATH . $module . 'extra';
-                $files = scandir($dir);
-                foreach ($files as $file) {
-                    if (strpos($file, CONF_EXT)) {
-                        $filename = $dir . DS . $file;
-                        Config::load($filename, pathinfo($file, PATHINFO_FILENAME));
-                    }
+            if ($config['extra_config_list']) {
+                foreach ($config['extra_config_list'] as $name => $file) {
+                    $filename = CONF_PATH . $module . $file . CONF_EXT;
+                    Config::load($filename, is_string($name) ? $name : pathinfo($filename, PATHINFO_FILENAME));
                 }
             }
 
@@ -506,7 +469,7 @@ class App
             }
 
             // 加载当前模块语言包
-            if ($module) {
+            if ($config['lang_switch_on'] && $module) {
                 Lang::load($path . 'lang' . DS . Request::instance()->langset() . EXT);
             }
         }
@@ -554,7 +517,7 @@ class App
             $must   = !is_null(self::$routeMust) ? self::$routeMust : $config['url_route_must'];
             if ($must && false === $result) {
                 // 路由无效
-                throw new RouteNotFoundException();
+                throw new HttpException(404, 'Route Not Found');
             }
         }
         if (false === $result) {

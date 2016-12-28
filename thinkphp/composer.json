@@ -27,10 +27,5 @@
         "sebastian/phpcpd": "2.*",
         "squizlabs/php_codesniffer": "2.*",
         "phpdocumentor/reflection-docblock": "^2.0"
-    },
-    "autoload": {
-        "psr-4": {
-            "think\\": "library/think"
-        }
-    }    
+    }
 }

@@ -74,7 +74,6 @@ class Sqlite extends Connection
      */
     public function getTables($dbName = '')
     {
-        $this->initConnect(true);
         $sql = "SELECT name FROM sqlite_master WHERE type='table' "
             . "UNION ALL SELECT name FROM sqlite_temp_master "
             . "WHERE type='table' ORDER BY name";

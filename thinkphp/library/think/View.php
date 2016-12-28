@@ -11,9 +11,6 @@
 
 namespace think;
 
-use think\Loader;
-use think\Request;
-
 class View
 {
     // 视图实例
@@ -22,8 +19,6 @@ class View
     public $engine;
     // 模板变量
     protected $data = [];
-    // 用于静态赋值的模板变量
-    protected static $var = [];
     // 视图输出替换
     protected $replace = [];
 
@@ -37,21 +32,7 @@ class View
     {
         // 初始化模板引擎
         $this->engine((array) $engine);
-        // 基础替换字符串
-        $request = Request::instance();
-        $base    = $request->root();
-        $root    = strpos($base, '.') ? ltrim(dirname($base), DS) : $base;
-        if ('' != $root) {
-            $root = '/' . ltrim($root, '/');
-        }
-        $baseReplace = [
-            '__ROOT__'   => $root,
-            '__URL__'    => $base . '/' . $request->module() . '/' . Loader::parseName($request->controller()),
-            '__STATIC__' => $root . '/static',
-            '__CSS__'    => $root . '/static/css',
-            '__JS__'     => $root . '/static/js',
-        ];
-        $this->replace = array_merge($baseReplace, (array) $replace);
+        $this->replace = $replace;
     }
 
     /**
@@ -67,22 +48,6 @@ class View
             self::$instance = new self($engine, $replace);
         }
         return self::$instance;
-    }
-
-    /**
-     * 模板变量静态赋值
-     * @access public
-     * @param mixed $name  变量名
-     * @param mixed $value 变量值
-     * @return void
-     */
-    public static function share($name, $value = '')
-    {
-        if (is_array($name)) {
-            self::$var = array_merge(self::$var, $name);
-        } else {
-            self::$var[$name] = $value;
-        }
     }
 
     /**
@@ -151,7 +116,7 @@ class View
     public function fetch($template = '', $vars = [], $replace = [], $config = [], $renderContent = false)
     {
         // 模板变量
-        $vars = array_merge(self::$var, $this->data, $vars);
+        $vars = array_merge($this->data, $vars);
 
         // 页面缓存
         ob_start();

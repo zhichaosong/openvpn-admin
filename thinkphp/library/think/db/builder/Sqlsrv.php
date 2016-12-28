@@ -27,23 +27,22 @@ class Sqlsrv extends Builder
      * order分析
      * @access protected
      * @param mixed $order
-     * @param array $options
      * @return string
      */
-    protected function parseOrder($order, $options = [])
+    protected function parseOrder($order)
     {
         if (is_array($order)) {
             $array = [];
             foreach ($order as $key => $val) {
                 if (is_numeric($key)) {
                     if (false === strpos($val, '(')) {
-                        $array[] = $this->parseKey($val, $options);
+                        $array[] = $this->parseKey($val);
                     } elseif ('[rand]' == $val) {
                         $array[] = $this->parseRand();
                     }
                 } else {
                     $sort    = in_array(strtolower(trim($val)), ['asc', 'desc']) ? ' ' . $val : '';
-                    $array[] = $this->parseKey($key, $options) . ' ' . $sort;
+                    $array[] = $this->parseKey($key) . ' ' . $sort;
                 }
             }
             $order = implode(',', $array);
@@ -62,26 +61,16 @@ class Sqlsrv extends Builder
     }
 
     /**
-     * 字段和表名处理
+     * 字段名分析
      * @access protected
      * @param string $key
-     * @param array  $options
      * @return string
      */
-    protected function parseKey($key, $options = [])
+    protected function parseKey($key)
     {
         $key = trim($key);
-        if (strpos($key, '.') && !preg_match('/[,\'\"\(\)\[\s]/', $key)) {
-            list($table, $key) = explode('.', $key, 2);
-            if (isset($options['alias'][$table])) {
-                $table = $options['alias'][$table];
-            }
-        }
         if (!is_numeric($key) && !preg_match('/[,\'\"\*\(\)\[.\s]/', $key)) {
             $key = '[' . $key . ']';
-        }
-        if (isset($table)) {
-            $key = '[' . $table . '].' . $key;
         }
         return $key;
     }
