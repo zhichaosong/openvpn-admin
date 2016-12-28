@@ -21,7 +21,7 @@ class User extends Model
 		$msg = '';
 		//！！！ 用户名、密码、验证码，需要统一后台验证，使用 validate
 		$User = new User();
-		$result = $User->validate('User.login')->save($data);
+		$result = $User->validate('User.login')->save($data); //validate 类中没有这个save方法 没有想明白这里为何使用save()
 
 		if(false === $result){
 			return info($User->getError(),0);
