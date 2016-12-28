@@ -12,6 +12,7 @@
 namespace think;
 
 use think\exception\TemplateNotFoundException;
+use think\Request;
 
 /**
  * ThinkPHP分离出来的模板引擎
@@ -25,6 +26,7 @@ class Template
     // 引擎配置
     protected $config = [
         'view_path'          => '', // 模板路径
+        'view_base'          => '',
         'view_suffix'        => 'html', // 默认模板文件后缀
         'view_depr'          => DS,
         'cache_suffix'       => 'php', // 默认模板缓存后缀
@@ -127,6 +129,8 @@ class Template
             $this->config = array_merge($this->config, $config);
         } elseif (isset($this->config[$config])) {
             return $this->config[$config];
+        } else {
+            return null;
         }
     }
 
@@ -957,78 +961,66 @@ class Template
      * @param  array $vars 变量数组
      * @return string
      */
-    public function parseThinkVar(&$vars)
+    public function parseThinkVar($vars)
     {
-        $vars[0]  = strtoupper(trim($vars[0]));
-        $parseStr = '';
-        if (count($vars) >= 2) {
-            $vars[1] = trim($vars[1]);
-            switch ($vars[0]) {
+        $type  = strtoupper(trim(array_shift($vars)));
+        $param = implode('.', $vars);
+        if ($vars) {
+            switch ($type) {
                 case 'SERVER':
-                    $parseStr = '$_SERVER[\'' . strtoupper($vars[1]) . '\']';
+                    $parseStr = '\\think\\Request::instance()->server(\'' . $param . '\')';
                     break;
                 case 'GET':
-                    $parseStr = '$_GET[\'' . $vars[1] . '\']';
+                    $parseStr = '\\think\\Request::instance()->get(\'' . $param . '\')';
                     break;
                 case 'POST':
-                    $parseStr = '$_POST[\'' . $vars[1] . '\']';
+                    $parseStr = '\\think\\Request::instance()->post(\'' . $param . '\')';
                     break;
                 case 'COOKIE':
-                    if (isset($vars[2])) {
-                        $parseStr = '$_COOKIE[\'' . $vars[1] . '\'][\'' . $vars[2] . '\']';
-                    } else {
-                        $parseStr = '\\think\\Cookie::get(\'' . $vars[1] . '\')';
-                    }
+                    $parseStr = '\\think\\Cookie::get(\'' . $param . '\')';
                     break;
                 case 'SESSION':
-                    if (isset($vars[2])) {
-                        $parseStr = '$_SESSION[\'' . $vars[1] . '\'][\'' . $vars[2] . '\']';
-                    } else {
-                        $parseStr = '\\think\\Session::get(\'' . $vars[1] . '\')';
-                    }
+                    $parseStr = '\\think\\Session::get(\'' . $param . '\')';
                     break;
                 case 'ENV':
-                    $parseStr = '$_ENV[\'' . strtoupper($vars[1]) . '\']';
+                    $parseStr = '\\think\\Request::instance()->env(\'' . $param . '\')';
                     break;
                 case 'REQUEST':
-                    $parseStr = '$_REQUEST[\'' . $vars[1] . '\']';
+                    $parseStr = '\\think\\Request::instance()->request(\'' . $param . '\')';
                     break;
                 case 'CONST':
-                    $parseStr = strtoupper($vars[1]);
+                    $parseStr = strtoupper($param);
                     break;
                 case 'LANG':
-                    $parseStr = '\\think\\Lang::get(\'' . $vars[1] . '\')';
+                    $parseStr = '\\think\\Lang::get(\'' . $param . '\')';
                     break;
                 case 'CONFIG':
-                    if (isset($vars[2])) {
-                        $vars[1] .= '.' . $vars[2];
-                    }
-                    $parseStr = '\\think\\Config::get(\'' . $vars[1] . '\')';
+                    $parseStr = '\\think\\Config::get(\'' . $param . '\')';
                     break;
                 default:
                     $parseStr = '\'\'';
                     break;
             }
         } else {
-            if (count($vars) == 1) {
-                switch ($vars[0]) {
-                    case 'NOW':
-                        $parseStr = "date('Y-m-d g:i a',time())";
-                        break;
-                    case 'VERSION':
-                        $parseStr = 'THINK_VERSION';
-                        break;
-                    case 'LDELIM':
-                        $parseStr = '\'' . ltrim($this->config['tpl_begin'], '\\') . '\'';
-                        break;
-                    case 'RDELIM':
-                        $parseStr = '\'' . ltrim($this->config['tpl_end'], '\\') . '\'';
-                        break;
-                    default:
-                        if (defined($vars[0])) {
-                            $parseStr = $vars[0];
-                        }
-                }
+            switch ($type) {
+                case 'NOW':
+                    $parseStr = "date('Y-m-d g:i a',time())";
+                    break;
+                case 'VERSION':
+                    $parseStr = 'THINK_VERSION';
+                    break;
+                case 'LDELIM':
+                    $parseStr = '\'' . ltrim($this->config['tpl_begin'], '\\') . '\'';
+                    break;
+                case 'RDELIM':
+                    $parseStr = '\'' . ltrim($this->config['tpl_end'], '\\') . '\'';
+                    break;
+                default:
+                    if (defined($type)) {
+                        $parseStr = $type;
+                    } else {
+                        $parseStr = '';
+                    }
             }
         }
         return $parseStr;
@@ -1071,14 +1063,20 @@ class Template
     {
         if ('' == pathinfo($template, PATHINFO_EXTENSION)) {
             if (strpos($template, '@')) {
-                // 跨模块调用模板
-                $template = str_replace(['/', ':'], $this->config['view_depr'], $template);
-                $template = APP_PATH . str_replace('@', '/' . basename($this->config['view_path']) . '/', $template);
-            } else {
-                $template = str_replace(['/', ':'], $this->config['view_depr'], $template);
-                $template = $this->config['view_path'] . $template;
+                list($module, $template) = explode('@', $template);
             }
-            $template .= '.' . ltrim($this->config['view_suffix'], '.');
+            if (0 !== strpos($template, '/')) {
+                $template = str_replace(['/', ':'], $this->config['view_depr'], $template);
+            } else {
+                $template = str_replace(['/', ':'], $this->config['view_depr'], substr($template, 1));
+            }
+            if ($this->config['view_base']) {
+                $module = isset($module) ? $module : Request::instance()->module();
+                $path   = $this->config['view_base'] . ($module ? $module . DS : '');
+            } else {
+                $path = isset($module) ? APP_PATH . $module . DS . basename($this->config['view_path']) . DS : $this->config['view_path'];
+            }
+            $template = $path . $template . '.' . ltrim($this->config['view_suffix'], '.');
         }
 
         if (is_file($template)) {

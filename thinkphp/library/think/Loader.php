@@ -322,7 +322,7 @@ class Loader
                 //加载当前模块应用类库
                 $baseUrl = App::$modulePath;
             } elseif (is_dir(EXTEND_PATH . $name)) {
-                $baseUrl = EXTEND_PATH;
+                $baseUrl = EXTEND_PATH . $name . DS;
             } else {
                 // 加载其它模块的类库
                 $baseUrl = APP_PATH . $name . DS;
@@ -365,8 +365,9 @@ class Loader
      */
     public static function model($name = '', $layer = 'model', $appendSuffix = false, $common = 'common')
     {
-        if (isset(self::$instance[$name . $layer])) {
-            return self::$instance[$name . $layer];
+        $guid = $name . $layer;
+        if (isset(self::$instance[$guid])) {
+            return self::$instance[$guid];
         }
         if (strpos($name, '/')) {
             list($module, $name) = explode('/', $name, 2);
@@ -384,7 +385,7 @@ class Loader
                 throw new ClassNotFoundException('class not exists:' . $class, $class);
             }
         }
-        self::$instance[$name . $layer] = $model;
+        self::$instance[$guid] = $model;
         return $model;
     }
 
@@ -406,7 +407,7 @@ class Loader
         }
         $class = self::parseClass($module, $layer, $name, $appendSuffix);
         if (class_exists($class)) {
-            return new $class(Request::instance());
+            return App::invokeClass($class);
         } elseif ($empty && class_exists($emptyClass = self::parseClass($module, $layer, $empty, $appendSuffix))) {
             return new $emptyClass(Request::instance());
         }
@@ -427,9 +428,9 @@ class Loader
         if (empty($name)) {
             return new Validate;
         }
-
-        if (isset(self::$instance[$name . $layer])) {
-            return self::$instance[$name . $layer];
+        $guid = $name . $layer;
+        if (isset(self::$instance[$guid])) {
+            return self::$instance[$guid];
         }
         if (strpos($name, '/')) {
             list($module, $name) = explode('/', $name);
@@ -447,7 +448,7 @@ class Loader
                 throw new ClassNotFoundException('class not exists:' . $class, $class);
             }
         }
-        self::$instance[$name . $layer] = $validate;
+        self::$instance[$guid] = $validate;
         return $validate;
     }
 
@@ -493,14 +494,16 @@ class Loader
      * type 0 将Java风格转换为C的风格 1 将C风格转换为Java的风格
      * @param string  $name 字符串
      * @param integer $type 转换类型
+     * @param bool    $ucfirst 首字母是否大写（驼峰规则）
      * @return string
      */
-    public static function parseName($name, $type = 0)
+    public static function parseName($name, $type = 0, $ucfirst = true)
     {
         if ($type) {
-            return ucfirst(preg_replace_callback('/_([a-zA-Z])/', function ($match) {
+            $name = preg_replace_callback('/_([a-zA-Z])/', function ($match) {
                 return strtoupper($match[1]);
-            }, $name));
+            }, $name);
+            return $ucfirst ? ucfirst($name) : lcfirst($name);
         } else {
             return strtolower(trim(preg_replace("/[A-Z]/", "_\\0", $name), "_"));
         }

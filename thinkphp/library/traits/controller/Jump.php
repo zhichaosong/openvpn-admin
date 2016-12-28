@@ -44,7 +44,7 @@ trait Jump
         if (is_null($url) && isset($_SERVER["HTTP_REFERER"])) {
             $url = $_SERVER["HTTP_REFERER"];
         } elseif ('' !== $url) {
-            $url = preg_match('/^(https?:|\/)/', $url) ? $url : Url::build($url);
+            $url = (strpos($url, '://') || 0 === strpos($url, '/')) ? $url : Url::build($url);
         }
         $result = [
             'code' => $code,
@@ -81,9 +81,9 @@ trait Jump
             $msg  = '';
         }
         if (is_null($url)) {
-            $url = 'javascript:history.back(-1);';
+            $url = Request::instance()->isAjax() ? '' : 'javascript:history.back(-1);';
         } elseif ('' !== $url) {
-            $url = preg_match('/^(https?:|\/)/', $url) ? $url : Url::build($url);
+            $url = (strpos($url, '://') || 0 === strpos($url, '/')) ? $url : Url::build($url);
         }
         $result = [
             'code' => $code,

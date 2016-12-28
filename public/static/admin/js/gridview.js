@@ -501,6 +501,8 @@ $(function() {
         return row;
     };
 
+    
+
     GridView.prototype.current = function() {
         return this.currentRow;
     }
