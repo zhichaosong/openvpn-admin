@@ -29,12 +29,15 @@ class Tool extends Taglib
         $controller = $request->controller();
         $url = '/'.$module.'/'.$controller;
 
-        $html = '';
-
+        $html  = '';
         $html .= '<div id="' . $tag['id'] . '" class="toolbar" data-module="'.$url.'">';
-        $toolbar_node_list = \app\common\controller\Permission::getCurrentAccessList();
-
+        $html .= '<div class="btn-group">';
+        $html .= '<button type="button" data-name="add" class="btn btn-primary" data-event-type="view" data-event-value=""  data-target="modal"><i class="fa fa-plus" aria-hidden="true" style="margin-right: 2px"> </i>添加</button><button type="button" data-name="delete" class="btn btn-default" data-event-type="default" data-event-value="" data-target="modal"><i class="fa fa-edit" aria-hidden="true" style="margin-right: 2px"> </i>删除</button>';
+        $html .= '</div>';
+        $html .= $content;
+        $html .= '</div>';
         
         return $html;
     }
+
 }
