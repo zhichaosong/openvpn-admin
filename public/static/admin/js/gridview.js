@@ -23,7 +23,6 @@ $(function() {
         this.clickToSelect = this.$table.data('clickToSelect') == false ? false : true; //选中checkbox
         this.showRefresh = this.$table.data('showRefresh') == false ? false : true;
         this.$table.data('gridview', this);
-        this.enabledEdit = this.$table.data('edit') || false;
         this.init();
     };
 
@@ -74,12 +73,6 @@ $(function() {
                 return false;
             },
             onClickRow: function(row, $element) {
-                $this.scrollPosition = $this.$table.bootstrapTable('getScrollPosition');
-                var result = $this.$table.triggerHandler('clickRow', [row, $this]);
-                if (result !== false && $this.enabledEdit) {
-                    $this.editRow(row);
-                }
-
                 $element.addClass('info').siblings().removeClass('info');
 
                 var btnGroup = $element.parents('.bootstrap-table:eq(0)').find('#toolbar').find('.btn-group')
@@ -418,45 +411,6 @@ $(function() {
         this.$form[0].reset();
     };
 
-    GridView.prototype.editRow = function(row) {
-        this.currentRow = row;
-        if (this.$form.length == 0) {
-            return;
-        }
-
-        var uniqueId = this.$form.find('input[name="' + this.uniqueId + '"]').val();
-
-        if (row == null) {
-            this.resetForm();
-            return;
-        }
-
-        if (uniqueId == row[this.uniqueId]) {
-            return;
-        }
-
-        this.resetForm();
-
-        for (var i in row) {
-            var $element = this.$form.find('input[name="' + i + '"]');
-            if ($element.length == 0) {
-                continue;
-            }
-
-            if ($element[0].type == 'radio' || $element[0].type == 'checkbox') {
-                $element.each(function(e_i, item) {
-                    if (row[i] instanceof Array) {
-                        item.checked = row[i].indexOf(item.value) != -1;
-                    } else {
-                        item.checked = item.value == row[i];
-                    }
-                });
-            } else {
-                $element.val(row[i]);
-            }
-        }
-    };
-
     GridView.prototype.resetView = function(height) {
 
         if (this.$table.data('height') != undefined) {
@@ -510,7 +464,6 @@ $(function() {
         });
     };
 
-
     GridView.prototype.getFormValue = function(selector) {
         var $form = selector == undefined ? this.$form : $(selector);
         if ($form.length == 0) {
@@ -554,6 +507,7 @@ $(function() {
 
     new GridView('table[data-toggle="gridview"]');
 
+    // 将gridView插件对外暴露，方便外部调用
     $.fn.gridView = function(option, arg1, arg2) {
         var $gridview = this.data('gridview');
         if (typeof option == 'string') {

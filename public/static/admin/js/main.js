@@ -580,7 +580,7 @@ function newId(length) {
     return str;
 }
 
-//jquery扩展ajax提交表单
+//jquery扩展ajax提交表单新方法
 $.fn.ajaxSubmit = function() {
     var $form = this;
     var $submit = $form.find(':submit');
