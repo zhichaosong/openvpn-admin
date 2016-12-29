@@ -27,22 +27,30 @@
                 <!-- 表单内容 -->
                 <div class="ibox-content">
                     <!-- 用户控件（操作） -->
-                    <div id="toolbar" class="toolbar" data-module="/admin/subject">
-                        <div class="btn-group">
-                            <button type="button" data-name="add" class="btn btn-primary" data-event-type="view" data-event-value="" data-target="modal"><i class="fa fa-plus" aria-hidden="true" style="margin-right: 2px"> </i>添加</button>
-                            <button type="button" data-name="edit" class="btn btn-default" data-event-type="view" data-event-value="" data-target="modal" disabled><i class="fa fa-edit" aria-hidden="true" style="margin-right: 2px"> </i>编辑</button>
-                            <button type="button" data-name="delete" class="btn btn-default" data-event-type="default" data-event-value="" data-target="modal" disabled><i class="fa fa-trash" aria-hidden="true" style="margin-right: 2px"> </i>删除</button>
-                        </div>
-                       
-                    </div>
+                    {toolbar id="toolbar"}
+                    {/toolbar}
                     <!-- 表格数据 -->
-                    <table id="table" data-toggle="gridview" class="table" data-url="/admin/subject" data-toolbar="#toolbar" data-show-columns="true" data-page-size="10" data-page-list="[10, 25, 50, All]" data-unique-id="id" data-pagination="true" data-side-pagination="client" data-search="true" data-click-to-select="false">
+                    <!-- 解释
+                        data-toggle 调用 gridview.js
+                        data-url 请求服务器地址
+                        data-toolbar toolbar按钮
+                        data-show-columns 是否显示 内容列下拉框  
+                        data-pagination 设置分页
+                        data-page-size 如果设置了分页，页面数据条数
+                        data-page-list 设置可供选择的页面数据条数
+                        data-unique-id 唯一ID （一般设置主键）
+                        data-side-pagination  设置在哪里进行分页，可选值为 'client' 或者 'server'
+                        data-search 是否启用搜索框 
+                        data-click-to-select 设置true 将在点击行时，自动选择rediobox 和 checkbox
+                         -->
+                    <table id="table" data-toggle="gridview" class="table" data-url="/admin/comment" data-toolbar="#toolbar" data-show-columns="true" data-pagination="true" data-page-size="10" data-page-list="[10, 25, 50, All]" data-unique-id="id"  data-side-pagination="server" data-search="true" data-click-to-select="false">
                         <thead>
                             <tr>
                                 <th data-width="10" data-align="center" data-checkbox="true"></th>
-                                <th data-field="name" >称呼</th>
-                                <th data-field="content">留言内容</th>
-                                <th data-field="create_time" data-align="center">时间</th>
+                                <th data-width="30" data-field="username">称呼</th>
+                                <th data-width="50" data-field="email" data-align="center">邮箱</th>
+                                <th data-field="content">内容</th>
+                                <th data-width="150" data-field="create_time" data-align="center">时间</th>
                                 <th data-field="operate"   data-align="center" data-formatter="operateFormatter" data-events="operateEvents">操作</th>
                                 
                             </tr>

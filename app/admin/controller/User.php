@@ -1,11 +1,7 @@
 <?php
 namespace app\admin\controller;
 
-use think\Session;
-use think\Request;
 use think\Loader;
-use think\Db;
-use think\Config;
 
 
 /**

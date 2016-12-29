@@ -82,6 +82,7 @@
        })
 
         $('.refcaptcha').on('click', function(){
+            console.log($('#captchaimg').get(0).src)
             $('#captchaimg').get(0).src=($('#captchaimg').get(0).src+'?=r'+Math.random(1, 10000));
         });
     })

@@ -17,7 +17,7 @@ $(function() {
         this.uniqueId = 'id';
         this.module = this.$toolbar.data('module');
         this.pagination = this.$table.data('pagination') == false ? false : true;
-        this.sidePagination = this.$table.data('') || "client";
+        this.sidePagination = this.$table.data('sidePagination') == 'server' ? 'server' : 'client';
         this.clientSort = this.$table.data('clientSort') == false ? false : true;
         this.pageSize = this.$table.data('pageSize') || 50;
         this.clickToSelect = this.$table.data('clickToSelect') == false ? false : true; //选中checkbox
