@@ -7,10 +7,9 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<title>{$Think.config.WEBSITE_NAME} | 登录</title>
-    <meta name="KeyWords" content="{$Think.config.KEYWORDS}">
-    <meta name="Description" content="{$Think.config.DESCRIPTION}">
-	<!-- {css href="/bootstrap3/css/bootstrap.css" /} -->
+	<title>{$Think.config.website.name} | 登录</title>
+    <meta name="KeyWords" content="{$Think.config.website.keywords}">
+    <meta name="Description" content="{$Think.config.website.description}">
 	{css href="__LIB__/bootstrap3/css/bootstrap.min.css" /}
 
 	{css href="__CSS__/bootstrap-table.css" /}
@@ -54,7 +53,7 @@
                 </div>
 
                 <div class="form-group" style="float: left;">
-                    <img id="captchaimg" src="{:captcha_src()}" alt="验证码" width="120" height="34" class="verify refcaptcha">
+                    <img id="captchaimg" src="{:captcha_src()}" alt="验证码" width="130" height="38" class="verify refcaptcha">
                     <span style="width: 100px;padding-left: 10px" class="refcaptcha">看不清，点击图片换一张</span>
                 </div>
 
@@ -82,7 +81,6 @@
        })
 
         $('.refcaptcha').on('click', function(){
-            console.log($('#captchaimg').get(0).src)
             $('#captchaimg').get(0).src=($('#captchaimg').get(0).src+'?=r'+Math.random(1, 10000));
         });
     })

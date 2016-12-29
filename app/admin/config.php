@@ -2,7 +2,11 @@
 
 return [
     //网站名称
-	'WEBSITE_NAME'          		    =>  'Red-Team',
+    'website'   =>      [
+                            'name'          => 'Red-Team',
+                            'keywords'      =>  'TPAdmin,高性能，后台管理',
+                            'description'   =>  'ThinkPHP5,高性能，后台管理，权限管理，后台模版，组件化开发，软删除，验证器，多语言，国际化'
+                        ],
     // 默认输出类型
     'default_return_type'               => 'html',
     // 默认跳转页面对应的模板文件
@@ -84,6 +88,4 @@ return [
     //伪静态
     'url_html_suffix' => false,
     'user_auth_key'     => 'authId',
-    'KEYWORDS'          =>  'TPAdmin,高性能，后台管理',
-    'DESCRIPTION'       =>  'ThinkPHP5,高性能，后台管理，权限管理，后台模版，组件化开发，软删除，验证器，多语言，国际化'
 ];
