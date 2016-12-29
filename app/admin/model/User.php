@@ -19,21 +19,10 @@ class User extends Model
 	{
 		$code = 1;
 		$msg = '';
-		//！！！ 用户名、密码、验证码，需要统一后台验证，使用 validate
-		//$User = new User();
-		//$result = $User->validate('User.login')->save($data); //validate 类中没有这个save方法 没有想明白这里为何使用save()
-
-		//if(false === $result){
-		//	return info($User->getError(),0);
-		//}
-
-		$check_field = ['mobile', 'password'];
-		foreach($check_field as $field) {
-			if(!isset($data[$field])) {
-				$code = 4001;
-				$msg = lang('Input error');
-				break;
-			}
+		//使用验证类demo
+		$userValidate = validate('User');
+		if(!$userValidate->scene('login')->check($data)) {
+			return info(lang($userValidate->getError()), 4001);
 		}
 		if( $code != 1 ) {
 			return info($msg, $code);

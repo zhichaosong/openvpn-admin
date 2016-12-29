@@ -12,13 +12,14 @@ class User extends Validate
     ];
 
     protected $message  =   [
-        'mobile.require'      => '账号必须',
-        'mobile.length'       => '请输入正确手机号',
-        'password.length'       => '密码应在6-20之间',
+        'mobile.require'      => 'Mobile require',
+        'mobile.length'       => 'Please enter a correct mobile',
+        'password.length'       => 'Please enter a correct password',
     ];
 
     protected $scene = [
-        'login'                 =>  ['mobile','password'],
+        'add' => ['mobile','password'],
+        'login' =>  ['mobile','password'],
     ];
 
 }

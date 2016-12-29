@@ -27,5 +27,8 @@ return [
     'Moblie already exists'     =>  '手机号已经存在，请重新输入',
     'You entered the account or password is incorrect, please again' => '你输入的账号或密码不正确，请重新输入',
     'This action must be rule' => '该方法必须验证权限',
-    'Captcha error'  => '验证码错误'
+    'Captcha error'  => '验证码错误',
+    'Mobile require' => '帐号必须',
+    'Please enter a correct mobile' => '请输入正确手机号',
+    'Please enter a correct password' => '请输入正确的密码'
 ];
