@@ -111,10 +111,10 @@ $(function() {
 
                 var checked =  $this.getSelections()
 
-                if (checked.length > 1) {
+                if (checked.length > 0) {
                     return
                 }
-                
+
                 var btnGroup = $element.parents('.bootstrap-table:eq(0)').find('#toolbar').find('.btn-group')
                 btnGroup.each(function(items, index) {
                     $(index).find('button').each(function(item, ele) {
@@ -343,7 +343,7 @@ $(function() {
             rows[0] = row
             rows['length'] =1
         }else{
-            rows = $this.$table.bootstrapTable('getSelections'); // 当前页被选中项(getAllSelections 所有分页被选中项)
+            rows = $this.getSelections() // 当前页被选中项(getAllSelections 所有分页被选中项)
         }
         if (rows.length == 0) {
             alertMsg('请勾选要删除的数据', 'warning');
