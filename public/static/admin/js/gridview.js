@@ -117,7 +117,7 @@ $(function() {
                     })
                 })
 
-                $this.$table.trigger('uncheck', [row, $this]);
+                // $this.$table.trigger('uncheck', [row, $this]);
                 return false;
             },
             onCheckAll: function(rows) {
