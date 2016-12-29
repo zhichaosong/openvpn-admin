@@ -33,7 +33,15 @@ class Login extends Common
 			return $this->success( lang('Request type error') );
 		}
 
-		$loginData = input('post.');
+		$postData = input('post.');
+		$captcha = $postData['captcha'];
+		if(!captcha_check($captcha)){
+			return $this->error( lang('Captcha error') );
+		};
+		$loginData = array(
+			'mobile'=>$postData['mobile'],
+			'password'=>$postData['password']
+		);
 		$ret = Loader::model('User')->login( $loginData );
 		if ($ret['code'] !== 1) {
 			return $this->error( $ret['msg'] );

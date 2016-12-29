@@ -22,10 +22,11 @@ class Admin extends Common
 	{
 		parent::_initialize();
 		//判断是否已经登录
-		$userRow = Session::get('userinfo', 'admin');
-		if( empty($userRow) ) {
+
+		if( !Session::has('userinfo', 'admin') ) {
 			$this->error('Please login first', url('/admin/Login/index'));
 		}
+		$userRow = Session::get('userinfo', 'admin');
 		//验证权限
 		$request = Request::instance();
 		$rule_val = $request->module().'/'.$request->controller().'/'.$request->action();

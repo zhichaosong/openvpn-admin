@@ -20,12 +20,12 @@ class User extends Model
 		$code = 1;
 		$msg = '';
 		//！！！ 用户名、密码、验证码，需要统一后台验证，使用 validate
-		$User = new User();
-		$result = $User->validate('User.login')->save($data); //validate 类中没有这个save方法 没有想明白这里为何使用save()
+		//$User = new User();
+		//$result = $User->validate('User.login')->save($data); //validate 类中没有这个save方法 没有想明白这里为何使用save()
 
-		if(false === $result){
-			return info($User->getError(),0);
-		}
+		//if(false === $result){
+		//	return info($User->getError(),0);
+		//}
 
 		$check_field = ['mobile', 'password'];
 		foreach($check_field as $field) {
