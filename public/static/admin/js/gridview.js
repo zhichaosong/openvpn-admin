@@ -84,7 +84,6 @@ $(function() {
                     })
                 })
 
-                // $this.$table.trigger('check', [row, $this]);
                 $this.currentRow = row;
             },
             onDblClickRow: function(item, $element) { //双击
@@ -96,6 +95,7 @@ $(function() {
             },
             onCheck: function(row, $element) {
 
+
                 var btnGroup = $element.parents('.bootstrap-table:eq(0)').find('#toolbar').find('.btn-group')
                 btnGroup.each(function(items, index) {
                     $(index).find('button').each(function(item, ele) {
@@ -104,10 +104,17 @@ $(function() {
                         }
                     })
                 })
-                $this.$table.trigger('check', [row, $this]);
+                // $this.$table.trigger('check', [row, $this]);
                 return false;
             },
             onUncheck: function(row, $element) {
+
+                var checked =  $this.getSelections()
+
+                if (checked.length > 1) {
+                    return
+                }
+                
                 var btnGroup = $element.parents('.bootstrap-table:eq(0)').find('#toolbar').find('.btn-group')
                 btnGroup.each(function(items, index) {
                     $(index).find('button').each(function(item, ele) {
@@ -323,6 +330,10 @@ $(function() {
             }
         });
     };
+
+    GridView.prototype.getSelections = function () {
+        return this.$table.bootstrapTable('getSelections');
+    }
 
     GridView.prototype.deleteModal = function(eventName, row) {
         $this = this
