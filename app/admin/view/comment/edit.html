@@ -13,7 +13,13 @@
                         <div class="form-group must">
                             <label class="col-sm-3 control-label">称呼</label>
                             <div class="col-sm-7">
-                                <input type="text" class="form-control" name="name" maxlength="8" placeholder="至多8个字符" required value="{$data.name ?? ''}">
+                                <input type="text" class="form-control" name="username" maxlength="8" placeholder="至多8个字符" required value="{$data.username ?? ''}">
+                            </div>
+                        </div>
+                        <div class="form-group must">
+                            <label class="col-sm-3 control-label">邮箱</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control email" name="email" maxlength="32" placeholder="至多32个字符" required value="{$data.email ?? ''}">
                             </div>
                         </div>
                         <div class="form-group must">

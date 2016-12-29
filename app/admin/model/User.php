@@ -67,9 +67,8 @@ class User extends Model
 		unset($data['password2']);
 		$data['password'] = mduser($data['password']);
 		$data['create_time'] = time();
-		$data['update_time'] = time();
-		$id = $this->insertGetId($data);
-		if($id > 0){
+		$this->allowField(true)->save($data);
+		if($this->id > 0){
             return info(lang('Add succeed'), 1);
         }else{
             return info(lang('Add failed') ,0);
@@ -77,10 +76,17 @@ class User extends Model
 	}
 
 	public function edit(array $data = [])
-	{
+	{	
+		$user = User::get(['mobile' => $data['mobile']]);
+		if (!empty($user)) {
+			return info(lang('Moblie already exists'), 0);
+		}
+
 		if($data['password2'] != $data['password']){
             return info('两次密码不一致！',0);
         }
+        $data['update_time'] = time();
+
 		$data['password'] = mduser($data['password']);
 		$res = $this->allowField(true)->save($data,['id'=>$data['id']]);
 		if($res == 1){

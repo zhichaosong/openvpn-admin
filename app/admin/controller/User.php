@@ -50,14 +50,13 @@ class User extends Admin
      * 编辑
      * @param  string $id 数据ID（主键）
      */
-    public function edit()
+    public function edit($id = 0)
     {   
-        $data = request()->param();
-        $id = input('get.id', '', 'intval');
-        if(empty($id)){
+        if(intval($id) < 0){
             return info(lang('Data ID exception'), 0);
         }
         if(request()->isPost()){
+            $data = input('post.');
             $userModel = Loader::model('User');
             $edit = $userModel->edit($data);
             return $edit;

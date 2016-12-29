@@ -27,5 +27,51 @@ class Comment extends Admin
 		}
 		return $this->fetch();
 	}
+
+    /**
+     * 添加
+     */
+    public function add()
+    {
+        if( request()->isPost() ){
+            $data = input('post.');
+            $commentModel = Loader::model('Comment');
+            $add = $commentModel->add($data);
+            return $add;
+        }
+        return $this->fetch('edit');
+    }
+
+    /**
+     * 编辑
+     * @param  string $id 数据ID（主键）
+     */
+    public function edit($id = 0)
+    {   
+        if(intval($id) < 0){
+            return info(lang('Data ID exception'), 0);
+        }
+        if(request()->isPost()){
+        	$data = input('post.');
+            $commentModel = Loader::model('Comment');
+            $edit = $commentModel->edit($data);
+            return $edit;
+        }
+        $data = Loader::model('Comment')->findUserById($id);
+        $this->assign('data',$data);
+        return $this->fetch();
+    }
+
+    /**
+     * 删除
+     * @param  string $id 数据ID（主键）
+     */
+    public function delete($id = 0){
+        if(empty($id)){
+            return info(lang('Data ID exception'), 0);
+        }
+        Loader::model('Comment')->deleteById($id);
+    }
+
 }
 ?>
