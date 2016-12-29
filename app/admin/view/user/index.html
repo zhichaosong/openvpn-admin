@@ -53,7 +53,7 @@
     var operateEvents = {
         'click .edit': function (e, value, row, index) {
             var param = {
-                url: '/admin/user/edit',
+                url: "{:url('admin/user/edit');}",
                 data: {id: row.id}
             }
             $("#table").gridView('loadModal', param.url,param.data)

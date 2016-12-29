@@ -47,11 +47,9 @@ return [
         // SESSION_ID的提交变量,解决flash上传跨域
         'var_session_id' => '',
         // SESSION 前缀
-        'prefix'         => 'red-team',
+        'prefix'         => '',
         // 驱动方式 支持redis memcache memcached
         'type'           => '',
-        //过期时间 一周
-        'expire'         => '604800',
         // 是否自动开启 SESSION
         'auto_start'     => true,
     ],
@@ -78,7 +76,7 @@ return [
         // 验证码图片宽度
         'imageW'   => 100, 
         // 验证码位数
-        'length'   => 5, 
+        'length'   => 4,
         // 验证成功后是否重置        
         'reset'    => true
     ],

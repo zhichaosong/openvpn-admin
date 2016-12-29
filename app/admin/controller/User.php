@@ -54,10 +54,10 @@ class User extends Admin
      * 编辑
      * @param  string $id 数据ID（主键）
      */
-    public function edit($id = 0)
+    public function edit()
     {   
         $data = request()->param();
-        $id = intval($data['id']);
+        $id = input('get.id', '', 'intval');
         if(empty($id)){
             return info(lang('Data ID exception'), 0);
         }
