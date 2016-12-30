@@ -22,14 +22,24 @@ class User extends Admin
      */
     public function index()
     {
-        if(request()->isAjax()) {
-
-            $data = request()->param();
-            $userModel = Loader::model('User');
-            $index = $userModel->index($data);
-            return $index;
-        }
         return view();
+    }
+
+    /**
+     * 异步获取列表数据
+     *
+     * @author chengbin
+     * @return mixed
+     */
+    public function getData()
+    {
+        if(!request()->isAjax()) {
+            $this->error(lang('Request type error'), 4001);
+        }
+
+        $request = request()->param();
+        $data = model('User')->getList( $request );
+        return $data;
     }
 
     /**

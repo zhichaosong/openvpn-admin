@@ -42,16 +42,12 @@ class User extends Model
 	}
 
 
-	public function index($data = null)
+	public function getList( $request )
 	{
-		$data = User::all(function($query){
-				    $query->alias('u')->field('u.id,u.username,u.mobile,u.status,u.create_time')->order('create_time', 'desc');
-				});
-		foreach ($data as $key => $value) {
-			$data[$key]['create_time'] = date('Y-m-d H:i:s',$value['create_time']);
-			$data[$key]['status'] = $value['status'] == 1 ? '启用' : '禁用';
-		}
-		return $data;
+		//先致空
+		$request = array();
+		$data = Db::name('user')->order('create_time desc')->where( $request )->select();
+		return $this->_fmtData( $data );
 	}
 
 
@@ -83,7 +79,7 @@ class User extends Model
 		}
 
 		if($data['password2'] != $data['password']){
-            return info('两次密码不一致！',0);
+            return info(lang('The two passwords No match!'),0);
         }
         $data['update_time'] = time();
 
@@ -109,5 +105,19 @@ class User extends Model
         }   
 	}
 
+	//格式化数据
+	private function _fmtData( $data )
+	{
+		if(empty($data)) {
+			return $data;
+		}
+
+		foreach ($data as $key => $value) {
+			$data[$key]['create_time'] = date('Y-m-d H:i:s',$value['create_time']);
+			$data[$key]['status'] = $value['status'] == 1 ? lang('Start') : lang('Off');
+		}
+
+		return $data;
+	}
 
 }

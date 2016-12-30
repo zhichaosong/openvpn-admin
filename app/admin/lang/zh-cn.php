@@ -30,5 +30,8 @@ return [
     'Captcha error'  => '验证码错误',
     'Mobile require' => '帐号必须',
     'Please enter a correct mobile' => '请输入正确手机号',
-    'Please enter a correct password' => '请输入正确的密码'
+    'Please enter a correct password' => '请输入正确的密码',
+    'Start' => '启用',
+    'Off' =>'禁用',
+    'The two passwords No match!' => '两次密码不一致！'
 ];
