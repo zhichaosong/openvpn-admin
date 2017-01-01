@@ -109,7 +109,7 @@ class User extends Model
 	//格式化数据
 	private function _fmtData( $data )
 	{
-		if(empty($data)) {
+		if(empty($data && is_array($data))) {
 			return $data;
 		}
 

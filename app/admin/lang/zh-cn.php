@@ -34,6 +34,18 @@ return [
     'Start' => '启用',
     'Off' =>'禁用',
     'The two passwords No match!' => '两次密码不一致！',
+    'Add'       => '添加',
     'Edit'      => '编辑',
     'Delete'    => '删除',
+
+    // 菜单列表 不支持数组
+    'Dashboards'    =>  'Dashboards',
+    'SystemManage'  =>  '系统管理',
+    'UserManage '   =>'账号管理',
+    'RoleManage'    =>'角色管理',
+    'AuthManage'    =>'授权管理',
+
+    'ArticleManage'    =>'文章管理',
+    'CommentSubject'   =>'建议专题',
+    'Test'             =>'测试测试'          
 ];
