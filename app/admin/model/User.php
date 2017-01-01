@@ -46,7 +46,8 @@ class User extends Model
 	{
 		//先致空
 		$request = array();
-		$data = Db::name('user')->order('create_time desc')->where( $request )->select();
+		// $data = Db::name('user')->order('create_time desc')->where( $request )->select();
+		$data = $this->order('create_time desc')->where( $request )->select();
 		return $this->_fmtData( $data );
 	}
 

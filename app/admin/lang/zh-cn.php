@@ -33,5 +33,7 @@ return [
     'Please enter a correct password' => '请输入正确的密码',
     'Start' => '启用',
     'Off' =>'禁用',
-    'The two passwords No match!' => '两次密码不一致！'
+    'The two passwords No match!' => '两次密码不一致！',
+    'Edit'      => '编辑',
+    'Delete'    => '删除',
 ];
