@@ -32,7 +32,7 @@ class Tool extends Taglib
         $html  = '';
         $html .= '<div id="' . $tag['id'] . '" class="toolbar" data-module="'.$url.'">';
         $html .= '<div class="btn-group">';
-        $html .= '<button type="button" data-name="add" class="btn btn-primary" data-event-type="view" data-event-value=""  data-target="modal"><i class="fa fa-plus" aria-hidden="true" style="margin-right: 2px"> </i>添加</button><button type="button" data-name="delete" class="btn btn-default" data-event-type="default" data-event-value="" data-target="modal"><i class="fa fa-edit" aria-hidden="true" style="margin-right: 2px"> </i>删除</button>';
+        $html .= '<button type="button" data-name="add" class="btn btn-primary" data-event-type="view" data-event-value=""  data-target="modal"><i class="fa fa-plus" aria-hidden="true" style="margin-right: 2px"> </i>{$Think.lang.Add}</button><button type="button" data-name="delete" class="btn btn-default" data-event-type="default" data-event-value="" data-target="modal"><i class="fa fa-trash" aria-hidden="true" style="margin-right: 2px"> </i>{$Think.lang.Delete}</button>';
         $html .= '</div>';
         $html .= $content;
         $html .= '</div>';
