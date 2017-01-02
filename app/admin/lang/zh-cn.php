@@ -40,8 +40,8 @@ return [
 
     // 菜单列表 不支持数组
     'Dashboards'    =>  'Dashboards',
-    'SystemManage'  =>  '系统管理',
-    'UserManage '   =>'账号管理',
+    'SystemManage'  =>'系统管理',
+    'UserManage'   =>'账号管理',
     'RoleManage'    =>'角色管理',
     'AuthManage'    =>'授权管理',
 
