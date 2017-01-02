@@ -28,6 +28,7 @@
 					            <th data-field="title">权限名称</th>
 					            <th data-field="level">RULE_VAL</th>
 					            <th data-field="status" data-formatter="format_status">状态</th>
+					            <th data-width="30" data-field="operate"   data-align="center" data-formatter="operateFormatter" data-events="operateEvents">操作</th>
 					        </tr>
 					    </thead>
 					</table>
@@ -63,48 +64,6 @@
         }
     };
 
-</script>
-
-<div class="gridview2"></div>
-
-<script type="text/javascript">
-
-	var toolbarUrl = '/admin/menu/toolbar?menu=', $menuTable, $btn_gridview;
-	$(function() {
-		$menuTable = $('#table')
-				.on('clickRow',function(e, row, $element) {
-							if ($btn_gridview == null) {
-								var $gridview2 = $('.gridview2');
-
-								$.ajax({
-									url: toolbarUrl + row.id,
-									type: 'get',
-						            dataType: 'html',
-									success:function(html){
-										$html = $(html);
-										$html.appendTo($gridview2);
-										win.init($gridview2)
-
-										$btn_gridview = $('#btn_gridview').gridView();
-
-										$menuTable.gridView('resetView');
-										$('#current_menu').val(row.id);
-										$btn_gridview.data('data-menu',row.id);
-									},
-								})
-								return;
-							} else if ($btn_gridview.data('data-menu') == row.id) {
-								return;
-							}
-
-							$btn_gridview.data('data-menu', row.id);
-							console.log($btn_gridview.data('bootstrap.table'))
-							$btn_gridview.data('bootstrap.table').options.url = toolbarUrl + row.id;
-							$btn_gridview.bootstrapTable('refresh');
-						})
-			});
-
-	
 
 function format_status(status,row,index) {
 	if(status == 1){
@@ -119,21 +78,5 @@ function format_status(status,row,index) {
 function format_sort(sort,row,index) {
 	return '<input type="text" class="form-control sort" data-id="'+row.id+'"  value="'+sort+'" />';
 }
-function fomat_icon(icon, row, index){
-	return '<i class="fa '+icon+'"></i>';
-}
-function fomat_access(val, row, index){
-	val +='';
-	switch(val){
-		case '-1':
-			return '禁止访问';
-		case '1':
-			return '无限制';
-		default:
-			return '系统默认';
-	}
-}
-function fomat_visible(val, row, index){
-	return val == 1 ? '显示' : '不显示';
-}
+
 </script>

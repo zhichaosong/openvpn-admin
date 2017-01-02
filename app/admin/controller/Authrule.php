@@ -25,10 +25,7 @@ class Authrule extends Admin
 	 */
 	public function index()
 	{
-		if(request()->isAjax()){
-            $data = $this->role->select();
-            return $data;
-        }
+		
 		return view();
 	}
 
