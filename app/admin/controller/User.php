@@ -59,6 +59,8 @@ class User extends Admin
         if(intval($id) < 0){
             return info(lang('Data ID exception'), 0);
         }
+        $roleData = model('role')->getKvData();
+        $this->assign('roleData', $roleData);
         $data = model('User')->get(['id'=>$id]);
         $this->assign('data',$data);
         return $this->fetch();
@@ -72,7 +74,7 @@ class User extends Admin
      */
     public function saveData()
     {
-        $this->mustCheckRule( 'admin/user/edit' );
+        //$this->mustCheckRule( 'admin/user/edit' );
         if(!request()->isAjax()) {
             return info(lang('Request type error'));
         }

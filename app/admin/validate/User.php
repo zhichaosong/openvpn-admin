@@ -9,6 +9,7 @@ class User extends Validate
     protected $rule =   [
         'mobile'              => 'require|length:11',
         'password'              => 'length:6,16',
+        'role_user' => 'require',
     ];
 
     protected $message  =   [
@@ -18,9 +19,9 @@ class User extends Validate
     ];
 
     protected $scene = [
-        'add' => ['mobile','password'],
+        'add' => ['mobile','password', 'role_user'],
         'login' =>  ['mobile','password'],
-        'edit' => ['mobile', 'password']
+        'edit' => ['mobile', 'password', 'role_user']
     ];
 
 }

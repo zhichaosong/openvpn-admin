@@ -13,4 +13,9 @@ class Role extends Model
     {
 
     }
+
+    public function getKvData()
+    {
+        return $this->where('status',1)->column('name','id');
+    }
 }
