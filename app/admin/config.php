@@ -29,8 +29,8 @@ return [
 	    'layout_name'  =>  'layout',
         // 模板后缀
         // 'view_suffix'  => 'html',
-        'taglib_pre_load'    =>    'think\template\taglib\Cx,app\admin\taglib\Tool,app\admin\taglib\Article',
-        'taglib_build_in'    =>    'think\template\taglib\Cx,app\admin\taglib\Tool,app\admin\taglib\Article',
+        'taglib_pre_load'    =>    'think\template\taglib\Cx,app\admin\taglib\Tool',
+        'taglib_build_in'    =>    'think\template\taglib\Cx,app\admin\taglib\Tool',
 	],
     //缓存
     'cache'                             => [

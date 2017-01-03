@@ -8,9 +8,8 @@ class ComposerStaticInit923c107bd3ade8511543877c94d0fd3f
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
+        '9b552a3cc426e3287cc811caefa3cf53' => __DIR__ . '/..' . '/topthink/think-helper/src/helper.php',
         '1cfd2761b63b0a29ed23657ea394cb2d' => __DIR__ . '/..' . '/topthink/think-captcha/src/helper.php',
-        'ddc3cd2a04224f9638c5d0de6a69c7e3' => __DIR__ . '/..' . '/topthink/think-migration/src/config.php',
-        '9e05116ddaa5b1d244b68c3993908acd' => __DIR__ . '/..' . '/topthink/think-queue/src/config.php',
         '72c97b53391125cae04082a81029f42d' => __DIR__ . '/..' . '/topthink/think-testing/src/config.php',
     );
 
@@ -18,10 +17,6 @@ class ComposerStaticInit923c107bd3ade8511543877c94d0fd3f
         't' => 
         array (
             'think\\testing\\' => 14,
-            'think\\sae\\' => 10,
-            'think\\queue\\' => 12,
-            'think\\mongo\\' => 12,
-            'think\\migration\\' => 16,
             'think\\helper\\' => 13,
             'think\\composer\\' => 15,
             'think\\captcha\\' => 14,
@@ -41,10 +36,6 @@ class ComposerStaticInit923c107bd3ade8511543877c94d0fd3f
             'Symfony\\Component\\Yaml\\' => 23,
             'Symfony\\Component\\DomCrawler\\' => 29,
         ),
-        'P' => 
-        array (
-            'Phinx\\' => 6,
-        ),
         'D' => 
         array (
             'Doctrine\\Instantiator\\' => 22,
@@ -55,22 +46,6 @@ class ComposerStaticInit923c107bd3ade8511543877c94d0fd3f
         'think\\testing\\' => 
         array (
             0 => __DIR__ . '/..' . '/topthink/think-testing/src',
-        ),
-        'think\\sae\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/topthink/think-sae/src',
-        ),
-        'think\\queue\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/topthink/think-queue/src',
-        ),
-        'think\\mongo\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/topthink/think-mongo/src',
-        ),
-        'think\\migration\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/topthink/think-migration/src',
         ),
         'think\\helper\\' => 
         array (
@@ -86,8 +61,7 @@ class ComposerStaticInit923c107bd3ade8511543877c94d0fd3f
         ),
         'think\\' => 
         array (
-            0 => __DIR__ . '/..' . '/topthink/think-image/src',
-            1 => __DIR__ . '/../..' . '/thinkphp/library/think',
+            0 => __DIR__ . '/../..' . '/thinkphp/library/think',
         ),
         'phpDocumentor\\Reflection\\' => 
         array (
@@ -110,10 +84,6 @@ class ComposerStaticInit923c107bd3ade8511543877c94d0fd3f
         'Symfony\\Component\\DomCrawler\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/dom-crawler',
-        ),
-        'Phinx\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/topthink/think-migration/phinx/src/Phinx',
         ),
         'Doctrine\\Instantiator\\' => 
         array (
@@ -499,6 +469,7 @@ class ComposerStaticInit923c107bd3ade8511543877c94d0fd3f
         'PHP_Token_STRING' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_STRING_CAST' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_STRING_VARNAME' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
+        'PHP_Token_SUPER' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_SWITCH' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_Stream' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token/Stream.php',
         'PHP_Token_Stream_CachingFactory' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token/Stream/CachingFactory.php',
@@ -513,6 +484,7 @@ class ComposerStaticInit923c107bd3ade8511543877c94d0fd3f
         'PHP_Token_UNSET' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_UNSET_CAST' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_USE' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
+        'PHP_Token_USE_FUNCTION' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_VAR' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_VARIABLE' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_WHERE' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',

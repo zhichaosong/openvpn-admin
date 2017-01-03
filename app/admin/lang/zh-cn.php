@@ -45,7 +45,4 @@ return [
     'RoleManage'    =>'角色管理',
     'AuthManage'    =>'授权管理',
 
-    'ArticleManage'    =>'文章管理',
-    'CommentSubject'   =>'建议专题',
-    'Test'             =>'测试测试'          
 ];
