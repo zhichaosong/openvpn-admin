@@ -20,14 +20,13 @@
                     <!-- 用户控件（操作） -->
                     {toolbar id="toolbar"}{/toolbar}
                     <!-- 表格数据 -->
-                    <table id="table" data-toggle="gridview" class="table" data-url="/admin/authrule" data-toolbar="#toolbar" data-show-columns="true" data-page-size="5" data-page-list="[5, 25, 50, All]" data-unique-id="id" data-pagination="true" data-side-pagination="client">
+                    <table id="table" data-toggle="gridview" class="table" data-url="{:url('admin/authrule/getData');}" data-toolbar="#toolbar" data-show-columns="true" data-page-size="5" data-page-list="[5, 25, 50, All]" data-unique-id="id" data-pagination="true" data-side-pagination="client">
 					    <thead>
 					        <tr>
 					            <th data-width="40"  data-align="center"  data-checkbox="true"></th>
-					            <th data-width="50" data-field="sort" data-formatter="format_sort">ID</th>
+					            <th data-width="50" data-field="id">ID</th>
 					            <th data-field="title">权限名称</th>
-					            <th data-field="level">RULE_VAL</th>
-					            <th data-field="status" data-formatter="format_status">状态</th>
+					            <th data-field="rule_val">RULE_VAL</th>
 					            <th data-width="30" data-field="operate"   data-align="center" data-formatter="operateFormatter" data-events="operateEvents">操作</th>
 					        </tr>
 					    </thead>
@@ -53,7 +52,7 @@
     var operateEvents = {
         'click .edit': function (e, value, row, index) {
             var param = {
-                url: '/admin/user/edit',
+                url: "{:url('admin/authrule/edit')}",
                 data: {id: row.id}
             }
             $("#table").gridView('loadModal', param.url,param.data)

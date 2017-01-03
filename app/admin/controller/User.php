@@ -89,7 +89,7 @@ class User extends Admin
         if(empty($id)){
             return info(lang('Data ID exception'), 0);
         }
-        Loader::model('User')->deleteById($id);
+        return Loader::model('User')->deleteById($id);
     }
 
    

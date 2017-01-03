@@ -15,6 +15,7 @@ class AuthRule extends Model
 {
     public function getList($request)
     {
+        $request = [];
         return $this->where($request)->select();
     }
 
@@ -24,18 +25,12 @@ class AuthRule extends Model
         return $status[$value];
     }
 
-    static function getAllStatus()
-    {
-        $status = [0=>'禁用',1=>'正常'];
-        return $status;
-    }
-
     public function saveData($data)
     {
         if(isset($data['rule_val'])) {
             $data['rule_val'] = strtolower($data['rule_val']);
         }
-        if(isset($data['id'])) {
+        if(isset($data['id']) && !empty($data['id'])) {
             $this->allowField(true)->save($data, ['id' => $data['id']]);
         } else {
             $this->insert($data);
@@ -46,10 +41,18 @@ class AuthRule extends Model
     public function isCheck( $rule_val )
     {
         $rule_val = strtolower($rule_val);
-        $map = ['rule_val'=>$rule_val, 'status'=>1];
+        $map = ['rule_val'=>$rule_val];
         if($this->where($map)->count()){
             return true;
         }
         return false;
+    }
+
+    public function deleteById($id)
+    {
+        $result = AuthRule::destroy($id);
+        if ($result > 0) {
+            return info(lang('Delete succeed'), 1);
+        }
     }
 }

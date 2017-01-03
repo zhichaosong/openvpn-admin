@@ -11,13 +11,6 @@ use think\Loader;
 */
 class Authrule extends Admin
 {
-	private $authRule;
-
-	public function _initialize()
-	{
-		parent::_initialize();
-		$this->authRule = Loader::model('AuthRule');
-	}
 	/**
 	 * 规则列表
 	 *
@@ -25,8 +18,23 @@ class Authrule extends Admin
 	 */
 	public function index()
 	{
-		
 		return view();
+	}
+
+	/**
+	 * 异步获取列表数据
+	 *
+	 * @author chengbin
+	 * @return mixed
+	 */
+	public function getData()
+	{
+		if(!request()->isAjax()) {
+			$this->error(lang('Request type error'), 4001);
+		}
+		$request = input('get.');
+		$data = model('AuthRule')->getList( $request );
+		return $data;
 	}
 
 	/**
@@ -36,14 +44,42 @@ class Authrule extends Admin
 	 */
 	public function add()
 	{
-		$this->assign('allstatus', \app\admin\model\AuthRule::getAllStatus());
 		return view();
 	}
 
+	/**
+	 * 编辑规则
+	 *
+	 * @author chengbin
+	 */
+	public function edit( $id = '' )
+	{
+		$data = model('AuthRule')->get(['id'=>$id]);
+		$this->assign( 'data', $data );
+		return view();
+	}
+
+	/**
+	 * 保存数据
+	 */
 	public function saveData()
 	{
+		/*$this->mustCheckRule( 'admin/authrule/edit' );
+		if(!request()->isAjax()) {
+			return info(lang('Request type error'));
+		}*/
 		$data = input('post.');
-		$this->authRule->saveData($data);
+		model('AuthRule')->saveData($data);
 		$this->success(lang('Save success'));
+	}
+
+	/**
+	 * 删除
+	 */
+	public function delete($id = 0){
+		if(empty($id)){
+			return info(lang('Data ID exception'), 0);
+		}
+		return model('AuthRule')->deleteById($id);
 	}
 }
