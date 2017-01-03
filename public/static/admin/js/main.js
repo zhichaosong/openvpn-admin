@@ -282,7 +282,6 @@ $(function () {
         var tmp = url.replace('/','').replace('/','')
         var end = Number(tmp.indexOf('/'))
         var need = tmp.substr(0,end)
-
         var urlStatus = false;
         var menuObj = $("#side-menu > li:gt(0) a");
         
@@ -293,9 +292,8 @@ $(function () {
             var menuTmp = href.replace('/','').replace('/','')
             var menuEnd = Number(menuTmp.indexOf('/'))
             var menuStr = menuTmp.substr(0,menuEnd)
-
             //判断当前菜单是否存在
-            if(need.indexOf(menuStr) > -1 && href != ''){
+            if(need.indexOf(menuStr) > -1 && menuStr != ''){
                 $(this).parent().addClass('active');
                 $(this).parent().parent().addClass('in');
                 $(this).parent().parent().parent().addClass('active'); //针对有二级菜单选中的样式添
