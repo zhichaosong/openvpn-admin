@@ -40,9 +40,11 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">角色</label>
                             <div class="col-sm-7">
-                                {volist name="roleData" key="key" id="vo"}
-                                <input type="radio" name="role_user" value="{$key}" />{$vo}
-                                {/volist}
+                                <select name="role_user" id="" class="form-control" required>
+                                    {volist name="roleData" key="key" id="vo"}
+                                        <option value="{$key}">{$vo}</option>
+                                    {/volist}
+                                </select>
                             </div>
                         </div>
 
