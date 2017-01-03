@@ -31,8 +31,7 @@ class Admin extends Common
 		$request = Request::instance();
 		$rule_val = $request->module().'/'.$request->controller().'/'.$request->action();
 		$uid = $userRow['id'];
-		//$userRow['administrator']!=1 &&
-		if(!$this->checkRule($uid, $rule_val)) {
+		if($userRow['administrator']!=1 && !$this->checkRule($uid, $rule_val)) {
 			$this->error(lang('Without the permissions page'));
 		}
 	}

@@ -226,8 +226,6 @@ return [
         'setcookie' => true,
     ],
 
-
-
     //分页配置
     'paginate'               => [
         'type'      => 'bootstrap',
@@ -235,6 +233,6 @@ return [
         'list_rows' => 15,
     ],
 
-    //写安装程序的时候随即生成
-    'user_auth_key' => '1234',
+    //写安装程序的时候随即生成authId
+    'user_auth_key' => 'authId',
 ];

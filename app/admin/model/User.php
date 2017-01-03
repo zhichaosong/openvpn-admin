@@ -19,7 +19,6 @@ class User extends Model
 	{
 		$code = 1;
 		$msg = '';
-		//使用验证类demo
 		$userValidate = validate('User');
 		if(!$userValidate->scene('login')->check($data)) {
 			return info(lang($userValidate->getError()), 4001);
@@ -46,7 +45,6 @@ class User extends Model
 	{
 		//先致空
 		$request = array();
-		// $data = Db::name('user')->order('create_time desc')->where( $request )->select();
 		$data = $this->order('create_time desc')->where( $request )->select();
 		return $this->_fmtData( $data );
 	}
