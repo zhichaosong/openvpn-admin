@@ -39,7 +39,7 @@ return [
     'Delete'    => '删除',
 
     // 菜单列表 不支持数组
-    'Dashboards'    =>  'Dashboards',
+    'Dashboards'    =>  '仪表盘',
     'SystemManage'  =>'系统管理',
     'UserManage'   =>'账号管理',
     'RoleManage'    =>'角色管理',

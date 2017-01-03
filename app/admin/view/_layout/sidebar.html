@@ -1,35 +1,21 @@
-
-
 <div class="sidebar-collapse">
     <ul class="nav metismenu" id="side-menu">
         <!-- 个人信息 -->
         <li class="nav-header">
-            <div class="dropdown profile-element"> 
-            <span><img alt="image" width="64" height="64" class="img-circle" src="__IMG__/logo.jpg" /></span>
-                <!-- <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                    <span class="clear"> 
-                    	<span class="block m-t-xs"> <strong class="font-bold">David Williams</strong></span>
-                    	<span class="text-muted text-xs block">Art Director <b class="caret"></b></span> </span>
-                </a>
-                <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                    <li><a href="profile.html">Profile</a></li>
-                    <li><a href="contacts.html">Contacts</a></li>
-                    <li><a href="mailbox.html">Mailbox</a></li>
-                    <li class="divider"></li>
-                    <li><a href="login.html">Logout</a></li>
-                </ul> -->
-            </div>
+                <div class="dropdown profile-element">
+            <a href="{:url('admin/index/index')}">
+                    <span><img alt="image" width="64" height="64" class="img-circle" src="__IMG__/logo.jpg" /></span>
+            </a>
+                </div>
             <div class="logo-element">
                 Red
             </div>
         </li>
-
         <!-- 菜单列表 -->
-         <!-- 一级菜单 -->
+        <!-- 一级菜单 -->
         <li>
             <a href="{:url('admin/index/index')}"><i class="fa fa-th-large"></i> <span class="nav-label">{$Think.lang.Dashboards}</span></a>
         </li>
-		
         <!-- 二级菜单 -->
         <li>
             <a href="#"><i class="fa fa-cog"></i> <span class="nav-label">{$Think.lang.SystemManage}</span><span class="fa arrow"></span></a>
@@ -39,7 +25,6 @@
                 <li><a href="{:url('admin/authrule/index')}">{$Think.lang.AuthManage}</a></li>
             </ul>
         </li>
-
         <!-- 二级菜单 -->
         <li class="">
             <a href="#"><i class="fa fa-envelope"></i> <span class="nav-label">{$Think.lang.ArticleManage}</span><span class="fa arrow"></span></a>
