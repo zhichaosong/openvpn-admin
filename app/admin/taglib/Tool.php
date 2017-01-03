@@ -14,7 +14,7 @@ class Tool extends Taglib
     // 标签定义
     protected $tags = [
         // 标签定义： attr 属性列表 close 是否闭合（0 或者1 默认1） alias 标签别名 level 嵌套层次
-        'toolbar'        => ['attr' => 'id']
+        'toolbar'           => ['attr' => 'id'],
     ];
 
     public function tagToolbar($tag, $content)

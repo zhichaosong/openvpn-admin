@@ -18,7 +18,11 @@
                 <!-- 表单内容 -->
                 <div class="ibox-content">
                     <!-- 用户控件（操作） -->
-                    {toolbar id="toolbar"}{/toolbar}
+                    {toolbar id="toolbar"}
+                        <div class="btn-group">
+                             <button type="button" data-name="access_menu" class="btn btn-primary" data-event-type="view" data-event-value="" data-target="self"><i class="fa fa-certificate" aria-hidden="true" style="margin-right: 2px"> </i>用户权限</button>
+                        </div>
+                    {/toolbar}
                     <!-- 表格数据 -->
                     <table id="table" data-toggle="gridview" class="table" data-url="{:url('admin/authrule/getData');}" data-toolbar="#toolbar" data-show-columns="true" data-page-size="5" data-page-list="[5, 25, 50, All]" data-unique-id="id" data-pagination="true" data-side-pagination="client">
 					    <thead>
@@ -38,6 +42,18 @@
 </div>
 
 <script type="text/javascript">
+
+// $(function(){
+//         $("#table").on("access_menu",function(e, gridview, params){
+//             console.log(e)
+//             if(gridview.currentRow == null){
+//                 alertMsg("请先选择授权的用户！")
+//                 return false;
+//             }
+//             params.data.id = gridview.currentRow.id
+//         })
+//     })
+
     function operateFormatter(value, row, index) {
         return [
             '<a class="edit" href="javascript:void(0)" title="{$Think.lang.Edit}">',

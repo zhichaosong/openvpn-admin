@@ -290,6 +290,7 @@ $(function() {
             if (params.event_type == 'custom') { // 自定义事件
                 return $this.$table.triggerHandler(eventName, [$this, params]);
             } else if (params.event_type == 'view') { //视图
+                
                 params.data = {};
                 if (eventName.substr(0, 4) == 'edit' || eventName.substr(0, 6) == 'update') {
                     if ($this.currentRow == null) {
@@ -327,6 +328,8 @@ $(function() {
                 } else {
                     $this.$table.triggerHandler(eventName, [$this, params]);
                 }
+            }else{
+                $this.$table.triggerHandler(eventName, [$this, params]);
             }
         });
     };

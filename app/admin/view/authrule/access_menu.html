@@ -1,0 +1,180 @@
+<!-- Data Tables -->
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins" style="background: white;padding: 12px">
+                <!-- 表单标题概要 -->
+                <div class="ibox-title">
+                    <h5>用户授权</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <!-- 表单内容 -->
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="checkbox first-level-hooks">
+                                <input type="checkbox" id="" value="" checked>
+                                <label class="first-level">系统管理</label>
+                            </div>
+                            <div class="checkbox second-level-hooks">
+                                <input type="checkbox" id="" value="" checked>
+                                <label>账号管理</label>
+                            </div>
+                            <div class="checkbox checkbox-inline">
+                                <input type="checkbox" id="" value="option">
+                                <label for=""> Inline One </label>
+                            </div>
+                            <div class="checkbox checkbox-inline">
+                                <input type="checkbox" id="" value="option">
+                                <label for=""> Inline Two </label>
+                            </div>
+                            <div class="checkbox checkbox-inline">
+                                <input type="checkbox" id="" value="option">
+                                <label for=""> Inline Three </label>
+                            </div>
+                            <div class="checkbox checkbox-inline">
+                                <input type="checkbox" id="" value="option">
+                                <label for=""> Inline Four </label>
+                            </div>
+                            <div class="checkbox checkbox-inline">
+                                <input type="checkbox" id="" value="option">
+                                <label for=""> Inline Five </label>
+                            </div>
+                            <div class="checkbox checkbox-inline">
+                                <input type="checkbox" id="" value="option">
+                                <label for=""> Inline Six </label>
+                            </div>
+                            <div class="checkbox checkbox-inline">
+                                <input type="checkbox" id="" value="option">
+                                <label for=""> Inline Seven </label>
+                            </div>
+                            
+
+                            <div class="checkbox second-level-hooks">
+                                <input type="checkbox" id="" value="" checked>
+                                <label>角色管理</label>
+                            </div>
+
+                            <div class="checkbox checkbox-inline">
+                                <input type="checkbox" id="" value="option">
+                                <label for=""> Inline One </label>
+                            </div>
+                            <div class="checkbox checkbox-inline">
+                                <input type="checkbox" id="" value="option">
+                                <label for=""> Inline Two </label>
+                            </div>
+                            <div class="checkbox checkbox-inline">
+                                <input type="checkbox" id="" value="option">
+                                <label for=""> Inline Three </label>
+                            </div>
+                            <div class="checkbox checkbox-inline">
+                                <input type="checkbox" id="" value="option">
+                                <label for=""> Inline Four </label>
+                            </div>
+                            <div class="checkbox checkbox-inline">
+                                <input type="checkbox" id="" value="option">
+                                <label for=""> Inline Five </label>
+                            </div>
+                            <div class="checkbox checkbox-inline">
+                                <input type="checkbox" id="" value="option">
+                                <label for=""> Inline Six </label>
+                            </div>
+                            <div class="checkbox checkbox-inline">
+                                <input type="checkbox" id="" value="option">
+                                <label for=""> Inline Seven </label>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="checkbox first-level-hooks">
+                                <input type="checkbox" id="" value="">
+                                <label class="first-level">文章管理</label>
+                            </div>
+                            <div class="checkbox second-level-hooks">
+                                <input type="checkbox" id="" value="">
+                                <label>建议专题</label>
+                            </div>
+                            <div class="checkbox checkbox-inline">
+                                <input type="checkbox" id="" value="option">
+                                <label for=""> Inline One </label>
+                            </div>
+                            <div class="checkbox checkbox-inline">
+                                <input type="checkbox" id="" value="option">
+                                <label for=""> Inline Two </label>
+                            </div>
+                            <div class="checkbox checkbox-inline">
+                                <input type="checkbox" id="" value="option">
+                                <label for=""> Inline Three </label>
+                            </div>
+
+                            <div class="checkbox second-level-hooks">
+                                <input type="checkbox" id="" value="">
+                                <label>测试测试</label>
+                            </div>
+
+                            <div class="checkbox checkbox-inline">
+                                <input type="checkbox" id="" value="option">
+                                <label for=""> Inline One </label>
+                            </div>
+                            <div class="checkbox checkbox-inline">
+                                <input type="checkbox" id="" value="option">
+                                <label for=""> Inline Two </label>
+                            </div>
+                            <div class="checkbox checkbox-inline">
+                                <input type="checkbox" id="" value="option">
+                                <label for=""> Inline Three </label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 btn-group-footer">
+                            <button type="button" class="btn btn-default">取消</button>
+                            <button type="submit" class="btn btn-primary">保存</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+.row .checkbox{
+    padding-left: 20px;
+}
+.row .checkbox label {
+    padding-left: 0;
+}
+.row .checkbox-inline{
+    padding-left: 40px;
+}
+
+.row .checkbox label.first-level {
+    font-weight: 700;
+    font-size: 14px;
+}
+.row .btn-group-footer{
+    margin-top: 10px;
+}
+</style>
+
+
+<script>
+    $(".first-level-hooks").find('input').on('click', function () {
+        $this = $(this)
+        var checkboxF = $this.is(':checked');
+        if (checkboxF) {
+            $this.parent().parent().find(':checkbox').attr('checked',true)
+        }else{
+            $this.parent().parent().find(':checkbox').removeAttr('checked')
+        }
+    })
+
+    
+</script>

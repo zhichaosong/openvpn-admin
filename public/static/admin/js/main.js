@@ -273,11 +273,12 @@ function WinMove() {
         .disableSelection();
 }
 
-
+// 菜单选中样式添加
 $(function () {
 
         // 匹配链接
         var url = (window.location.pathname).toLowerCase() //获取相对路径转为小写
+        
         var urlStatus = false;
         var menuObj = $("#side-menu > li:gt(0) a");
         

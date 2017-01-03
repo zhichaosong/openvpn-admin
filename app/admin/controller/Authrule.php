@@ -47,6 +47,11 @@ class Authrule extends Admin
 		return view();
 	}
 
+	public function access_menu()
+	{
+		return view();
+	}
+
 	/**
 	 * 编辑规则
 	 *

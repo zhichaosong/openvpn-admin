@@ -21,8 +21,8 @@ class AuthRule extends Model
 
     public function getStatusAttr($value)
     {
-        $status = self::getAllStatus();
-        return $status[$value];
+        // $status = self::getAllStatus();
+        // return $status[$value];
     }
 
     public function saveData($data)
