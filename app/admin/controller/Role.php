@@ -31,4 +31,9 @@ class Role extends Admin
         }
         return view();
     }
+
+    public function access_menu()
+    {
+        return view();
+    }
 }

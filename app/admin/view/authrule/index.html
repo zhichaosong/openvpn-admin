@@ -19,12 +19,10 @@
                 <div class="ibox-content">
                     <!-- 用户控件（操作） -->
                     {toolbar id="toolbar"}
-                        <div class="btn-group">
-                             <button type="button" data-name="access_menu" class="btn btn-primary" data-event-type="view" data-event-value="" data-target="self"><i class="fa fa-certificate" aria-hidden="true" style="margin-right: 2px"> </i>用户权限</button>
-                        </div>
+                       
                     {/toolbar}
                     <!-- 表格数据 -->
-                    <table id="table" data-toggle="gridview" class="table" data-url="{:url('admin/authrule/getData');}" data-toolbar="#toolbar" data-show-columns="true" data-page-size="5" data-page-list="[5, 25, 50, All]" data-unique-id="id" data-pagination="true" data-side-pagination="client">
+                    <table id="table" data-toggle="gridview" class="table" data-url="{:url('admin/authrule/getData');}" data-toolbar="#toolbar" data-show-columns="true" data-page-size="5" data-page-list="[5, 25, 50, All]" data-unique-id="id" data-pagination="true" data-side-pagination="client" data-click-to-select="false">
 					    <thead>
 					        <tr>
 					            <th data-width="40"  data-align="center"  data-checkbox="true"></th>
