@@ -56,10 +56,13 @@ class Admin extends Common
 	}
 
 	//执行该动作必须验证权限，否则抛出异常
-	public function mustCheckRule()
+	public function mustCheckRule( $rule_val = '' )
 	{
-		$request = Request::instance();
-		$rule_val = $request->module().'/'.$request->controller().'/'.$request->action();
+		if( empty($rule_val) ) {
+			$request = Request::instance();
+			$rule_val = $request->module().'/'.$request->controller().'/'.$request->action();
+		}
+
 		if(!model('AuthRule')->isCheck($rule_val)) {
 			$this->error(lang('This action must be rule'));
 		}

@@ -57,7 +57,7 @@ class Comment extends Admin
             $edit = $commentModel->edit($data);
             return $edit;
         }
-        $data = Loader::model('Comment')->findUserById($id);
+        $data = Loader::model('Comment')->get(['id'=>$id]);
         $this->assign('data',$data);
         return $this->fetch();
     }

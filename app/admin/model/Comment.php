@@ -62,11 +62,6 @@ class Comment extends Model
         }
 	}
 
-	public function findUserById($id)
-	{
-		return Comment::get($id);
-	}
-
 	public function deleteById($id)
 	{
 		$result = Comment::destroy($id);

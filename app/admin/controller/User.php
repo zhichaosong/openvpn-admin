@@ -47,12 +47,6 @@ class User extends Admin
      */
     public function add()
     {
-        if( request()->isPost() ){
-            $data = input('post.');
-            $userModel = Loader::model('User');
-            $add = $userModel->add($data);
-            return $add;
-        }
         return $this->fetch('edit');
     }
 
@@ -65,15 +59,26 @@ class User extends Admin
         if(intval($id) < 0){
             return info(lang('Data ID exception'), 0);
         }
-        if(request()->isPost()){
-            $data = input('post.');
-            $userModel = Loader::model('User');
-            $edit = $userModel->edit($data);
-            return $edit;
-        }
-        $data = Loader::model('User')->findUserById($id);
+        $data = model('User')->get(['id'=>$id]);
         $this->assign('data',$data);
         return $this->fetch();
+    }
+
+    /**
+     * 保存数据
+     * @param array $data
+     *
+     * @author chengbin
+     */
+    public function saveData()
+    {
+        $this->mustCheckRule( 'admin/user/edit' );
+        if(!request()->isAjax()) {
+            return info(lang('Request type error'));
+        }
+
+        $data = input('post.');
+        return model('User')->saveData( $data );
     }
 
     /**

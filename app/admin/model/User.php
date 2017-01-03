@@ -49,12 +49,26 @@ class User extends Model
 		return $this->_fmtData( $data );
 	}
 
+	public function saveData( $data )
+	{
+		if( isset( $data['id']) && !empty($data['id'])) {
+			$result = $this->edit( $data );
+		} else {
+			$result = $this->add( $data );
+		}
+		return $result;
+	}
+
 
 	public function add(array $data = [])
-	{	
+	{
+		$userValidate = validate('User');
+		if(!$userValidate->scene('add')->check($data)) {
+			return info(lang($userValidate->getError()), 4001);
+		}
 		$user = User::get(['mobile' => $data['mobile']]);
 		if (!empty($user)) {
-			return info(lang('Moblie already exists'), 0);
+			return info(lang('Mobile already exists'), 0);
 		}
 		if($data['password2'] != $data['password']){
             return info(lang('The password is not the same twice'), 0);
@@ -71,10 +85,14 @@ class User extends Model
 	}
 
 	public function edit(array $data = [])
-	{	
-		$user = User::get(['mobile' => $data['mobile']]);
-		if (!empty($user)) {
-			return info(lang('Moblie already exists'), 0);
+	{
+		$userValidate = validate('User');
+		if(!$userValidate->scene('edit')->check($data)) {
+			return info(lang($userValidate->getError()), 4001);
+		}
+		$moblie = $this->where(['mobile'=>$data['mobile']])->where('id', '<>', $data['id'])->value('mobile');
+		if (!empty($moblie)) {
+			return info(lang('Mobile already exists'), 0);
 		}
 
 		if($data['password2'] != $data['password']){
@@ -89,11 +107,6 @@ class User extends Model
         }else{
             return info(lang('Edit failed'), 0);
         }
-	}
-
-	public function findUserById($id)
-	{
-		return User::get($id);
 	}
 
 	public function deleteById($id)

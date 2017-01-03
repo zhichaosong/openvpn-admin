@@ -24,7 +24,7 @@ return [
     'Edit succeed'	=>	'编辑成功',
     'Edit failed'	=>	'编辑失败',
     'The password is not the same twice'	=> '两次密码不一致',
-    'Moblie already exists'     =>  '手机号已经存在，请重新输入',
+    'Mobile already exists'     =>  '手机号已经存在，请重新输入',
     'You entered the account or password is incorrect, please again' => '你输入的账号或密码不正确，请重新输入',
     'This action must be rule' => '该方法必须验证权限',
     'Captcha error'  => '验证码错误',
