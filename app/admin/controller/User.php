@@ -74,7 +74,7 @@ class User extends Admin
      */
     public function saveData()
     {
-        //$this->mustCheckRule( 'admin/user/edit' );
+        $this->mustCheckRule( 'admin/user/edit' );
         if(!request()->isAjax()) {
             return info(lang('Request type error'));
         }

@@ -50,33 +50,10 @@ class User extends Admin
 
 	public function saveData( $data )
 	{
-		$result = false;
-		Db::startTrans();
-		try{
-			if( isset( $data['id']) && !empty($data['id'])) {
-				$result = $this->edit( $data );
-				$userId = $data['id'];
-			} else {
-				$result = $this->add( $data );
-				$userId = $result['data'];
-			}
-			Db::commit();
-		} catch (\Exception $e) {
-			Db::rollback();
-		}
-
-		if($result['code'] == 1) {
-			$userRoleData = [];
-			$userRoleData['user_id'] = $userId;
-			$userRoleData['role_id'] = $data['role_user'];
-			$userRoleData['update_time'] = time();
-			$roleUser = model('RoleUser');
-			$map = ['user_id'=>$userId];
-			if($roleUser->where($map)->count()) {
-				$roleUser->where($map)->update($userRoleData);
-			} else {
-				$roleUser->insert($userRoleData);
-			}
+		if( isset( $data['id']) && !empty($data['id'])) {
+			$result = $this->edit( $data );
+		} else {
+			$result = $this->add( $data );
 		}
 		return $result;
 	}

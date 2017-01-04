@@ -2,89 +2,66 @@
 Navicat MySQL Data Transfer
 
 Source Server         : localhost
-Source Server Version : 50532
-Source Host           : localhost:3306
-Source Database       : tpweb
+Source Server Version : 50547
+Source Host           : 127.0.0.1:3306
+Source Database       : tp-admin
 
 Target Server Type    : MYSQL
-Target Server Version : 50532
+Target Server Version : 50547
 File Encoding         : 65001
 
-Date: 2017-01-03 22:01:39
+Date: 2017-01-04 10:23:23
 */
 
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for ta_auth_access
+-- Table structure for ta_user
 -- ----------------------------
-DROP TABLE IF EXISTS `ta_auth_access`;
-CREATE TABLE `ta_auth_access` (
-  `role_id` mediumint(8) unsigned NOT NULL COMMENT '角色',
-  `rule_val` varchar(255) NOT NULL COMMENT '规则唯一英文标识,全小写',
-  KEY `role_id` (`role_id`),
-  KEY `rule_name` (`rule_val`) USING BTREE
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='权限授权表';
-
--- ----------------------------
--- Records of ta_auth_access
--- ----------------------------
-INSERT INTO `ta_auth_access` VALUES ('1', 'admin/Index/index');
-INSERT INTO `ta_auth_access` VALUES ('1', 'admin/User/index');
-INSERT INTO `ta_auth_access` VALUES ('2', 'admin/User/add');
-INSERT INTO `ta_auth_access` VALUES ('2', 'admin/Test/index');
-INSERT INTO `ta_auth_access` VALUES ('1', 'admin/Authrule/index1');
-
--- ----------------------------
--- Table structure for ta_auth_rule
--- ----------------------------
-DROP TABLE IF EXISTS `ta_auth_rule`;
-CREATE TABLE `ta_auth_rule` (
-  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT COMMENT '规则id,自增主键',
-  `title` varchar(20) NOT NULL DEFAULT '' COMMENT '规则中文描述',
-  `pid` mediumint(8) NOT NULL DEFAULT '0',
-  `rule_val` varchar(255) NOT NULL DEFAULT '' COMMENT '规则唯一英文标识,全小写',
+DROP TABLE IF EXISTS `ta_user`;
+CREATE TABLE `ta_user` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(16) DEFAULT NULL COMMENT '账号',
+  `mobile` varchar(12) DEFAULT NULL COMMENT '手机号',
+  `password` varchar(32) DEFAULT NULL COMMENT '密码',
+  `status` int(11) DEFAULT '0' COMMENT '状态 （0禁止 1可用）',
+  `create_time` int(11) DEFAULT NULL COMMENT '帐号创建时间',
+  `administrator` int(1) DEFAULT '0' COMMENT '是否超级管理员，1是 0否',
+  `role_id` int(11) unsigned NOT NULL DEFAULT '0',
   `update_time` int(11) DEFAULT NULL COMMENT '账户最后更新时间',
   `delete_time` int(11) DEFAULT NULL COMMENT '软删除',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=182 DEFAULT CHARSET=utf8 COMMENT='权限规则表';
+) ENGINE=MyISAM AUTO_INCREMENT=63 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 -- ----------------------------
--- Records of ta_auth_rule
+-- Records of ta_user
 -- ----------------------------
-INSERT INTO `ta_auth_rule` VALUES ('1', '内容管理', '177', 'admin/index/index', '1483447139', null);
-INSERT INTO `ta_auth_rule` VALUES ('175', '权限列表', '178', 'admin/authrule/index1', '1483447497', null);
-INSERT INTO `ta_auth_rule` VALUES ('176', '用户管理', '179', 'admin/user/index', '1483447504', null);
-INSERT INTO `ta_auth_rule` VALUES ('177', 'Admin/Index', '0', 'admin/index', '1483447479', null);
-INSERT INTO `ta_auth_rule` VALUES ('178', 'Admin/Authrule', '0', 'admin/authrule', '1483447497', null);
-INSERT INTO `ta_auth_rule` VALUES ('179', 'Admin/User', '0', 'admin/user', '1483447504', null);
+INSERT INTO `ta_user` VALUES ('1', '石金融', '13330613321', '4c3c8afaf91b4dd81bcf68ba519fa2f6', '1', '1478252401', '1', '0', '1483422862', null);
+INSERT INTO `ta_user` VALUES ('62', '程斌', '15116041105', '4c3c8afaf91b4dd81bcf68ba519fa2f6', '1', '1483423025', '0', '0', '1483423039', '1483423039');
+INSERT INTO `ta_user` VALUES ('2', '管理员', '15100000000', '4c3c8afaf91b4dd81bcf68ba519fa2f6', '1', '1482835627', '1', '3', '1483496528', null);
 
 -- ----------------------------
--- Table structure for ta_comment
+-- Table structure for ta_role
 -- ----------------------------
-DROP TABLE IF EXISTS `ta_comment`;
-CREATE TABLE `ta_comment` (
+DROP TABLE IF EXISTS `ta_role`;
+CREATE TABLE `ta_role` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `username` varchar(8) DEFAULT NULL,
-  `email` varchar(32) DEFAULT NULL,
-  `content` text,
-  `create_time` int(11) DEFAULT NULL,
-  `update_time` int(11) DEFAULT NULL,
-  `delete_time` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+  `name` varchar(20) NOT NULL COMMENT '角色名称',
+  `pid` smallint(6) DEFAULT NULL COMMENT '父角色ID',
+  `status` tinyint(1) unsigned DEFAULT NULL COMMENT '状态',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  KEY `parentId` (`pid`),
+  KEY `status` (`status`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='角色表';
 
 -- ----------------------------
--- Records of ta_comment
+-- Records of ta_role
 -- ----------------------------
-INSERT INTO `ta_comment` VALUES ('1', 'shijinro', 'imland@outlook.com', 'woshijirnongxiansen\nhengaoxian', '2147483647', null, null);
-INSERT INTO `ta_comment` VALUES ('2', null, null, null, null, null, null);
-INSERT INTO `ta_comment` VALUES ('3', null, null, null, null, null, null);
-INSERT INTO `ta_comment` VALUES ('4', null, null, null, null, null, null);
-INSERT INTO `ta_comment` VALUES ('5', null, null, null, null, null, null);
-INSERT INTO `ta_comment` VALUES ('6', null, null, null, null, null, null);
-INSERT INTO `ta_comment` VALUES ('7', null, null, null, null, null, null);
-INSERT INTO `ta_comment` VALUES ('8', null, null, null, null, null, null);
+INSERT INTO `ta_role` VALUES ('1', '超级管理员', '0', '1', '拥有网站最高管理员权限！', '1329633709', '1329633709');
+INSERT INTO `ta_role` VALUES ('2', '测试角色', null, '1', '测试角色', '1482389092', '0');
 
 -- ----------------------------
 -- Table structure for ta_login_log
@@ -753,64 +730,67 @@ INSERT INTO `ta_login_log` VALUES ('645', '0', '127.0.0.1', 'Windows 7', 'chrome
 INSERT INTO `ta_login_log` VALUES ('646', '1', '127.0.0.1', 'Windows 7', 'chrome-49', '登录成功', '1482636390');
 
 -- ----------------------------
--- Table structure for ta_role
+-- Table structure for ta_comment
 -- ----------------------------
-DROP TABLE IF EXISTS `ta_role`;
-CREATE TABLE `ta_role` (
+DROP TABLE IF EXISTS `ta_comment`;
+CREATE TABLE `ta_comment` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(20) NOT NULL COMMENT '角色名称',
-  `status` tinyint(1) unsigned DEFAULT NULL COMMENT '状态',
-  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
-  `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
-  `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
-  PRIMARY KEY (`id`),
-  KEY `status` (`status`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='角色表';
+  `username` varchar(8) DEFAULT NULL,
+  `email` varchar(32) DEFAULT NULL,
+  `content` text,
+  `create_time` int(11) DEFAULT NULL,
+  `update_time` int(11) DEFAULT NULL,
+  `delete_time` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of ta_role
+-- Records of ta_comment
 -- ----------------------------
-INSERT INTO `ta_role` VALUES ('1', '超级管理员', '1', '拥有网站最高管理员权限！', '1329633709', '1329633709');
-INSERT INTO `ta_role` VALUES ('2', '测试角色', '1', '测试角色', '1482389092', '0');
+INSERT INTO `ta_comment` VALUES ('1', 'shijinro', 'imland@outlook.com', 'woshijirnongxiansen\nhengaoxian', '2147483647', null, null);
+INSERT INTO `ta_comment` VALUES ('2', null, null, null, null, null, null);
+INSERT INTO `ta_comment` VALUES ('3', null, null, null, null, null, null);
+INSERT INTO `ta_comment` VALUES ('4', null, null, null, null, null, null);
+INSERT INTO `ta_comment` VALUES ('5', null, null, null, null, null, null);
+INSERT INTO `ta_comment` VALUES ('6', null, null, null, null, null, null);
+INSERT INTO `ta_comment` VALUES ('7', null, null, null, null, null, null);
+INSERT INTO `ta_comment` VALUES ('8', null, null, null, null, null, null);
 
 -- ----------------------------
--- Table structure for ta_role_user
+-- Table structure for ta_auth_rule
 -- ----------------------------
-DROP TABLE IF EXISTS `ta_role_user`;
-CREATE TABLE `ta_role_user` (
-  `role_id` int(11) unsigned DEFAULT '0' COMMENT '角色 id',
-  `user_id` int(11) NOT NULL DEFAULT '0' COMMENT '用户id',
-  `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
-  `update_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
-  PRIMARY KEY (`user_id`),
-  KEY `group_id` (`role_id`),
-  KEY `user_id` (`user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='用户角色对应表';
-
--- ----------------------------
--- Records of ta_role_user
--- ----------------------------
-INSERT INTO `ta_role_user` VALUES ('2', '1', '0', '0');
-
--- ----------------------------
--- Table structure for ta_user
--- ----------------------------
-DROP TABLE IF EXISTS `ta_user`;
-CREATE TABLE `ta_user` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `username` varchar(16) DEFAULT NULL COMMENT '账号',
-  `mobile` varchar(12) DEFAULT NULL COMMENT '手机号',
-  `password` varchar(32) DEFAULT NULL COMMENT '密码',
-  `status` int(11) DEFAULT '0' COMMENT '状态 （0禁止 1可用）',
-  `create_time` int(11) DEFAULT NULL COMMENT '帐号创建时间',
-  `administrator` int(1) DEFAULT '0' COMMENT '是否超级管理员，1是 0否',
+DROP TABLE IF EXISTS `ta_auth_rule`;
+CREATE TABLE `ta_auth_rule` (
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT COMMENT '规则id,自增主键',
+  `title` varchar(20) NOT NULL DEFAULT '' COMMENT '规则中文描述',
+  `rule_val` varchar(255) NOT NULL DEFAULT '' COMMENT '规则唯一英文标识,全小写',
   `update_time` int(11) DEFAULT NULL COMMENT '账户最后更新时间',
   `delete_time` int(11) DEFAULT NULL COMMENT '软删除',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=62 DEFAULT CHARSET=utf8 COMMENT='用户表';
+) ENGINE=MyISAM AUTO_INCREMENT=179 DEFAULT CHARSET=utf8 COMMENT='权限规则表';
 
 -- ----------------------------
--- Records of ta_user
+-- Records of ta_auth_rule
 -- ----------------------------
-INSERT INTO `ta_user` VALUES ('1', '石金融', '13330613321', '4c3c8afaf91b4dd81bcf68ba519fa2f6', '1', '1478252401', '1', '1483451879', null);
-INSERT INTO `ta_user` VALUES ('2', 'admin', '15100000000', '4c3c8afaf91b4dd81bcf68ba519fa2f6', '1', '1482835627', '1', '1483450516', null);
+INSERT INTO `ta_auth_rule` VALUES ('1', '内容管理', 'admin/index/index', null, null);
+INSERT INTO `ta_auth_rule` VALUES ('176', '用户管理', 'admin/user/index', null, null);
+
+-- ----------------------------
+-- Table structure for ta_auth_access
+-- ----------------------------
+DROP TABLE IF EXISTS `ta_auth_access`;
+CREATE TABLE `ta_auth_access` (
+  `role_id` mediumint(8) unsigned NOT NULL COMMENT '角色',
+  `rule_val` varchar(255) NOT NULL COMMENT '规则唯一英文标识,全小写',
+  KEY `role_id` (`role_id`),
+  KEY `rule_name` (`rule_val`) USING BTREE
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='权限授权表';
+
+-- ----------------------------
+-- Records of ta_auth_access
+-- ----------------------------
+INSERT INTO `ta_auth_access` VALUES ('1', 'admin/Index/index');
+INSERT INTO `ta_auth_access` VALUES ('1', 'admin/User/index');
+INSERT INTO `ta_auth_access` VALUES ('2', 'admin/User/add');
+INSERT INTO `ta_auth_access` VALUES ('2', 'admin/Test/index');
+INSERT INTO `ta_auth_access` VALUES ('1', 'admin/Authrule/index1');
