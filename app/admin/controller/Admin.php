@@ -62,6 +62,10 @@ class Admin extends Common
 	//执行该动作必须验证权限，否则抛出异常
 	public function mustCheckRule( $rule_val = '' )
 	{
+		$userRow = Session::get('userinfo', 'admin');
+		if( $userRow['administrator'] == 1 ) {
+			return true;
+		}
 		if( empty($rule_val) ) {
 			$request = Request::instance();
 			$rule_val = $request->module().'/'.$request->controller().'/'.$request->action();
