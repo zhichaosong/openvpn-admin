@@ -28,7 +28,7 @@
                                 <th data-width="80" data-field="mobile" data-align="center">电话</th>
                                 <th data-width="50" data-field="status" >状态</th>
                                 <th data-width="80" data-field="create_time" data-align="center">创建时间</th>
-                                <th data-width="30" data-field="operate"   data-align="center" data-formatter="operateFormatter" data-events="operateEvents">操作</th>
+                                <th data-width="80" data-field="operate"   data-align="center" data-formatter="operateFormatter" data-events="operateEvents">操作</th>
                             </tr>
                         </thead>
                     </table>
@@ -41,10 +41,10 @@
 <script type="text/javascript">
     function operateFormatter(value, row, index) {
         return [
-            '<a class="edit" href="javascript:void(0)" title="{$Think.lang.Edit}">',
+            '<a class="btn btn-xs edit" href="javascript:void(0)" title="{$Think.lang.Edit}">',
             '<i class="fa fa-edit"></i>',
             '</a>  ',
-            '<a class="delete" href="javascript:void(0)" title="{$Think.lang.Delete}">',
+            '<a class="btn btn-xs delete" href="javascript:void(0)" title="{$Think.lang.Delete}">',
             '<i class="fa fa-trash"></i>',
             '</a>'
         ].join('');

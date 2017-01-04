@@ -32,6 +32,17 @@ class Role extends Admin
         return view();
     }
 
+    public function add()
+    {
+        return $this->fetch('edit');
+    }
+
+
+    public function edit($id = 0)
+    {
+        return $this->fetch();
+    }
+
     public function access_menu()
     {
         return view();

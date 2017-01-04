@@ -31,7 +31,7 @@
 								<th data-width="100" data-field="name">角色名称</th>
 								<th data-width="100" data-field="status" data-formatter="format_status">状态</th>
 								<th data-field="remark">备注</th>
-                                <th data-field="operate"   data-align="center" data-formatter="operateFormatter" data-events="operateEvents">操作</th>
+                                <th data-width="100" data-field="operate"   data-align="center" data-formatter="operateFormatter" data-events="operateEvents">操作</th>
                                 
 							</tr>
 						</thead>
@@ -45,23 +45,32 @@
 <script type="text/javascript">
     function operateFormatter(value, row, index) {
         return [
-            '<a class="edit" href="javascript:void(0)" title="{$Think.lang.Edit}">',
+            '<a class="btn btn-xs access_menu" href="javascript:void(0)" title="{$Think.lang.Access_menu}">',
+            '<i class="fa fa-certificate"></i>',
+            '</a>  ',
+            '<a class="btn btn-xs edit" href="javascript:void(0)" title="{$Think.lang.Edit}">',
             '<i class="fa fa-edit"></i>',
             '</a>  ',
-            '<a class="delete" href="javascript:void(0)" title="{$Think.lang.Delete}">',
+            '<a class="btn btn-xs delete" href="javascript:void(0)" title="{$Think.lang.Delete}">',
             '<i class="fa fa-trash"></i>',
             '</a>'
         ].join('');
     }
 
     var operateEvents = {
-        'click .edit': function (e, value, row, index) {
+        'click .access_menu': function (e, value, row, index) {
             var param = {
                 url: '/admin/role/access_menu',
                 data: {id: row.id}
             }
             window.location.href = param.url + '?id=' + param.data.id;
-            // $("#table").gridView('loadModal', param.url,param.data)
+        },
+        'click .edit': function (e, value, row, index) {
+            var param = {
+                url: '/admin/role/edit',
+                data: {id: row.id}
+            }
+            $("#table").gridView('loadModal', param.url,param.data)
         },
         'click .delete': function (e, value, row, index) {
             $("#table").gridView('deleteModal', 'delete', row)

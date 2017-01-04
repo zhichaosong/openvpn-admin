@@ -29,7 +29,7 @@
 					            <th data-width="50" data-field="id">ID</th>
 					            <th data-field="title">权限名称</th>
 					            <th data-field="rule_val">RULE_VAL</th>
-					            <th data-width="30" data-field="operate"   data-align="center" data-formatter="operateFormatter" data-events="operateEvents">操作</th>
+					            <th data-width="80" data-field="operate"   data-align="center" data-formatter="operateFormatter" data-events="operateEvents">操作</th>
 					        </tr>
 					    </thead>
 					</table>
@@ -43,10 +43,10 @@
 
     function operateFormatter(value, row, index) {
         return [
-            '<a class="edit" href="javascript:void(0)" title="{$Think.lang.Edit}">',
+            '<a class="btn btn-xs edit" href="javascript:void(0)" title="{$Think.lang.Edit}">',
             '<i class="fa fa-edit"></i>',
             '</a>  ',
-            '<a class="delete" href="javascript:void(0)" title="{$Think.lang.Delete}">',
+            '<a class="btn btn-xs delete" href="javascript:void(0)" title="{$Think.lang.Delete}">',
             '<i class="fa fa-trash"></i>',
             '</a>'
         ].join('');

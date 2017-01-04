@@ -37,6 +37,7 @@ return [
     'Add'       => '添加',
     'Edit'      => '编辑',
     'Delete'    => '删除',
+    'Access_menu'=> '用户授权',
 
     // 菜单列表 不支持数组
     'Dashboards'    =>  '仪表盘',
