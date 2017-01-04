@@ -43,6 +43,6 @@ return [
     'SystemManage'  =>'系统管理',
     'UserManage'   =>'账号管理',
     'RoleManage'    =>'角色管理',
-    'AuthManage'    =>'授权管理',
+    'AuthManage'    =>'权限管理',
 
 ];

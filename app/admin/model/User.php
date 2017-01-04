@@ -7,7 +7,7 @@ use think\Loader;
 use think\Model;
 use traits\model\SoftDelete;
 
-class User extends Model
+class User extends Admin
 {
 	use SoftDelete;
     protected $deleteTime = 'delete_time';
@@ -43,9 +43,8 @@ class User extends Model
 
 	public function getList( $request )
 	{
-		//先致空
-		$request = array();
-		$data = $this->order('create_time desc')->where( $request )->select();
+		$request = $this->fmtRequest( $request );
+		$data = $this->order('create_time desc')->where( $request['map'] )->limit($request['offset'], $request['limit'])->select();
 		return $this->_fmtData( $data );
 	}
 

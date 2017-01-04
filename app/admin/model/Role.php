@@ -6,7 +6,7 @@ use think\Db;
 use think\Loader;
 use think\Model;
 
-class Role extends Model
+class Role extends Admin
 {
     //根据uid返回角色 rule_val
     public function getRoleInfo( $uid )

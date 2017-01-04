@@ -11,7 +11,7 @@ use app\common\tools;
 
 
 /**
-* 后台基础类
+* 后台controller基础类
 * @author aierui github  https://github.com/Aierui
  *
 * @version 1.0 

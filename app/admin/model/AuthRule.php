@@ -11,12 +11,12 @@ use \think\Session;
  *
  * @author chengbin
  */
-class AuthRule extends Model
+class AuthRule extends Admin
 {
     public function getList($request)
     {
-        $request = [];
-        return $this->where($request)->select();
+        $request = $this->fmtRequest( $request );
+        return $this->where($request['map'])->limit($request['offset'], $request['limit'])->select();
     }
 
     public function getStatusAttr($value)

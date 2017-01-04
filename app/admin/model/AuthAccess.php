@@ -11,7 +11,7 @@ use \think\Session;
  *
  * @author chengbin
  */
-class AuthAccess extends Model
+class AuthAccess extends Admin
 {
     static $authAccessData = array();
     public function getRuleVals( $uid )

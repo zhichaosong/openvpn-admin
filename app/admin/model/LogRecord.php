@@ -9,7 +9,7 @@ use \think\Session;
 /**
  * 操作日志记录
  */
-class logRecord extends Model
+class logRecord extends Admin
 {
     protected $updateTime = false;
     protected $insert     = ['ip', 'user_id','browser','os'];
