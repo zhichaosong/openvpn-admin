@@ -4,14 +4,18 @@
         <div class="col-lg-3">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <span class="label label-success pull-right">Monthly</span>
+                    <span class="label label-success pull-right">Total</span>
                     <h5>Star</h5>
                 </div>
                 <div class="ibox-content">
-                    <h1 class="no-margins">40 886,200</h1>
-                    <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div>
-                    <small>Github</small>
+                    <h1 class="no-margins" id="github-star-count"></h1>
+                    <div class="stat-percent font-bold text-success">100% <i class="fa fa-bolt"></i></div>
+                    <a href="https://github.com/Astonep/tp-admin" target="_blank">
+                        <small>Github</small>
+                    </a>
                 </div>
+
+
             </div>
         </div>
         <div class="col-lg-3">
@@ -55,3 +59,21 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    $(function () {
+        var data = {}
+        $.ajax({
+            url: 'https://api.github.com/repos/Astonep/tp-admin',
+            type: 'get',
+            data:  '',
+            dataType:  'json',
+            success:function(ajaxData){
+                data.github = ajaxData.stargazers_count
+                console.log(data.github)
+                $("#github-star-count").text(data.github)
+            }
+        })
+        
+    })
+</script>
