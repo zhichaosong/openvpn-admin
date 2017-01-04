@@ -31,7 +31,7 @@ class User extends Admin
      * @author chengbin
      * @return mixed
      */
-    public function getData()
+    public function getList()
     {
         if(!request()->isAjax()) {
             $this->error(lang('Request type error'), 4001);
