@@ -60,14 +60,14 @@
     var operateEvents = {
         'click .access_menu': function (e, value, row, index) {
             var param = {
-                url: '/admin/role/access_menu',
+                url: '{:url("admin/authrule/setauth");}',
                 data: {id: row.id}
             }
             window.location.href = param.url + '?id=' + param.data.id;
         },
         'click .edit': function (e, value, row, index) {
             var param = {
-                url: '/admin/role/edit',
+                url: '{:url("admin/role/edit");}',
                 data: {id: row.id}
             }
             $("#table").gridView('loadModal', param.url,param.data)

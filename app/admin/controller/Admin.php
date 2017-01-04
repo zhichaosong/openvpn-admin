@@ -18,6 +18,9 @@ use app\common\tools;
 */
 class Admin extends Common
 {
+	protected $uid = 0;
+	protected $role_id = 0;
+
 	function _initialize()
 	{
 		parent::_initialize();
@@ -30,8 +33,9 @@ class Admin extends Common
 		//验证权限
 		$request = Request::instance();
 		$rule_val = $request->module().'/'.$request->controller().'/'.$request->action();
-		$uid = $userRow['id'];
-		if($userRow['administrator']!=1 && !$this->checkRule($uid, $rule_val)) {
+		$this->uid = $userRow['id'];
+		$this->role_id = $userRow['role_id'];
+		if($userRow['administrator']!=1 && !$this->checkRule($this->uid, $rule_val)) {
 			$this->error(lang('Without the permissions page'));
 		}
 	}

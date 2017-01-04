@@ -72,9 +72,4 @@ class Role extends Admin
         }
         return model('Role')->deleteById($id);
     }
-
-    public function access_menu()
-    {
-        return view();
-    }
 }

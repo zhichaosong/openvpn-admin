@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50547
 File Encoding         : 65001
 
-Date: 2017-01-04 10:23:23
+Date: 2017-01-04 15:21:45
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -36,7 +36,7 @@ CREATE TABLE `ta_user` (
 -- ----------------------------
 -- Records of ta_user
 -- ----------------------------
-INSERT INTO `ta_user` VALUES ('1', '石金融', '13330613321', '4c3c8afaf91b4dd81bcf68ba519fa2f6', '1', '1478252401', '1', '0', '1483422862', null);
+INSERT INTO `ta_user` VALUES ('1', '石金融', '13330613321', '4c3c8afaf91b4dd81bcf68ba519fa2f6', '1', '1478252401', '1', '1', '1483422862', null);
 INSERT INTO `ta_user` VALUES ('62', '程斌', '15116041105', '4c3c8afaf91b4dd81bcf68ba519fa2f6', '1', '1483423025', '0', '0', '1483423039', '1483423039');
 INSERT INTO `ta_user` VALUES ('2', '管理员', '15100000000', '4c3c8afaf91b4dd81bcf68ba519fa2f6', '1', '1482835627', '1', '3', '1483496528', null);
 
@@ -55,12 +55,12 @@ CREATE TABLE `ta_role` (
   PRIMARY KEY (`id`),
   KEY `parentId` (`pid`),
   KEY `status` (`status`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='角色表';
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='角色表';
 
 -- ----------------------------
 -- Records of ta_role
 -- ----------------------------
-INSERT INTO `ta_role` VALUES ('1', '超级管理员', '0', '1', '拥有网站最高管理员权限！', '1329633709', '1329633709');
+INSERT INTO `ta_role` VALUES ('1', '超级管理员1', '0', '1', '网站最高管理员权限！', '1329633709', '1329633709');
 INSERT INTO `ta_role` VALUES ('2', '测试角色', null, '1', '测试角色', '1482389092', '0');
 
 -- ----------------------------
@@ -764,16 +764,18 @@ CREATE TABLE `ta_auth_rule` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT COMMENT '规则id,自增主键',
   `title` varchar(20) NOT NULL DEFAULT '' COMMENT '规则中文描述',
   `rule_val` varchar(255) NOT NULL DEFAULT '' COMMENT '规则唯一英文标识,全小写',
+  `pid` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '父类ID',
   `update_time` int(11) DEFAULT NULL COMMENT '账户最后更新时间',
   `delete_time` int(11) DEFAULT NULL COMMENT '软删除',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=179 DEFAULT CHARSET=utf8 COMMENT='权限规则表';
+) ENGINE=MyISAM AUTO_INCREMENT=180 DEFAULT CHARSET=utf8 COMMENT='权限规则表';
 
 -- ----------------------------
 -- Records of ta_auth_rule
 -- ----------------------------
-INSERT INTO `ta_auth_rule` VALUES ('1', '内容管理', 'admin/index/index', null, null);
-INSERT INTO `ta_auth_rule` VALUES ('176', '用户管理', 'admin/user/index', null, null);
+INSERT INTO `ta_auth_rule` VALUES ('1', '内容管理', 'admin/index/index', '3', '1483502713', null);
+INSERT INTO `ta_auth_rule` VALUES ('2', '用户管理', 'admin/user/index', '3', null, null);
+INSERT INTO `ta_auth_rule` VALUES ('3', 'Admin/Index', 'admin/index', '0', '1483502713', null);
 
 -- ----------------------------
 -- Table structure for ta_auth_access
@@ -781,16 +783,15 @@ INSERT INTO `ta_auth_rule` VALUES ('176', '用户管理', 'admin/user/index', nu
 DROP TABLE IF EXISTS `ta_auth_access`;
 CREATE TABLE `ta_auth_access` (
   `role_id` mediumint(8) unsigned NOT NULL COMMENT '角色',
-  `rule_val` varchar(255) NOT NULL COMMENT '规则唯一英文标识,全小写',
+  `rule_id` mediumint(8) unsigned NOT NULL COMMENT '规则唯一英文标识,全小写',
   KEY `role_id` (`role_id`),
-  KEY `rule_name` (`rule_val`) USING BTREE
+  KEY `rule_name` (`rule_id`) USING BTREE
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='权限授权表';
 
 -- ----------------------------
 -- Records of ta_auth_access
 -- ----------------------------
-INSERT INTO `ta_auth_access` VALUES ('1', 'admin/Index/index');
-INSERT INTO `ta_auth_access` VALUES ('1', 'admin/User/index');
-INSERT INTO `ta_auth_access` VALUES ('2', 'admin/User/add');
-INSERT INTO `ta_auth_access` VALUES ('2', 'admin/Test/index');
-INSERT INTO `ta_auth_access` VALUES ('1', 'admin/Authrule/index1');
+INSERT INTO `ta_auth_access` VALUES ('2', '3');
+INSERT INTO `ta_auth_access` VALUES ('1', '2');
+INSERT INTO `ta_auth_access` VALUES ('2', '1');
+INSERT INTO `ta_auth_access` VALUES ('3', '2');

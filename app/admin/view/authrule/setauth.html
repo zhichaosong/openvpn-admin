@@ -1,0 +1,84 @@
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins" style="background: white;padding: 12px">
+                <!-- 表单标题概要 -->
+                <div class="ibox-title">
+                    <h5>用户授权</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <!-- 表单内容 -->
+                <form data-method="post" data-action="{:url('admin/authrule/saveAuthAccess')}" data-submit="ajax" data-validate="true" class="form-horizontal">
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            {notempty name="data"}
+                            {volist name="data" id="vo"}
+                                <div class="checkbox second-level-hooks">
+                                    <label>{$vo.title}</label>
+                                </div>
+                                {notempty name="vo['children']"}
+                                {volist name="vo['children']" id="sub"}
+                                    <div class="checkbox checkbox-inline">
+                                        <input type="checkbox" id="authrule{$sub.id}" name="authrule[]" <?php if(in_array($sub['id'], $rule_ids)) {echo 'checked';}; ?> value="{$sub.id}">
+                                        <label for="authrule{$sub.id}">{$sub.title}</label>
+                                    </div>
+                                {/volist}
+                                {/notempty}
+                            {/volist}
+                            {/notempty}
+                        </div>
+                        <div class="col-md-12 btn-group-footer">
+                            <button type="button" class="btn btn-default">取消</button>
+                            <button type="submit" class="btn btn-primary">保存</button>
+                        </div>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+.row .checkbox{
+    padding-left: 20px;
+}
+.row .checkbox label {
+    padding-left: 0;
+}
+.row .checkbox-inline{
+    padding-left: 40px;
+}
+
+.row .checkbox label.first-level {
+    font-weight: 700;
+    font-size: 14px;
+}
+.row .btn-group-footer{
+    margin-top: 10px;
+}
+</style>
+
+
+<script>
+    $(".first-level-hooks").find('input').on('click', function () {
+        $this = $(this)
+        var checkboxF = $this.is(':checked');
+        if (checkboxF) {
+            $this.parent().parent().find(':checkbox').attr('checked',true)
+        }else{
+            $this.parent().parent().find(':checkbox').removeAttr('checked')
+        }
+    })
+
+    
+</script>

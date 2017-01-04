@@ -47,8 +47,12 @@ class Authrule extends Admin
 		return view();
 	}
 
-	public function access_menu()
+	public function setauth()
 	{
+		$levelData = model('AuthRule')->getLevelData();
+		$this->assign('data', $levelData);
+		$ids = model('AuthAccess')->getIds( $this->uid );
+		$this->assign('rule_ids', $ids);
 		return view();
 	}
 
@@ -69,10 +73,10 @@ class Authrule extends Admin
 	 */
 	public function saveData()
 	{
-		/*$this->mustCheckRule( 'admin/authrule/edit' );
+		$this->mustCheckRule( 'admin/authrule/edit' );
 		if(!request()->isAjax()) {
 			return info(lang('Request type error'));
-		}*/
+		}
 		$data = input('post.');
 		model('AuthRule')->saveData($data);
 		$this->success(lang('Save success'));
@@ -86,5 +90,15 @@ class Authrule extends Admin
 			return info(lang('Data ID exception'), 0);
 		}
 		return model('AuthRule')->deleteById($id);
+	}
+
+	public function saveAuthAccess()
+	{
+		if(!request()->isAjax()) {
+			return info(lang('Request type error'));
+		}
+		$post_data = input('post.');
+		$data = isset($post_data['authrule'])?$post_data['authrule']:[];
+		return model('AuthAccess')->saveData($this->role_id, $data);
 	}
 }

@@ -91,4 +91,22 @@ class AuthRule extends Admin
         unset($ex_tmp);
         return $title;
     }
+
+    public function getLevelData()
+    {
+        $data = $this->order('pid asc')->select();
+        if( empty($data) ) {
+            return $data;
+        }
+
+        $ret = [];
+        foreach($data as $val) {
+            if( $val->pid == 0 ) {
+                $ret[$val->id] = ['id'=>$val->id,'title'=>$val->title,'pid'=>$val->pid, 'rule_val'=>$val->rule_val];
+            } elseif (isset($ret[$val->pid])) {
+                $ret[$val->pid]['children'][] = ['id'=>$val->id,'title'=>$val->title,'pid'=>$val->pid, 'rule_val'=>$val->rule_val];
+            }
+        }
+        return $ret;
+    }
 }
