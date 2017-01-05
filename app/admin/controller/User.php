@@ -47,6 +47,8 @@ class User extends Admin
      */
     public function add()
     {
+        $roleData = model('role')->getKvData();
+        $this->assign('roleData', $roleData);
         return $this->fetch('edit');
     }
 
