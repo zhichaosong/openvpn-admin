@@ -117,9 +117,11 @@ class Visitor
             $os = 'SunOS';
         } else if (preg_match('/ibm/i', $agent) && preg_match('/os/i', $agent)) {
             $os = 'IBM OS/2';
-        } else if (preg_match('/Mac/i', $agent) && preg_match('/PC/i', $agent)) {
-            $os = 'Macintosh';
-        } else if (preg_match('/PowerPC/i', $agent)) {
+        } else if (preg_match('/Mac/i', $agent) && preg_match('/10_12_2/i', $agent)) {
+            $os = 'Mac OS X 10_12_2';
+        }else if (preg_match('/Mac/i', $agent)) {
+            $os = 'Mac OS X';
+        }else if (preg_match('/PowerPC/i', $agent)) {
             $os = 'PowerPC';
         } else if (preg_match('/AIX/i', $agent)) {
             $os = 'AIX';

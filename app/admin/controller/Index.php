@@ -21,6 +21,9 @@ class Index extends Admin
 	 */
 	public function index()
 	{
+		$data['ip'] = Loader::model('LogRecord')->UniqueIpCount();
+
+		$this->assign('data', $data);
 		return view();
 	}
 }

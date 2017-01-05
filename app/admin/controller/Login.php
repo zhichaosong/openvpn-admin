@@ -49,7 +49,9 @@ class Login extends Common
 		if ($ret['code'] !== 1) {
 			return $this->error( $ret['msg'] );
 		}
+		unset($ret['data']['password']);
 		Session::set('userinfo', $ret['data'], 'admin');
+		Loader::model('LogRecord')->record( lang('Login succeed') );
 		return $this->success($ret['msg'], url('admin/index/index'));
 	}
 
