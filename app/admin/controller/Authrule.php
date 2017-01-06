@@ -99,6 +99,9 @@ class Authrule extends Admin
 		}
 		$post_data = input('post.');
 		$data = isset($post_data['authrule'])?$post_data['authrule']:[];
-		return model('AuthAccess')->saveData($this->role_id, $data);
+		$res = model('AuthAccess')->saveData($this->role_id, $data);
+		if ($res['code'] == 1) {
+			return $this->success();
+		}
 	}
 }
