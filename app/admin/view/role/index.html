@@ -19,9 +19,6 @@
                 <div class="ibox-content">
                     <!-- 用户控件（操作） -->
                     {toolbar id="toolbar"}
-                       <!--  <div class="btn-group">
-                            <button type="button" data-name="access_menu" class="btn btn-primary" data-event-type="view" data-event-value="" data-target="self"><i class="fa fa-certificate" aria-hidden="true" style="margin-right: 2px"> </i>用户权限</button>
-                        </div> -->
                     {/toolbar}
                     <!-- 表格数据 -->
 					<table id="table" data-toggle="gridview" class="table" data-url="{:url('admin/role/getList')}" data-toolbar="#toolbar" data-show-columns="true" data-page-size="10" data-page-list="[10, 25, 50, All]" data-unique-id="id" data-pagination="true" data-side-pagination="client" data-search="true" data-click-to-select="false">
@@ -31,7 +28,7 @@
 								<th data-width="100" data-field="name">角色名称</th>
 								<th data-width="100" data-field="status" data-formatter="format_status">状态</th>
 								<th data-field="remark">备注</th>
-                                <th data-width="100" data-field="operate"   data-align="center" data-formatter="operateFormatter" data-events="operateEvents">操作</th>
+                                <th data-width="100" data-field="operate" data-align="center" data-formatter="operateFormatter" data-events="operateEvents">操作</th>
                                 
 							</tr>
 						</thead>
