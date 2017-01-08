@@ -5,7 +5,7 @@
 
 
 
-> 喜欢就Star，不只是Fork；111121212
+> 喜欢就Star，不只是Fork；
 
 > 想要分享的动机才是驱动力，而技术仅仅是一种方法。
 
@@ -21,11 +21,10 @@ TP-Web即基于ThinkPHP5的web后台管理系统
 地址：[http://doc.web.shijinrong.cn/](http://doc.web.shijinrong.cn/)
 
 ## 在线体验
-地址：[http://web.shijinrong.cn/admin/login](http://web.shijinrong.cn/admin/login) 
 
 账户：13330613321
 
-密码：123
+密码：123456
 
 
 ## 线上仓库

@@ -27,6 +27,7 @@ $(function() {
     };
 
     GridView.prototype.init = function() {
+        // console.log(this.toolbar)
         this.initTable();
         this.initForm();
         this.initToolbar();
@@ -74,16 +75,8 @@ $(function() {
             },
             onClickRow: function(row, $element) {
                 $element.addClass('info').siblings().removeClass('info');
-
-                var btnGroup = $element.parents('.bootstrap-table:eq(0)').find('#toolbar').find('.btn-group')
-                btnGroup.each(function(items, index) {
-                    $(index).find('button').each(function(item, ele) {
-                        if ($(ele).data('name') != 'delete') { //默认delete需选中checkbox
-                            $(ele).removeAttr('disabled').removeClass('btn-default').addClass('btn-primary')
-                        }
-                    })
-                })
-
+                // console.log($this.toolbar)
+                $this.toggleCheckedClass()
                 $this.currentRow = row;
             },
             onDblClickRow: function(item, $element) { //双击
@@ -95,15 +88,10 @@ $(function() {
             },
             onCheck: function(row, $element) {
 
-
-                var btnGroup = $element.parents('.bootstrap-table:eq(0)').find('#toolbar').find('.btn-group')
-                btnGroup.each(function(items, index) {
-                    $(index).find('button').each(function(item, ele) {
-                        if ($(ele).data('name') == 'delete') {
-                            $(ele).removeAttr('disabled').removeClass('btn-default').addClass('btn-primary')
-                        }
-                    })
-                })
+                var data = {
+                    attr: ''
+                }
+                $this.toggleCheckedClass(data)
                 // $this.$table.trigger('check', [row, $this]);
                 return false;
             },
@@ -114,41 +102,28 @@ $(function() {
                 if (checked.length > 0) {
                     return
                 }
-
-                var btnGroup = $element.parents('.bootstrap-table:eq(0)').find('#toolbar').find('.btn-group')
-                btnGroup.each(function(items, index) {
-                    $(index).find('button').each(function(item, ele) {
-                        if ($(ele).data('name') == 'delete') {
-                            $(ele).attr('disabled', true).addClass('btn-default').removeClass('btn-primary')
-                        }
-                    })
-                })
+               
+                var data = {
+                    attr: 'disabled'
+                }
+                $this.toggleCheckedClass(data)
 
                 // $this.$table.trigger('uncheck', [row, $this]);
                 return false;
             },
             onCheckAll: function(rows) {
-
-                var btnGroup = $('body').find('.bootstrap-table:eq(0)').find('#toolbar').find('.btn-group')
-                btnGroup.each(function(items, index) {
-                        $(index).find('button').each(function(item, ele) {
-                            if ($(ele).data('name') == 'delete') {
-                                $(ele).removeAttr('disabled').removeClass('btn-default').addClass('btn-primary')
-                            }
-                        })
-                    })
+                var data = {
+                    attr: ''
+                }
+                $this.toggleCheckedClass(data)
                     //$table.trigger('checkAll', [rows]);
                 return false;
             },
             onUncheckAll: function(rows) {
-                var btnGroup = $('body').find('.bootstrap-table:eq(0)').find('#toolbar').find('.btn-group')
-                btnGroup.each(function(items, index) {
-                    $(index).find('button').each(function(item, ele) {
-                        if ($(ele).data('name') == 'delete') {
-                            $(ele).attr('disabled', true).addClass('btn-default').removeClass('btn-primary')
-                        }
-                    })
-                })
+                var data = {
+                    attr: 'disabled'
+                }
+                $this.toggleCheckedClass(data)
 
                 //$table.trigger('uncheckAll', [rows]);
                 return false;
@@ -336,6 +311,41 @@ $(function() {
 
     GridView.prototype.getSelections = function () {
         return this.$table.bootstrapTable('getSelections');
+    }
+
+    GridView.prototype.toggleCheckedClass = function (data) {
+        $this = this
+        // var btnGroup = $this.toolbar.find('.btn-group')
+        var btnGroup = $('body').find('.bootstrap-table:eq(0)').find('#toolbar').find('.btn-group')
+        // console.log(btnGroup)
+        // return false
+        if (data != undefined) {
+            if (data.attr == 'disabled') {
+                btnGroup.each(function(items, index) {
+                    $(index).find('button').each(function(item, ele) {
+                        if ($(ele).data('name') == 'delete') {
+                            $(ele).attr('disabled', true).addClass('btn-default').removeClass('btn-primary')
+                        }
+                    })
+                })
+            }else if (data.attr == '') {
+                btnGroup.each(function(items, index) {
+                    $(index).find('button').each(function(item, ele) {
+                        if ($(ele).data('name') == 'delete') {
+                            $(ele).removeAttr('disabled').removeClass('btn-default').addClass('btn-primary')
+                        }
+                    })
+                })
+            }
+        }else{
+            btnGroup.each(function(items, index) {
+                $(index).find('button').each(function(item, ele) {
+                    if ($(ele).data('name') != 'delete') { //默认delete需选中checkbox
+                        $(ele).removeAttr('disabled').removeClass('btn-default').addClass('btn-primary')
+                    }
+                })
+            })
+        }
     }
 
     GridView.prototype.deleteModal = function(eventName, row) {
