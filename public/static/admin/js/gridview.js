@@ -313,11 +313,7 @@ $(function() {
     }
 
     GridView.prototype.toggleCheckedClass = function (data) {
-        $this = this
-        // var btnGroup = $this.toolbar.find('.btn-group')
-        var btnGroup = $('body').find('.bootstrap-table:eq(0)').find('#toolbar').find('.btn-group')
-        // console.log(btnGroup)
-        // return false
+        var btnGroup = this.$toolbar.find('.btn-group')
         if (data != undefined) {
             if (data.attr == 'disabled') {
                 btnGroup.each(function(items, index) {
