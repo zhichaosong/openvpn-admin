@@ -27,7 +27,6 @@ $(function() {
     };
 
     GridView.prototype.init = function() {
-        // console.log(this.toolbar)
         this.initTable();
         this.initForm();
         this.initToolbar();
