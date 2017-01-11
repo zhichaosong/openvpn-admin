@@ -21,7 +21,7 @@
 
 TP-admin即基于ThinkPHP5拿来即用高性能后台管理系统
 
-- 0.1.0  [预览](https://github.com/Aierui/tp-admin/tree/0.1.0)
+- 0.1.0  [查看](https://github.com/Aierui/tp-admin/tree/0.1.0)
 
 ## 官方文档(旧) 新正在写……
 地址：[http://doc.web.shijinrong.cn/](http://doc.web.shijinrong.cn/)
@@ -121,8 +121,7 @@ TP-admin即基于ThinkPHP5的admin后台管理系统
 
 
 ## 交流
-- 大家可以在github上Issues
-- 在[这个后台](http://web.shijinrong.cn/admin/)我增加了一个用户建议、也可以留言
+- 问题只接受来自Github上Issues《源码附截图，描述清楚
 - 欢迎提出bug、便于我接下来修改
 - 若你还有足够的精力和时间，欢迎你也加入进来
 - 邮箱：imland@outlook.com
