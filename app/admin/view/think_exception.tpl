@@ -79,7 +79,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>系统发生错误</title>
+    <title>{$Think.lang.SysError}</title>
     <meta name="robots" content="noindex,nofollow" />
     <style>
         /* Base */
@@ -444,7 +444,7 @@
     <?php } ?>
 
 
-<p><input type="button" class="btn btn-danger" value="返回" onclick="window.history.back()"></p>
+<p><input type="button" class="btn btn-danger" value="{$Think.lang.Back}" onclick="window.history.back()"></p>
  
     <?php if(\think\App::$debug) { ?>
     <script>

@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<title>{$Think.config.website.name} | 登录</title>
+	<title>{$Think.config.website.name} | {:lang('Login')}</title>
     <meta name="KeyWords" content="{$Think.config.website.keywords}">
     <meta name="Description" content="{$Think.config.website.description}">
 	{css href="__LIB__/bootstrap3/css/bootstrap.min.css" /}
@@ -53,11 +53,11 @@
                 </div>
 
                 <div class="form-group" style="float: left;">
-                    <img id="captchaimg" src="{:captcha_src()}" alt="验证码" width="130" height="38" class="verify refcaptcha">
-                    <span style="width: 100px;padding-left: 10px" class="refcaptcha">看不清，点击图片换一张</span>
+                    <img id="captchaimg" src="{:captcha_src()}" alt="{:lang('Captcha')}" width="130" height="38" class="verify refcaptcha">
+                    <span style="width: 100px;padding-left: 10px" class="refcaptcha">{:lang('Click On The Image Change One')}</span>
                 </div>
 
-                <button id="sub-login" type="submit" class="btn btn-primary block full-width m-b">Login</button>
+                <button id="sub-login" type="submit" class="btn btn-primary block full-width m-b">{:lang('Login')}</button>
 
                <!--  <a href="#"><small>Forgot password?</small></a>
                 <p class="text-muted text-center"><small>Do not have an account?</small></p>

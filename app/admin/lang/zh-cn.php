@@ -27,6 +27,7 @@ return [
     'Mobile already exists'     =>  '手机号已经存在，请重新输入',
     'You entered the account or password is incorrect, please again' => '你输入的账号或密码不正确，请重新输入',
     'This action must be rule' => '该方法必须验证权限',
+    'Captcha' => '验证码',
     'Captcha error'  => '验证码错误',
     'Mobile require' => '帐号必须',
     'Please enter a correct mobile' => '请输入正确手机号',
@@ -59,6 +60,15 @@ return [
     'Auth List' => '权限列表',
     'Auth Name' => '权限名称',
     'Auth Val' => '权限规则值',
+    'Debug Mode Already Open' => '调试模式已经打开',
+    'JumpPrompt' => '跳转提示',
+    'PageAuto' => '页面自动',
+    'Jump' => '跳转',
+    'WaitingTime' => '等待时间',
+    'SysError' => '系统发生错误',
+    'Back' => '返回',
+    'Login' => '登录',
+    'Click On The Image Change One' => '看不清，点击图片换一张',
 
     // 菜单列表 不支持数组
     'Dashboards'    =>  '仪表盘',

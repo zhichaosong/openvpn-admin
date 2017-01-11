@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>跳转提示</title>
+    <title>{$Think.lang.JumpPrompt}</title>
     <meta name="KeyWords" content="{$Think.config.website.keywords}">
     <meta name="Description" content="{$Think.config.website.description}">
     {css href="__LIB__/bootstrap3/css/bootstrap.css" /}
@@ -25,7 +25,7 @@
         <tr>
             <td style="text-align:center;">
                 <div style="width:100%; margin:0 auto;">
-                      <h3>跳转提示!</h3>
+                      <h3>{$Think.lang.JumpPrompt}</h3>
                           <?php switch ($code) {?>
                                 <?php case 1:?>
                                 <h2>:)</h2>
@@ -38,7 +38,7 @@
                             <?php } ?>
                         <p class="detail"></p>
                         <p class="jump">
-                            页面自动 <a id="href" href="<?php echo($url);?>">跳转</a> 等待时间： <b id="wait"><?php echo($wait);?></b>
+                            {$Think.lang.PageAuto} <a id="href" href="<?php echo($url);?>">{$Think.lang.Jump}</a> {$Think.lang.WaitingTime}： <b id="wait"><?php echo($wait);?></b>
                         </p>
                 </div>
             </td>
