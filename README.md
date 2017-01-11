@@ -3,24 +3,32 @@
 
 =====================
 
+> 新版本在线体验地址已经上线👏 ---2017-01-10
+
+> 元旦到现在一直忙，新版本拖延拖延😪 ---2017-01-07
+
+> 新版本快要上线啦，小伙伴鸡冻不，---2016-12-29
 
 
 > 喜欢就Star，不只是Fork；
 
 > 想要分享的动机才是驱动力，而技术仅仅是一种方法。
 
-> 数据库文件已经上传，安装配置就可以使用
 
 ======================
 
-# TP-Web(简称Web)
+# TP-admin
 
-TP-Web即基于ThinkPHP5的web后台管理系统
+TP-admin即基于ThinkPHP5拿来即用高性能后台管理系统
 
-## 官方文档
+- 0.1.0  [预览](https://github.com/Aierui/tp-admin/tree/0.1.0)
+
+## 官方文档(旧) 新正在写……
 地址：[http://doc.web.shijinrong.cn/](http://doc.web.shijinrong.cn/)
 
 ## 在线体验
+
+地址：[http://tpadmin.shijinrong.cn/admin/](http://tpadmin.shijinrong.cn/admin/)
 
 账户：13330613321
 
@@ -29,13 +37,13 @@ TP-Web即基于ThinkPHP5的web后台管理系统
 
 ## 线上仓库
 
-在线地址：[https://github.com/Aierui/web](https://github.com/Aierui/web)
+在线地址：[https://github.com/Astonep/tp-admin](https://github.com/Astonep/tp-admin)
 
 ### 源代码下载
 
-**git克隆**：``git clone https://github.com/Aierui/web`` 
+**git克隆**：``git clone https://github.com/Astonep/tp-admin`` 
 
-**直接下载**：[https://github.com/Aierui/web/archive/master.zip](https://github.com/Aierui/web/archive/master.zip) 
+**直接下载**：[https://github.com/Astonep/tp-admin/archive/master.zip](https://github.com/Astonep/tp-admin/archive/master.zip) 
 
 ## 本地部署
 
@@ -67,11 +75,11 @@ http://your-domain/ 例如虚拟域名配置为www.web.com 则http://www.web.com
 **详细参考**[ThinkPHP5官方手册中的部署部分](http://www.kancloud.cn/manual/thinkphp5/129745)官方手册更加完善且很清楚
 
 ## 开发规范
-tp-web-admin框架严格遵循ThinkPHP5开发规范，详情请参照[官方手册](http://www.kancloud.cn/manual/thinkphp5/118007)
+tp-admin框架严格遵循ThinkPHP5开发规范，详情请参照[官方手册](http://www.kancloud.cn/manual/thinkphp5/118007)
 
-# TP-Web——拿来即用高性能后台管理系统
+# TP-admin——拿来即用高性能后台管理系统
 
-TP-Web即基于ThinkPHP5的web后台管理系统
+TP-admin即基于ThinkPHP5的admin后台管理系统
 
 ### 主要特性：
 
@@ -89,7 +97,7 @@ TP-Web即基于ThinkPHP5的web后台管理系统
 - **小特性，自己挖掘哦~~ 更多新特性、正在完善中……**
 - **也期待有想法的你加入**
 
-### 支持TP-web的用户请到 [GitHub](https://github.com/Aierui/web) 给我一个star ^_^
+### 支持TP-admin的用户请到 [GitHub](https://github.com/Aierui/web) 给我们一个star ^_^
 
 ### 为什么要选择TP5
 因为TP5在框架中就有如下高级特性
@@ -105,7 +113,7 @@ TP-Web即基于ThinkPHP5的web后台管理系统
 ### 合理使用轮子
 排名部分先后顺序
 - 框架：ThinkPHP5.0.2、jQuery3.1.0
-- 插件：bootstrap3.3.0、bootstrap-table1.11.0、validate.js0.10.0、jstree3.1.1、font-awesome4.6.3
+- 插件：bootstrap3.3.0、bootstrap-table1.11.0、validate.js0.10.0、pace1.0.0、metismenu2.0.2、font-awesome4.6.3
 - 平台：Github
 - ……
 

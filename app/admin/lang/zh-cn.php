@@ -39,6 +39,8 @@ return [
     'Add'       => '添加',
     'Edit'      => '编辑',
     'Delete'    => '删除',
+    'Delete without authorization'  => '无权限删除',
+    'Edit without authorization'  => '无权限编辑',
     'Access_menu'=> '用户授权',
     'Account List' => '账号列表',
     'Account' => '帐号',
