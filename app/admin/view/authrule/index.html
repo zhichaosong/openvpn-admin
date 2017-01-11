@@ -5,7 +5,7 @@
             <div class="ibox float-e-margins" style="background: white;padding: 10px">
                 <!-- 表单标题概要 -->
                 <div class="ibox-title">
-                    <h5>权限列表</h5>
+                    <h5>{:lang('Auth List')}</h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
@@ -27,9 +27,9 @@
 					        <tr>
 					            <th data-width="40"  data-align="center"  data-checkbox="true"></th>
 					            <th data-width="50" data-field="id">ID</th>
-					            <th data-field="title">权限名称</th>
+					            <th data-field="title">{:lang('Auth Name')}</th>
 					            <th data-field="rule_val">RULE_VAL</th>
-					            <th data-width="80" data-field="operate"   data-align="center" data-formatter="operateFormatter" data-events="operateEvents">操作</th>
+					            <th data-width="80" data-field="operate"   data-align="center" data-formatter="operateFormatter" data-events="operateEvents">{:lang('Operate')}</th>
 					        </tr>
 					    </thead>
 					</table>
@@ -69,11 +69,11 @@
 
 function format_status(status,row,index) {
 	if(status == 1){
-		return '显示'
+		return '{:lang("Start")}'
 	}else if(status == 2){
-		return  '隐藏'
+		return  '{:lang("Hide")}'
 	}else if(status == 0){
-		return  '禁止'
+		return  '{:lang("Off")}'
 	}
 }
 
