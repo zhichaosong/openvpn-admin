@@ -33,6 +33,7 @@ TP-admin即基于ThinkPHP5的后台管理系统
 - 插件：bootstrap3.3.0、bootstrap-table1.11.0、validate.js0.10.0、pace1.0.0、metismenu2.0.2、font-awesome4.6.3
 - 平台：Github
 - ……
+
 >[success] 在此非常感谢各框架、插件、平台的支持
 
 
