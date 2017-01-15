@@ -1,14 +1,4 @@
-> 开始写文档啦！！！！！！！！！！！
-
-
-=====================
-
-> 新版本在线体验地址已经上线👏 ---2017-01-10
-
-> 元旦到现在一直忙，新版本拖延拖延😪 ---2017-01-07
-
-> 新版本快要上线啦，小伙伴鸡冻不，---2016-12-29
-
+> 新版本在线体验地址已经上线，欢迎体验👏 ---2017-01-14
 
 > 喜欢就Star，不只是Fork；
 
@@ -21,10 +11,10 @@
 
 TP-admin即基于ThinkPHP5拿来即用高性能后台管理系统
 
-- 0.1.0  [查看](https://github.com/Aierui/tp-admin/tree/0.1.0)
+- 0.1.0  [查看](https://github.com/Aierui/tp-admin/tree/0.1.0) 提供源代码，文档已废弃。
 
-## 官方文档(旧) 新正在写……
-地址：[http://doc.web.shijinrong.cn/](http://doc.web.shijinrong.cn/)
+## 官方文档
+地址：[http://doc.tpadmin.shijinrong.cn/](http://doc.tpadmin.shijinrong.cn/)
 
 ## 在线体验
 
@@ -54,8 +44,6 @@ TP-admin即基于ThinkPHP5拿来即用高性能后台管理系统
 > * MBstring PHP Extension
 > * CURL PHP Extension
 
-
-
 建议配置虚拟域名（若不清楚，请自行解决之），方便接下来开展你的开发工作。
 > 按照TP5默认，入口文件位于`public/index.php`
 > 入口文件位置的设计是为了让应用部署更安全，public目录为web可访问目录，其他的文件都可以放到非WEB访问目录下面。
@@ -77,23 +65,25 @@ http://your-domain/ 例如虚拟域名配置为www.web.com 则http://www.web.com
 ## 开发规范
 tp-admin框架严格遵循ThinkPHP5开发规范，详情请参照[官方手册](http://www.kancloud.cn/manual/thinkphp5/118007)
 
-# TP-admin——拿来即用高性能后台管理系统
 
-TP-admin即基于ThinkPHP5的admin后台管理系统
+# TP－Admin——拿来即用高性能后台管理系统
 
-### 主要特性：
-
-
-- **基础封装**：后台基础类，如权限验证、实时登录等
-- **角色管理**：自定义后台各菜单各节点权限分配
-- **数据验证**：表单数据自动验证、数据库防注入
+TP-Admin即基于ThinkPHP5的web后台管理系统（总结一套自己的后台管理系统，方便自己后续的项目开发。）
+## 主要特性：
+- **自适应手机端**：响应式布局，PC、移动端效果均表现不错
+- **支持国际化**：已实现功能完全支持国际化，在给出的模式下开发，可以完全符合国际化需求
+- **使用ThinkPHP5.0+**
+- **吸取教训**：吸取 OneThink + ThinkCMF 的开源框架优点（如：静态资源部署，角色权限管理）；
+- **部署**：支持单域名（如：www.shijinrong.cn/admin、www.shijinrong.cn）单域名部署（如：admin.shijinrong.cn、www.shijinrong.cn）；
 - **日志记录**：自动记录网站操作写入数据库
+- **数据验证**：表单数据自动验证（包含前台Js + 后台使用ThinkPHP5内置validate类）
+- **基础封装**：后台基础类，如权限验证、登录等
 - **账号管理**：平台后台账号统一管理，自定义分配角色
-- **响应式布局**：PC、移动端均有不错的表现效果
-- **异步请求**：保护好全局污染
+- **异步请求**：减轻服务器端的压力，避免阻塞，提高效率，保护好全局污染
 
 
-### 支持TP-admin的用户请到 [GitHub](https://github.com/Astonep/tp-admin) 给我们一个star ^_^
+## 支持TP-admin的用户请到 [GitHub](https://github.com/Astonep/tp-admin) 给我们一个star ^_^
+
 
 ### 为什么要选择TP5
 因为TP5在框架中就有如下高级特性
@@ -114,6 +104,9 @@ TP-admin即基于ThinkPHP5的admin后台管理系统
 - ……
 
 > 在此非常感谢各框架、插件、平台的支持
+
+
+
 
 
 ## 交流
