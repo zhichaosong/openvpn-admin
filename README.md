@@ -17,7 +17,7 @@ TP-admin即基于ThinkPHP5拿来即用高性能后台管理系统
 
 ## 在线体验
 
-地址：[http://tpadmin.shijinrong.cn/admin/](http://tpadmin.shijinrong.cn/admin/)
+地址：[http://tpadmin.shijinrong.cn/admin/](http://tpadmin.shijinrong.cn/admin/login)
 
 账户：13330613321
 
