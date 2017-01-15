@@ -97,7 +97,7 @@ class User extends Admin
         if(empty($id)){
             return info(lang('Data ID exception'), 0);
         }
-        if (intval($id == 1)) {
+        if (intval($id == 1 || in_array(1, explode(',', $id)))) {
             return info(lang('Delete without authorization'), 0);
         }
         return Loader::model('User')->deleteById($id);
