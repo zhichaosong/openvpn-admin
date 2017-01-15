@@ -13,7 +13,7 @@
                         <div class="form-group must">
                             <label class="col-sm-3 control-label">{:lang('Role Name')}</label>
                             <div class="col-sm-7">
-                                <input type="text" class="form-control" name="name" maxlength="8"  placeholder="{:lang('Please Enter The Correct Length')}" required value="{$data.name ?? ''}">
+                                <input type="text" class="form-control" name="name" maxlength="8"  placeholder="{:lang('Up_characters',['langth' =>8])}" required value="{$data.name ?? ''}">
                             </div>
                         </div>
                         
@@ -30,7 +30,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">{:lang('Note')}</label>
                             <div class="col-sm-7"> 
-                                <input type="text" class="form-control" name="remark" maxlength="10" placeholder="{:lang('Please Enter The Correct Length')}"  value="{$data.remark ?? ''}"  >
+                                <input type="text" class="form-control" name="remark" maxlength="10" placeholder="{:lang('Up_characters',['langth' =>10])}"  value="{$data.remark ?? ''}"  >
                             </div>
                         </div>
 

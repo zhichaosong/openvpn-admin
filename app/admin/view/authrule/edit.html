@@ -13,14 +13,14 @@
                         <div class="form-group must">
                             <label class="col-sm-3 control-label">{:lang('Auth Name')}</label>
                             <div class="col-sm-7">
-                                <input type="text" class="form-control" name="title" maxlength="8" placeholder="{:lang('Please Enter The Correct Length')}" required value="{$data['title']}" >
+                                <input type="text" class="form-control" name="title" maxlength="8" placeholder="{:lang('Up_characters',['langth' =>8])}" required value="{$data['title']}" >
                             </div>
                         </div>
 
                         <div class="form-group must">
                             <label class="col-sm-3 control-label">RULE_VAL</label>
                             <div class="col-sm-7">
-                                <input type="text" class="form-control" name="rule_val" maxlength="255" placeholder="{:lang('Auth Val')}（module/controller/action）" required value="{$data['rule_val']}"　>
+                                <input type="text" class="form-control" name="rule_val" maxlength="255" placeholder="{:lang('Auth Val')}（module/controller/action" required value="{$data['rule_val']}"　>
                             </div>
                         </div>
                     </div>
@@ -33,42 +33,3 @@
         </div>
     </div>
 </form>
-
-
-
-<script type="text/javascript">
-
-    $('#icon_list').on('hide.bs.modal', function(){
-        $('#editForm').show();
-    });
-
-    $('#select_icon').on('click', function(){
-        $('#editForm').hide();
-        $('#icon_list').modal({backdrop: false}).show();
-    });
-
-    $('#icon_list li').on('click', function(){
-        var class_name = this.firstElementChild.getAttribute('class').slice(3);
-        $('#icon').val(class_name);
-        $('#icon_list').modal('hide');
-    });
-
-    $("#pid").change(function(){
-        var pid = $("#pid option:selected").val();
-        if (pid == 0) {
-            $("#module").find('.col-sm-7').find('input:eq(0)').removeAttr('required');
-            $("#module").hide();
-        }else{
-            $("#module").find('.col-sm-7').find('input:eq(0)').attr('required','required');
-            $("#module").show();
-        }
-    }).trigger('change')
-
-</script>
-
-<style type="text/css">
-    #icon_list ul li {
-        display: inline-block;
-        width: 32.3%;
-    }
-</style>

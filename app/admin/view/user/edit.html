@@ -13,27 +13,27 @@
                         <div class="form-group must">
                             <label class="col-sm-3 control-label">{:lang('Name')}</label>
                             <div class="col-sm-7">
-                                <input type="text" class="form-control" name="username" maxlength="8"  placeholder="{:lang('Please Enter The Correct Length')}" required value="{$data.username ?? ''}">
+                                <input type="text" class="form-control" name="username" maxlength="8"  placeholder="{:lang('Up_characters',['langth' =>8])}" required value="{$data.username ?? ''}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">{:lang('Mobile Number')}</label>
                             <div class="col-sm-7"> 
-                                <input type="tel" class="form-control mobile" name="mobile" maxlength="11" placeholder="{:lang('Please Enter The Correct Length')}" required value="{$data.mobile ?? ''}"  >
+                                <input type="tel" class="form-control mobile" name="mobile" maxlength="11" placeholder="{:lang('Up_characters',['langth' =>11])}" required value="{$data.mobile ?? ''}"  >
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">{:lang('Password')}</label>
                             <div class="col-sm-7">
-                                <input type="password" class="form-control" name="password" id="password"  rangelength="[6,16]" placeholder="{:lang('Please Enter The Correct Length')}" required>
+                                <input type="password" class="form-control" name="password" id="password"  rangelength="[6,16]" placeholder="{:lang('Range_characters',['minLangth' =>6,'maxLangth' => 16])}" required>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">{:lang('Confirm Password')}</label>
                             <div class="col-sm-7">
-                                <input type="password" class="form-control equalto" name="password2" rangelength="[6,16]" placeholder="{:lang('Please Enter The Correct Length')}" required data-rule-equalto="#password" data-msg-equalto="{:lang('The password is not the same twice')}">
+                                <input type="password" class="form-control equalto" name="password2" rangelength="[6,16]" placeholder="{:lang('Range_characters',['minLangth' =>6,'maxLangth' => 16])}" required data-rule-equalto="#password" data-msg-equalto="{:lang('The password is not the same twice')}">
                             </div>
                         </div>
 
