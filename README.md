@@ -11,7 +11,6 @@
 
 TP-admin即基于ThinkPHP5拿来即用高性能后台管理系统
 
-- 0.1.0  [查看](https://github.com/Aierui/tp-admin/tree/0.1.0) 提供源代码，文档已废弃。
 
 ## 官方文档
 地址：[http://doc.tpadmin.shijinrong.cn/](http://doc.tpadmin.shijinrong.cn/)
