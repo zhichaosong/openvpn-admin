@@ -3,6 +3,7 @@ namespace app\admin\taglib;
 
 use think\template\TagLib;
 use think\Request;
+use think\Config;
 
 /**
 * 工具类标签
