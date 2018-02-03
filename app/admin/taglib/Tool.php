@@ -28,7 +28,10 @@ class Tool extends Taglib
         $request = Request::instance();
         $module = $request->module();
         $controller = $request->controller();
-        $url = '/'.$module.'/'.$controller;
+        if (Config::get('url_domain_deploy'))
+            $url = '/' . $controller;
+        else
+            $url = '/' . $module . '/' . $controller;
 
         $html  = '';
         $html .= '<div id="' . $tag['id'] . '" class="toolbar" data-module="'.$url.'">';

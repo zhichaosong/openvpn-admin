@@ -1,25 +1,37 @@
 {
-    "name": "topthink/think",
-    "description": "the new thinkphp framework",
+    "name": "aierui/tp-admin",
+    "description": "thinkphp5-admin",
     "type": "project",
     "keywords": [
-        "framework",
+        "admin",
+        "tp-admin",
         "thinkphp",
+        "thinkphp-admin",
+        "thinkphp5",
         "ORM"
     ],
-    "homepage": "http://thinkphp.cn/",
-    "license": "Apache-2.0",
+    "license": "MIT",
+    "homepage": "https://github.com/aierui/tp-admin",
     "authors": [
         {
-            "name": "liu21st",
-            "email": "liu21st@gmail.com"
+            "name": "aierui",
+            "email": "aieruishi@gmail.com",
+            "homepage": "https://shijinrong.cn",r
+            "role": "Developer"
         }
     ],
     "require": {
         "php": ">=5.4.0",
-        "topthink/framework": "^5.0.4",
-        "topthink/think-captcha": "^1.0.7",
-        "topthink/think-testing": "^1.0"
+        "topthink/framework": "5.0.10",
+        "topthink/think-captcha": "1.0.7"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~6.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "app\\": "app"
+        }
     },
     "extra": {
         "think-path": "thinkphp"

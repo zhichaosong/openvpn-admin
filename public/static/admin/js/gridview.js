@@ -74,8 +74,10 @@ $(function() {
             },
             onClickRow: function(row, $element) {
                 $element.addClass('info').siblings().removeClass('info');
-                // console.log($this.toolbar)
+
+                // var btnGroup = $element.parents('.bootstrap-table:eq(0)').find('#toolbar').find('.btn-group')
                 $this.toggleCheckedClass()
+
                 $this.currentRow = row;
             },
             onDblClickRow: function(item, $element) { //双击
@@ -313,25 +315,24 @@ $(function() {
     }
 
     GridView.prototype.toggleCheckedClass = function (data) {
-        var btnGroup = this.$toolbar.find('.btn-group')
-        if (data != undefined) {
-            if (data.attr == 'disabled') {
-                btnGroup.each(function(items, index) {
-                    $(index).find('button').each(function(item, ele) {
-                        if ($(ele).data('name') == 'delete') {
-                            $(ele).attr('disabled', true).addClass('btn-default').removeClass('btn-primary')
-                        }
-                    })
+        $this = this
+        var btnGroup = $this.toolbar.find('.btn-group')
+        if (data.attr == 'disabled') {
+            btnGroup.each(function(items, index) {
+                $(index).find('button').each(function(item, ele) {
+                    if ($(ele).data('name') == 'delete') {
+                        $(ele).attr('disabled', true).addClass('btn-default').removeClass('btn-primary')
+                    }
                 })
-            }else if (data.attr == '') {
-                btnGroup.each(function(items, index) {
-                    $(index).find('button').each(function(item, ele) {
-                        if ($(ele).data('name') == 'delete') {
-                            $(ele).removeAttr('disabled').removeClass('btn-default').addClass('btn-primary')
-                        }
-                    })
+            })
+        }else if (data.attr == '') {
+            btnGroup.each(function(items, index) {
+                $(index).find('button').each(function(item, ele) {
+                    if ($(ele).data('name') == 'delete') {
+                        $(ele).removeAttr('disabled').removeClass('btn-default').addClass('btn-primary')
+                    }
                 })
-            }
+            })
         }else{
             btnGroup.each(function(items, index) {
                 $(index).find('button').each(function(item, ele) {
