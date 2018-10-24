@@ -44,8 +44,10 @@ class User extends Admin
 	public function getList( $request )
 	{
 		$request = $this->fmtRequest( $request );
-		$data = $this->order('create_time desc')->where( $request['map'] )->limit($request['offset'], $request['limit'])->select();
-		return $this->_fmtData( $data );
+//		$data = $this->order('create_time desc')->where( $request['map'] )->limit($request['offset'], $request['limit'])->select();
+		$data = $this->order('create_time desc')->select();
+//		return $this->_fmtData( $data );
+        return $data;
 	}
 
 	public function saveData( $data )

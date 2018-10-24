@@ -62,18 +62,7 @@
 
 <script type="text/javascript">
     $(function () {
-        var data = {}
-        $.ajax({
-            url: 'https://api.github.com/repos/Astonep/tp-admin',
-            type: 'get',
-            data:  '',
-            dataType:  'json',
-            success:function(ajaxData){
-                data.github = ajaxData.stargazers_count
-                console.log(data.github)
-                $("#github-star-count").text(data.github)
-            }
-        })
+        $("#github-star-count").text(1024);
 
         if (localStorage.pagecount){
                localStorage.pagecount = Number(localStorage.pagecount)+1

@@ -1,4 +1,4 @@
-@import url("http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&lang=en");
+/*@import url("http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&lang=en");*/
 /*
  *
  *   INSPINIA - Responsive Admin Theme
@@ -4192,11 +4192,11 @@ body.modal-open {
   padding: 100px 20px 20px 20px;
 }
 .logo-name {
-  color: #b51e34;
-  font-size: 180px;
-  font-weight: 800;
-  letter-spacing: -10px;
-  margin-bottom: 0px;
+  color: white;
+  font-size: 70px;
+  font-weight: 500;
+  letter-spacing: -5px;
+  margin-bottom: 20px;
 }
 .middle-box h1 {
   font-size: 160px;

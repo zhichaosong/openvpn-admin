@@ -76,7 +76,7 @@ $(function() {
                 $element.addClass('info').siblings().removeClass('info');
 
                 // var btnGroup = $element.parents('.bootstrap-table:eq(0)').find('#toolbar').find('.btn-group')
-                $this.toggleCheckedClass()
+                // $this.toggleCheckedClass()
 
                 $this.currentRow = row;
             },
@@ -316,7 +316,7 @@ $(function() {
 
     GridView.prototype.toggleCheckedClass = function (data) {
         $this = this
-        var btnGroup = $this.toolbar.find('.btn-group')
+        var btnGroup = $this.$toolbar.find('.btn-group')
         if (data.attr == 'disabled') {
             btnGroup.each(function(items, index) {
                 $(index).find('button').each(function(item, ele) {

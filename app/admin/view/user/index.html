@@ -28,7 +28,7 @@
                                 <th data-width="10" data-align="center" data-checkbox="true"></th>
                                 <th data-width="50" data-field="username" >{:lang('Account')}</th>
                                 <th data-width="80" data-field="mobile" data-align="center">{:lang('Mobile')}</th>
-                                <th data-width="50" data-field="status" >{:lang('Status')}</th>
+                                <th data-width="50" data-field="status" data-formatter="format_status">{:lang('Status')}</th>
                                 <th data-width="80" data-field="create_time" data-align="center">{:lang('Create Time')}</th>
                                 <th data-width="80" data-field="operate"   data-align="center" data-formatter="operateFormatter" data-events="operateEvents">{:lang('Operate')}</th>
                             </tr>
@@ -66,4 +66,11 @@
         }
     };
 
+    function format_status(status, row, index) {
+        if(status == 1){
+            return '{:lang("Start")}'
+        }else if(status == 0){
+            return '{:lang("Off")}'
+        }
+    }
 </script>
