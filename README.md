@@ -92,7 +92,7 @@ TP-admin即基于ThinkPHP5的admin后台管理系统
 - **ORM**：重构的数据库、模型及关联，MongoDb支持；
 
 ### 合理使用轮子
-排名部分先后顺序
+排名不分先后顺序
 - 框架：ThinkPHP5.0.2、jQuery3.1.0
 - 插件：bootstrap3.3.0、bootstrap-table1.11.0、validate.js0.10.0、pace1.0.0、metismenu2.0.2、font-awesome4.6.3
 - 平台：Github

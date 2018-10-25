@@ -75,7 +75,6 @@ class User extends Admin
      * 保存数据
      * @param array $data
      *
-     * @author chengbin
      */
     public function saveData()
     {
@@ -85,7 +84,6 @@ class User extends Admin
         }
 
         $data = input('post.');
-        var_dump($data);die;
         return model('User')->saveData( $data );
     }
 
