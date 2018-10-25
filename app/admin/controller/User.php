@@ -66,6 +66,7 @@ class User extends Admin
         }
         $roleData = model('role')->getKvData();
         $this->assign('roleData', $roleData);
+//        dump($roleData);
         $data = model('User')->get(['id'=>$id]);
         $this->assign('data',$data);
         return $this->fetch();

@@ -44,8 +44,17 @@ class User extends Admin
 	public function getList( $request )
 	{
 		$request = $this->fmtRequest( $request );
-//		$data = $this->order('create_time desc')->where( $request['map'] )->limit($request['offset'], $request['limit'])->select();
-		$data = $this->order('create_time desc')->select();
+		$data = $this->order('create_time desc')->where( $request['map'] )->limit($request['offset'], $request['limit'])->select();
+
+        $roleData = model('role')->getKvData();
+        foreach ($data as $user){
+            foreach ($roleData as $role){
+                if($user['role_id'] == $role['id']){
+                    $user['role'] = $role['name'];
+                }
+            }
+        }
+//		$data = $this->order('create_time desc')->select();
 //		return $this->_fmtData( $data );
         return $data;
 	}

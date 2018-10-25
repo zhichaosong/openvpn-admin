@@ -16,7 +16,8 @@ class Role extends Admin
 
     public function getKvData()
     {
-        return $this->where('status',1)->column('name','id');
+//        return $this->where('status',1)->column('name','id');
+        return $this->where('status',1)->select();
     }
 
     public function getList( $request )

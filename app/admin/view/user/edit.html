@@ -42,7 +42,11 @@
                             <div class="col-sm-7">
                                 <select name="role_id" id="" class="form-control" required>
                                     {volist name="roleData" key="key" id="vo"}
-                                        <option value="{$key}">{$vo}</option>
+                                        <?php if(isset($data) && $data['role_id']==$key) {?>
+                                            <option value="{$vo.id}" selected>{$vo.name}</option>
+                                        <?php } else { ?>
+                                            <option value="{$vo.id}" >{$vo.name}</option>
+                                        <?php } ?>
                                     {/volist}
                                 </select>
                             </div>
@@ -51,10 +55,22 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">{:lang('Status')}</label>
                             <div class="col-sm-7">
-                                <select name="status" class="form-control" required>
-                                    <option value="1" {$data['status']?$data['status']==1 ? 'selected' : '' : ''}>{:lang('Start')}</option>
-                                    <option value="2" {$data['status']?$data['status']==2 ? 'selected' : '' : ''}>{:lang('Hide')}</option>
-                                    <option value="0" {$data['status']?$data['status']==0 ? 'selected' : '' : ''}>{:lang('Off')}</option>
+                                 <select name="status" class="form-control" required>
+                                    <?php if(isset($data) && $data['status']==1) {?>
+                                        <option value="1" selected>{:lang('Start')}</option>
+                                    <?php } else { ?>
+                                        <option value="1">{:lang('Start')}</option>
+                                    <?php } ?>
+                                    <?php if(isset($data) && $data['status']==2) {?>
+                                        <option value="2" selected>{:lang('Hide')}</option>
+                                    <?php } else { ?>
+                                        <option value="2">{:lang('Hide')}</option>
+                                    <?php } ?>
+                                    <?php if(isset($data) && $data['status']==0) {?>
+                                        <option value="0" selected>{:lang('Off')}</option>
+                                    <?php } else { ?>
+                                        <option value="0">{:lang('Off')}</option>
+                                    <?php } ?>
                                 </select>
                             </div>
                         </div>
