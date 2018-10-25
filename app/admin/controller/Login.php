@@ -11,7 +11,7 @@ use think\Config;
 
 /**
 * 登录
-* @author aierui github  https://github.com/Aierui
+* @author aierui github  https://github.com/zhichaosong
 * @version 1.0 
 */
 class Login extends Common

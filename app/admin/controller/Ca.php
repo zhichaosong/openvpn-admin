@@ -6,10 +6,10 @@ use think\Loader;
 
 /**
 * 用户管理
-* @author aierui github  https://github.com/zhichaosong
+* @author zhichaosong github  https://github.com/zhichaosong
 * @version 1.0 
 */
-class User extends Admin
+class CA extends Admin
 {
 
     function _initialize()
@@ -38,7 +38,7 @@ class User extends Admin
         }
 
         $request = request()->param();
-        $data = model('User')->getList( $request );
+        $data = model('Ca')->getList( $request );
         return $data;
     }
 
@@ -67,7 +67,7 @@ class User extends Admin
         $roleData = model('role')->getKvData();
         $this->assign('roleData', $roleData);
 //        dump($roleData);
-        $data = model('User')->get(['id'=>$id]);
+        $data = model('Ca')->get(['id'=>$id]);
         $this->assign('data',$data);
         return $this->fetch();
     }
@@ -79,13 +79,13 @@ class User extends Admin
      */
     public function saveData()
     {
-        $this->mustCheckRule( 'admin/user/edit' );
+        $this->mustCheckRule( 'admin/Ca/edit' );
         if(!request()->isAjax()) {
             return info(lang('Request type error'));
         }
 
         $data = input('post.');
-        return model('User')->saveData( $data );
+        return model('Ca')->saveData( $data );
     }
 
     /**
@@ -99,8 +99,28 @@ class User extends Admin
         if (intval($id == 1)) {
             return info(lang('Delete without authorization'), 0);
         }
-        return Loader::model('User')->deleteById($id);
+        return Loader::model('Ca')->deleteById($id);
     }
 
+
+
+    /**
+     * 为用户生成证书
+     * @param  string $id 用户ID（外键）
+     */
+    public function generate($id = 0)
+    {
+        if(intval($id) < 0){
+            return info(lang('Data ID exception'), 0);
+        }
+        $this->mustCheckRule( 'admin/user/index' );
+        if(!request()->isAjax()) {
+            return info(lang('Request type error'));
+        }
+
+//        $data = input('post.');
+        $data = ['user_id' => $id, 'status' => 1];
+        return model('Ca')->saveData( $data );
+    }
    
 }

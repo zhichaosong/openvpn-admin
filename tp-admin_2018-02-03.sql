@@ -125,7 +125,7 @@ CREATE TABLE `ta_user` (
   `mobile` varchar(12) DEFAULT NULL COMMENT '手机号',
   `password` varchar(32) DEFAULT NULL COMMENT '密码',
   `status` int(11) DEFAULT '0' COMMENT '状态 （0禁止 1可用）',
-  `create_time` int(11) DEFAULT NULL COMMENT '帐号创建时间',
+  `create_time` int(11) DEFAULT NULL COMMENT '账号创建时间',
   `administrator` int(1) DEFAULT '0' COMMENT '是否超级管理员，1是 0否',
   `role_id` int(11) unsigned NOT NULL DEFAULT '0',
   `update_time` int(11) DEFAULT NULL COMMENT '账户最后更新时间',

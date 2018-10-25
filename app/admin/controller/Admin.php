@@ -12,7 +12,7 @@ use app\common\tools;
 
 /**
 * 后台controller基础类
-* @author aierui github  https://github.com/Aierui
+* @author aierui github  https://github.com/zhichaosong
  *
 * @version 1.0 
 */

@@ -1,6 +1,6 @@
 /**
  * GridView
- * @author aierui github  https://github.com/Aierui
+ * @author aierui github  https://github.com/zhichaosong
  * @version 1.0
  */
 $(function() {

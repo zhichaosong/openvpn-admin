@@ -9,7 +9,7 @@ use think\Lang;
 /**
 * 公用的控制器，pc、app、微信各端不需要控制权限的控制器，必须继承该控制器
  *
-* @author aierui github  https://github.com/Aierui
+* @author aierui github  https://github.com/zhichaosong
 * @version 1.0 
 */
 class Common extends Controller

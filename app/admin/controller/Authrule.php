@@ -6,7 +6,7 @@ use think\Loader;
 
 /**
 * 登录
-* @author aierui github  https://github.com/Aierui
+* @author aierui github  https://github.com/zhichaosong
 * @version 1.0 
 */
 class Authrule extends Admin

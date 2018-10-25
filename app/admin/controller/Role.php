@@ -8,7 +8,7 @@ use think\Db;
 
 /**
 * 角色管理
-* @author aierui github  https://github.com/Aierui
+* @author aierui github  https://github.com/zhichaosong
 * @version 1.0 
 */
 class Role extends Admin

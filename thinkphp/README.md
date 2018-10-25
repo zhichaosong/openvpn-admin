@@ -95,7 +95,7 @@ www  WEB部署目录（或者子目录）
 ThinkPHP5的命名规范遵循`PSR-2`规范以及`PSR-4`自动加载规范。
 
 ## 参与开发
-注册并登录 Github 帐号， fork 本项目并进行改动。
+注册并登录 Github 账号， fork 本项目并进行改动。
 
 更多细节参阅 [CONTRIBUTING.md](CONTRIBUTING.md)
 

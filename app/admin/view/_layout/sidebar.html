@@ -13,11 +13,11 @@
             </div>
         </li>
         <!-- 菜单列表 -->
-        <!-- 一级菜单 -->
+        <!-- 仪表盘 -->
         <li>
             <a href="{:url('admin/index/index')}" data-model="admin-index"><i class="fa fa-th-large"></i> <span class="nav-label">{$Think.lang.Dashboards}</span></a>
         </li>
-        <!-- 二级菜单 -->
+        <!-- 系统管理 -->
         <li>
             <a href="#"><i class="fa fa-cog"></i> <span class="nav-label">{$Think.lang.SystemManage}</span><span class="fa arrow"></span></a>
             <ul class="nav nav-second-level collapse">
@@ -25,6 +25,10 @@
                 <li><a href="{:url('admin/role/index')}" data-model="admin-role">{$Think.lang.RoleManage}</a></li>
                 <li><a href="{:url('admin/authrule/index')}" data-model="admin-authrule">{$Think.lang.AuthManage}</a></li>
             </ul>
+        </li>
+        <!-- VPN管理 -->
+        <li>
+            <a href="{:url('admin/ca/index')}" data-model="admin-ca"><i class="fa fa-th-large"></i> <span class="nav-label">{$Think.lang.CAManage}</span></a>
         </li>
        
     </ul>
