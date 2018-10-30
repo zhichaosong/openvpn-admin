@@ -17,3 +17,6 @@ tests
 
 ##Cache
 runtime/
+
+##Keys
+public/easy-rsa/keys/

@@ -32,7 +32,7 @@
                                 <th data-width="80" data-field="role" data-align="center">{:lang('Role')}</th>
                                 <th data-width="50" data-field="status" data-formatter="format_status">{:lang('Status')}</th>
                                 <th data-width="80" data-field="create_time" data-align="center">{:lang('Create Time')}</th>
-                                <th data-width="80" data-field="ca"   data-align="center" data-formatter="caFormatter" data-events="caEvents">{:lang('CA')}</th>
+                                <th data-width="80" data-field="key"   data-align="center" data-formatter="keyFormatter" data-events="keyEvents">{:lang('Key')}</th>
                                 <th data-width="80" data-field="operate"   data-align="center" data-formatter="operateFormatter" data-events="operateEvents">{:lang('Operate')}</th>
                             </tr>
                         </thead>
@@ -44,27 +44,27 @@
 </div>
 
 <script type="text/javascript">
-    function caFormatter(value, row, index) {
+    function keyFormatter(value, row, index) {
         return [
             '<a class="btn btn-xs generate" href="javascript:void(0)" title="{$Think.lang.Edit}">',
             '<i class="fa fa-file-code-o"></i> ',
-            '{:lang(\'CAGenerate\')}</a>  ',
-            '<a class="btn btn-xs download" href="javascript:void(0)" title="{$Think.lang.Delete}">',
+            '{:lang(\'KeyGenerate\')}</a>  ',
+            '<a class="btn btn-xs download" download="client.ovpn" href="\\easy-rsa\\keys\\' + row.id + '.ovpn" title="{$Think.lang.Delete}">',
             '<i class="fa fa-download"></i> ',
-            '{:lang(\'CADownload\')}</a>'
+            '{:lang(\'KeyDownload\')}</a>'
         ].join('');
     }
 
-    var caEvents = {
+    var keyEvents = {
         'click .generate': function (e, value, row, index) {
             var param = {
-                url: "{:url('admin/ca/generate');}",
+                url: "{:url('admin/key/generate');}",
                 data: {id: row.id}
             }
             $("#table").gridView('loadModal', param.url,param.data)
         },
         'click .download': function (e, value, row, index) {
-            $("#table").gridView('deleteModal', 'delete', row)
+//            $("#table").gridView('deleteModal', 'delete', row)
 
         }
     };

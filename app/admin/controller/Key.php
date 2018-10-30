@@ -9,7 +9,7 @@ use think\Loader;
 * @author zhichaosong github  https://github.com/zhichaosong
 * @version 1.0 
 */
-class CA extends Admin
+class Key extends Admin
 {
 
     function _initialize()
@@ -38,7 +38,7 @@ class CA extends Admin
         }
 
         $request = request()->param();
-        $data = model('Ca')->getList( $request );
+        $data = model('Key')->getList( $request );
         return $data;
     }
 
@@ -67,7 +67,7 @@ class CA extends Admin
         $roleData = model('role')->getKvData();
         $this->assign('roleData', $roleData);
 //        dump($roleData);
-        $data = model('Ca')->get(['id'=>$id]);
+        $data = model('Key')->get(['id'=>$id]);
         $this->assign('data',$data);
         return $this->fetch();
     }
@@ -79,13 +79,13 @@ class CA extends Admin
      */
     public function saveData()
     {
-        $this->mustCheckRule( 'admin/Ca/edit' );
+        $this->mustCheckRule( 'admin/key/edit' );
         if(!request()->isAjax()) {
             return info(lang('Request type error'));
         }
 
         $data = input('post.');
-        return model('Ca')->saveData( $data );
+        return model('Key')->saveData( $data );
     }
 
     /**
@@ -99,7 +99,7 @@ class CA extends Admin
         if (intval($id == 1)) {
             return info(lang('Delete without authorization'), 0);
         }
-        return Loader::model('Ca')->deleteById($id);
+        return Loader::model('Key')->deleteById($id);
     }
 
 
@@ -120,7 +120,7 @@ class CA extends Admin
 
 //        $data = input('post.');
         $data = ['user_id' => $id, 'status' => 1];
-        return model('Ca')->saveData( $data );
+        return model('Key')->saveData( $data );
     }
    
 }
