@@ -9,7 +9,7 @@ FOR /F "tokens=2*" %%a IN ('REG QUERY "HKEY_LOCAL_MACHINE\SOFTWARE\OpenVPN"') DO
 rem Alternatively define the PATH to openssl.exe manually
 rem set "PATH=%PATH%;C:\Program Files\OpenVPN\bin"
 
-set HOME=easy-rsa
+set HOME=D:\"Program Files"\OpenVPN\easy-rsa\
 set KEY_CONFIG=openssl-1.0.0.cnf
 
 rem Edit this variable to point to

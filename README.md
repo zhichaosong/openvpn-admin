@@ -103,3 +103,20 @@ TP-admin即基于ThinkPHP5的admin后台管理系统
 
 ## 交流
 - 问题只接受来自[Github上Issues](https://github.com/Astonep/tp-admin/issues)《源码附截图，并描述清楚
+
+## OpenVPN 配置
+1. model\Key.php
+① 配置 $openVPNPath 为本地 OpenVPN 路径；
+② $openVPNCMDPath 路径同上，但是路径中的空格要加双引号，便于 CMD 调用；
+本例中为：
+```php
+    public $openVPNPath = 'D:\\Program Files\\OpenVPN\\';
+    public $openVPNCMDPath = 'D:\\"Program Files"\\OpenVPN\\';
+```
+2. 配置本地 OpenVPN\easy-rsa\build-key 的 HOME 路径
+因为是 PHP 在 public 目录下调用 CMD 命令，所以为了防止路径错误配置成绝对路径；
+本例中为：
+```ini
+set HOME=D:\"Program Files"\OpenVPN\easy-rsa\
+```
+3. 修改 public\easy-rsa\client.ovpn 中的服务器 IP 及相关配置
