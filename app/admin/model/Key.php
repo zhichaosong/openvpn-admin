@@ -43,8 +43,8 @@ class Key extends Admin
 //        $lastLine = exec ( $cmd ,$output, $return_val);
 //        $lastLine = exec("openssl req -days 3650 -nodes -new -keyout 1.key -out 1.csr -config easy-rsa\openssl-1.0.0.cnf -subj /C=CN/ST=BJ/L=CY/O=AVIC/OU=dev/CN=%1/emailAddress=songzc@avic-digital.com", $output, $return_val);
 
-        $platform = 0;  //0-windows,1-linux
-        if(1 == $platform){
+        $platform = 1;  //0-windows, 1-linux, 3-debug
+        if(0 == $platform){
             //读文件 begin
             $confFilePath = "easy-rsa\\client.ovpn";
             $caFilePath = $this->openVPNPath."easy-rsa\\keys\\"."ca.crt";
@@ -83,13 +83,16 @@ class Key extends Admin
             fclose($confFile);
             fclose($ovpnFile);
         } elseif (1 == $platform){
-            $cmd = "sudo bash .\\easy-rsa\\newclient.sh ".$data["user_id"]; //生成证书脚本
+            $cmd = "bash ./easy-rsa/newclient.sh ".$data["user_id"]; //生成证书脚本
             $lastLine = exec($cmd, $output, $return_val);
+        } elseif (3 == $platform){
+          $return_val = 3;
         }
 
         //读文件 end
 		$data['create_time'] = time();
         $data['note'] = $return_val;
+      
 		$this->allowField(true)->save($data);
 		if($this->id > 0){
             return info(lang('Add succeed'), 0);
