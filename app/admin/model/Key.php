@@ -43,46 +43,53 @@ class Key extends Admin
 //        $lastLine = exec ( $cmd ,$output, $return_val);
 //        $lastLine = exec("openssl req -days 3650 -nodes -new -keyout 1.key -out 1.csr -config easy-rsa\openssl-1.0.0.cnf -subj /C=CN/ST=BJ/L=CY/O=AVIC/OU=dev/CN=%1/emailAddress=songzc@avic-digital.com", $output, $return_val);
 
-        //读文件 begin
-        $confFilePath = "easy-rsa\\client.ovpn";
-        $caFilePath = $this->openVPNPath."easy-rsa\\keys\\"."ca.crt";
-        $crtFilePath = $this->openVPNPath."easy-rsa\\keys\\".$data["user_id"].".crt";
-        $keyFilePath = $this->openVPNPath."easy-rsa\\keys\\".$data["user_id"].".key";
-        $ovpnFilePath = "easy-rsa\\keys\\".$data["user_id"].".ovpn";
-        if(!file_exists($crtFilePath)){
-            $cmd = $this->openVPNCMDPath."easy-rsa\build-key ".$data["user_id"]; //生成证书脚本
+        $platform = 0;  //0-windows,1-linux
+        if(1 == $platform){
+            //读文件 begin
+            $confFilePath = "easy-rsa\\client.ovpn";
+            $caFilePath = $this->openVPNPath."easy-rsa\\keys\\"."ca.crt";
+            $crtFilePath = $this->openVPNPath."easy-rsa\\keys\\".$data["user_id"].".crt";
+            $keyFilePath = $this->openVPNPath."easy-rsa\\keys\\".$data["user_id"].".key";
+            $ovpnFilePath = "easy-rsa\\keys\\".$data["user_id"].".ovpn";
+            if(!file_exists($crtFilePath)){
+                $cmd = $this->openVPNCMDPath."easy-rsa\build-key ".$data["user_id"]; //生成证书脚本
+                $lastLine = exec($cmd, $output, $return_val);
+            }
+            $confFile = fopen($confFilePath, "r") or die("Unable to open file!");
+            $caFile = fopen($caFilePath, "r") or die("Unable to open file!");
+            $crtFile = fopen($crtFilePath, "r") or die("Unable to open file!");
+            $keyFile = fopen($keyFilePath, "r") or die("Unable to open file!");
+            $ovpnFile = fopen($ovpnFilePath, "w") or die("Unable to write file!");
+            $confFileStr = fread($confFile,filesize($confFilePath));
+            $caFileStr = fread($caFile,filesize($caFilePath));
+            $crtFileStr = fread($crtFile,filesize($crtFilePath));
+            $keyFileStr = fread($keyFile,filesize($keyFilePath));
+            $content = $confFileStr;
+            $content .= "\n<ca>\n";
+            $content .= $caFileStr;
+            $content .= "</ca>";
+            $content .= "\n<cert>\n";
+            $content .= $crtFileStr;
+            $content .= "</cert>";
+            $content .= "\n<key>\n";
+            $content .= $keyFileStr;
+            $content .= "</key>";
+            $data['path'] =  "\\".$ovpnFilePath;
+            $data['content'] =  $content;
+            fwrite($ovpnFile, $content);
+            fclose($caFile);
+            fclose($crtFile);
+            fclose($keyFile);
+            fclose($confFile);
+            fclose($ovpnFile);
+        } elseif (1 == $platform){
+            $cmd = "sudo bash .\\easy-rsa\\newclient.sh ".$data["user_id"]; //生成证书脚本
             $lastLine = exec($cmd, $output, $return_val);
         }
-        $confFile = fopen($confFilePath, "r") or die("Unable to open file!");
-        $caFile = fopen($caFilePath, "r") or die("Unable to open file!");
-        $crtFile = fopen($crtFilePath, "r") or die("Unable to open file!");
-        $keyFile = fopen($keyFilePath, "r") or die("Unable to open file!");
-        $ovpnFile = fopen($ovpnFilePath, "w") or die("Unable to write file!");
-        $confFileStr = fread($confFile,filesize($confFilePath));
-        $caFileStr = fread($caFile,filesize($caFilePath));
-        $crtFileStr = fread($crtFile,filesize($crtFilePath));
-        $keyFileStr = fread($keyFile,filesize($keyFilePath));
-        $content = $confFileStr;
-        $content .= "\n<ca>\n";
-        $content .= $caFileStr;
-        $content .= "</ca>";
-        $content .= "\n<cert>\n";
-        $content .= $crtFileStr;
-        $content .= "</cert>";
-        $content .= "\n<key>\n";
-        $content .= $keyFileStr;
-        $content .= "</key>";
-        $data['path'] =  "\\".$ovpnFilePath;
-        $data['content'] =  $content;
-        fwrite($ovpnFile, $content);
-        fclose($caFile);
-        fclose($crtFile);
-        fclose($keyFile);
-        fclose($confFile);
-        fclose($ovpnFile);
+
         //读文件 end
 		$data['create_time'] = time();
-//        $data['note'] = $return_val;
+        $data['note'] = $return_val;
 		$this->allowField(true)->save($data);
 		if($this->id > 0){
             return info(lang('Add succeed'), 0);
