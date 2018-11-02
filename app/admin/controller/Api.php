@@ -36,8 +36,7 @@ class Api extends Common
             return lang('User not found');
         }
 
-        $pwd = rand(1000, 9999);;
-        $data = ['user_id' => $user['id'], 'pwd' => $pwd];
+        $data = ['user_id' => $user['id']];
         $res = model('Key')->saveData( $data );
         return json_encode($res);
     }

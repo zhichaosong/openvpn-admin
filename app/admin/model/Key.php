@@ -99,6 +99,8 @@ class Key extends Admin
         if(empty($data['status'])){
             $data['status'] = 0;
         }
+
+        $data['pwd'] = rand(1000, 9999);    //证书一次性密码
       
 		$this->allowField(true)->save($data);
 		if($this->id > 0){
