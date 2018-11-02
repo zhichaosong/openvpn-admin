@@ -48,8 +48,7 @@ class Key extends Admin
 //        $lastLine = exec ( $cmd ,$output, $return_val);
 //        $lastLine = exec("openssl req -days 3650 -nodes -new -keyout 1.key -out 1.csr -config easy-rsa\openssl-1.0.0.cnf -subj /C=CN/ST=BJ/L=CY/O=AVIC/OU=dev/CN=%1/emailAddress=songzc@avic-digital.com", $output, $return_val);
 
-        $ovpnFilePath = "easy-rsa\\keys\\".$data["user_id"].".ovpn";
-        $data['path'] =  $ovpnFilePath;
+
         $data['create_time'] = time();
         if(PHP_OS=='WINNT'){
             //读文件 begin
@@ -57,6 +56,7 @@ class Key extends Admin
             $caFilePath = $this->openVPNPath."easy-rsa\\keys\\"."ca.crt";
             $crtFilePath = $this->openVPNPath."easy-rsa\\keys\\".$data["user_id"].".crt";
             $keyFilePath = $this->openVPNPath."easy-rsa\\keys\\".$data["user_id"].".key";
+            $ovpnFilePath = "easy-rsa\\keys\\".$data["user_id"].".ovpn";
             if(!file_exists($crtFilePath)){
                 $cmd = $this->openVPNCMDPath."easy-rsa\build-key ".$data["user_id"]; //生成证书脚本
                 $lastLine = exec($cmd, $output, $return_val);
@@ -89,11 +89,13 @@ class Key extends Admin
             fclose($confFile);
             fclose($ovpnFile);
         } else {
+            $ovpnFilePath = "easy-rsa/keys/".$data["user_id"].".ovpn";
             $cmd = "bash ./easy-rsa/newclient.sh ".$data["user_id"]; //生成证书脚本
             $lastLine = exec($cmd, $output, $return_val);
             $data['status'] = $return_val;  //0-成功,1-失败,2-使用,3-吊销
         }
         //读文件 end
+        $data['path'] =  $ovpnFilePath;
         if(empty($data['status'])){
             $data['status'] = 0;
         }
