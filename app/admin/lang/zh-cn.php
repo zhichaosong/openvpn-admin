@@ -12,6 +12,9 @@
 // 中文语言包
 return [
     'Request type error'  => '请求类型错误',
+    'Request params error'  => '请求参数错误',
+    'File not found'  => '文件未找到或已失效',
+    'User not found'  => '用户未找到或已失效',
     'Input error'         => '输入错误',
     'Login failed'        => '登录失败',
     'Login succeed'       => '登录成功',
@@ -33,9 +36,6 @@ return [
     'Mobile require' => '账号必须',
     'Please enter a correct mobile' => '请输入正确手机号',
     'Please enter a correct password' => '请输入正确的密码',
-    'Start' => '启用',
-    'Off' =>'禁用',
-    'Hide' =>'隐藏',
     'The two passwords No match!' => '两次密码不一致！',
     'Add'       => '添加',
     'Edit'      => '编辑',
@@ -48,10 +48,12 @@ return [
     'Mobile' => '手机',
     'Status' => '状态',
     'Create Time' => '创建时间',
+    'Update Time' => '修改时间',
     'Operate' => '操作',
     'Key' => '证书',
     'KeyGenerate' => '生成',
     'KeyDownload' => '下载',
+    'Key not found' => '证书未找到或已失效',
     'Name' => '姓名',
     'Mobile Number' => '手机号码',
     'Password' => '密码',
@@ -85,5 +87,13 @@ return [
     'RoleManage'    =>'角色管理',
     'AuthManage'    =>'权限管理',
     'CAManage'    =>  '证书管理',
+
+    //各种状态
+    'Start' => '启用',
+    'Off' =>'禁用',
+    'Hide' =>'隐藏',
+    'Used' =>'已使用',
+    'Fail' =>'失败',
+    'Unknown' =>'未知',
 
 ];

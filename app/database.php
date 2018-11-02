@@ -17,9 +17,9 @@ return [
     // 数据库名
     'database'       => 'openvpn',
     // 用户名
-    'username'       => 'openvpn',
+    'username'       => 'root',
     // 密码
-    'password'       => 'asD7Rb62EF7bP4Xz',
+    'password'       => 'root',
     // 端口
     'hostport'       => '3306',
     // 连接dsn

@@ -28,8 +28,10 @@
                                 <th data-width="10" data-align="center" data-checkbox="true"></th>
                                 <th data-width="10" data-field="id" data-align="center">ID</th>
                                 <th data-width="50" data-field="user_id" >{:lang('Account')}</th>
+                                <th data-width="50" data-field="pwd" data-align="center">{:lang('Password')}</th>
                                 <th data-width="50" data-field="status" data-formatter="format_status">{:lang('Status')}</th>
                                 <th data-width="80" data-field="create_time" data-align="center">{:lang('Create Time')}</th>
+                                <th data-width="80" data-field="update_time" data-align="center">{:lang('Update Time')}</th>
                                 <th data-width="80" data-field="key"   data-align="center" data-formatter="keyFormatter" data-events="keyEvents">{:lang('Key')}</th>
                                 <th data-width="80" data-field="operate"   data-align="center" data-formatter="operateFormatter" data-events="operateEvents">{:lang('Operate')}</th>
                             </tr>
@@ -89,10 +91,16 @@
     };
 
     function format_status(status, row, index) {
-        if(status == 1){
+        if(status == 0){
             return '{:lang("Start")}'
-        }else if(status == 0){
+        }else if(status == 1){
+            return '{:lang("Fail")}'
+        }else if(status == 2){
+            return '{:lang("Used")}'
+        }else if(status == 3){
             return '{:lang("Off")}'
+        }else{
+            return '{:lang("Unknown")}'
         }
     }
 </script>

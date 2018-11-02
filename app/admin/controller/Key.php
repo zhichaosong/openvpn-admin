@@ -119,7 +119,7 @@ class Key extends Admin
         }
 
 //        $data = input('post.');
-        $data = ['user_id' => $id, 'status' => 1];
+        $data = ['user_id' => $id];
         return model('Key')->saveData( $data );
     }
    
